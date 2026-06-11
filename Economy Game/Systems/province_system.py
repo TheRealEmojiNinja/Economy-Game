@@ -1,5 +1,5 @@
 '''
-Preface:
+Preface: This file includes key functions regarding the creation of unique provinces.
 
 Author: TheEmojiNinja
 '''
@@ -28,6 +28,7 @@ def createProvinces(game_object : g.GameData):
 
         i += 1
 
+# The getProvinceNames method returns a list with all the province names.
 def getProvinceNames(game_object : g.GameData) -> list[p.Province]:
     list = []
     province_list = game_object.provinces

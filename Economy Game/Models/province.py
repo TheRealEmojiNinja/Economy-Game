@@ -25,27 +25,31 @@ class Province:
                          "Hidden_Resource_Deposits":["Coal", "Iron", "Stone"]}
 
     # Helper methods that get different values for certain province components (name, factories, mines)
-    def getName(self):
+    def getName(self) -> str:
         return self.province["Name"]
     
-    def getFactories(self):
+    def getFactories(self) -> int:
         return self.province["Factories"]
     
-    def getMines(self):
+    def getMines(self) -> int:
         return self.province["Mines"]
     
     # Helper methods to update the values for certain province components (name, factories, mines)
-    def setName(self, name):
+    def setName(self, name : str) -> None:
         self.province["Name"] = name
 
-    def addFactories(self, newFactories):
+    def addFactories(self, newFactories : int) -> None:
         self.province["Factories"] += newFactories
 
-    def addMines(self, newMines):
+    def addMines(self, newMines : int) -> None:
         self.province["Mines"] += newMines
 
-    # The printStats method prints out all the unique attributes of a province in a formatted manner.
-    def printStats(self):
+    # Helper method to return the province's available resources currently
+    def getAvailableResources(self) -> list:
+        return self.province["Resource_Deposits"]
+
+    # The printStats method prints out all the unique attributes of a province in a formatted manner
+    def printStats(self) -> str:
         stats = self.province["Name"] + " consists of " + str(self.province["Factories"]) + " factories, " + str(self.province["Mines"]) + " mines, \nan infrastructure level of " + str(self.province["Infrastructure_Level"]) + " and the following resources: "
 
         for resource in self.province["Resource_Deposits"]:

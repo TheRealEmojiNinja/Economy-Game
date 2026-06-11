@@ -1,5 +1,6 @@
 '''
-Preface: This file contains important functions relating to some of the changeable variables outlined in key_variables.py.
+Preface: This file contains important functions relating to the management of the overall economy and the economic costs
+of constructing buildings. 
 
 Author: TheEmojiNinja
 '''
@@ -20,14 +21,25 @@ def addProfitToCurrency(game_object : g.GameData, profit : int) -> None:
 def subtractCostFromCurrency(game_object : g.GameData, cost : int) -> None:
     game_object.currency -= cost
 
+# Functions that randomize starting values for factories, mines and infrastructure level
 def randomizeNumberOfFactories() -> int:
-    return random.randrange(0, 4)
+    return random.randrange(0, 2)
 
 def randomizeNumberOfMines() -> int:
-    return random.randrange(2, 5)
+    return random.randrange(1, 3)
 
 def randomizeInfrastructureLevel() -> int:
     return random.randrange(0, 2)
 
+# Helper functions that return the cost and required resources for constructing factories and mines
+def getCostOfFactory() -> int:
+    return 250
 
-    
+def getRequiredIronOfFactory() -> int:
+    return 500
+
+def getCostOfMine() -> int:
+    return 300
+
+def getRequiredStoneOfFactory() -> int:
+    return 500

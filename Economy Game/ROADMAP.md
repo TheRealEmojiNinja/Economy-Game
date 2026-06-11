@@ -4,27 +4,49 @@ Completed Components
     - Factory construction
     - Mine construction
     - Basic daily progression
+    - Consumption of resources for different things (daily production, construction, etc.)
 
 In Progress
 
     - Laws system
     - Resource extraction (uncovering new resource deposits)
-    - Consumption of resources for different things (daily production, construction, etc.)
 
 Planned
 
     - Infrastructure level
     - Random game events
-    - satisfaction system
+    - Satisfaction system
     - Integration with Tkinter GUI
     - Victory conditions? (may be dependent on different economic ideologies the player aims to acheive, for example full capitalist economy, democratic socialist economy, etc.)
 
-Version 1.0.0 will be defined as a game system where you can develop more factories and mines within different provinces to earn even more money as the day progresses. It will not have any end goal yet. In addition, uses should be implemented for coal, iron and stone. Coal should be used daily to power existing factories. Iron should be used to construct more factories (in addition to it costing money). Stone should be used to construct mines (in addition to it costing money) and in the future, infrastructure.
+Version 1.0.0 will be defined as a game system where you can develop more factories and mines within different provinces to earn even more money as the days progress. It will not have any end goal yet. In addition, uses should be implemented for coal, iron and stone. Coal should be used daily to power existing factories. Iron should be used to construct more factories (in addition to it costing money). Stone should be used to construct mines (in addition to it costing money) and in the future, infrastructure.
 
-Version 1.1.0 should aim to implement a law-based system that will at least allow the user to regulate taxes and manage the market (open or closed).
+Version 1.1.0 should aim to complete the infrastructure system. Depending on the infrastructure level of a province, it can cut the construction speed of buildings within that province only.
 
-Version 1.2.0 should aim to complete the infrastructure system which depending on its level, can speed up the construction of more mines and factories.
+Version 1.1.1 should create maximum limits for the number of factories, mines and infrastructure a unique province can have:
 
-Version 1.3.0 should aim to implement a satisfaction system that intertwines with the law-based system to be implemented in version 1.1.0. The satisfaction system will represent the overall contentness of the population in regards to the laws a user sets, and if it becomes too low or too high it will offer certain consequences and benefits, respectively.
+    - Max number of factories should be around 5-20
+    - Max number of mines should be around 5-25
+    - Max infrastructure level should be around 5-10
+
+Version 1.1.5 should aim to implement a law-based system that will at allow the user to regulate and enact certain laws that can affect the game. This major feature is deemed Version 1.1.5 as the law-based system is intertwined with the satisfaction system for Version 1.2.0, so both are necessary for a fully functioning feature update. Certain laws that the player can enact would be:
+
+    - Set a tax level from [Very Low, Low, Average, High, Very High]
+    - Temporarily force a province to work faster, cutting construction times but also has a negative effect on the satisfaction system outlined in Version 1.2.0
+    - Choose an economic outlook, like working towards a free-market economy, a closed economy, etc.
+
+Version 1.2.0 should aim to implement a satisfaction system which represents the overall contentness of the population. This is intertwined with the law-based system in Version 1.1.5 as certain laws can either boost or lower the population's satisfaction. If it is too low, it can cause debuffs like slowed construction times and less industrial output. Likewise, if it is high, it can cause buffs like faster construction times and more industrial output. 
+
+Version 1.2.1 should aim to implement some randomly generated mini-events or pop-ups that occur after the player hits ENTER to progress through the day. These pop-ups will not affect the player, but can offer tips or information about their economy. It may also have unrelated information about the world this game takes place in that add to immersion. 
+
+Version 1.3.0 should aim to implement randomized events that can occur throughout the game. These events can either affect the player positively or negatively. Some ideas for randomized events could be:
+
+    - An electrical outage in a province that forces all factories to stop working for a period of time
+    - A cave collapsing within a province causing it to lose one cave
+
+Version 1.4.0 should aim to expand the laws-based system by introducing a sub-system that allows the player to pursue certain objectives that may help the player over time. Some ideas for these objectives are:
+
+    - Excavation projects in provinces to uncover new resources (Coal, Iron, Stone) not yet in that province. This will cost currency and some resources and has a chance of failing too.
+    - Hold a national parade to temporarily increase satisfaction (either immediately or over time)
 
 There may be multiple versions inbetween major updates that might fix bugs or add minor modifications/features to the game.

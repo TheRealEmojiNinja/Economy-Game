@@ -1,3 +1,10 @@
+'''
+Preface: This file consists of the UI function for the laws and management menu, which is not yet implemented.
+
+Author: TheEmojiNinja
+'''
+
+# The function that displays the laws and management menu, which is not yet implemented
 def lawsAndManagementMenu(province_list):
 
     managing = True

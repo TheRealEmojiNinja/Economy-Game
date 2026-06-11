@@ -1,6 +1,15 @@
+'''
+Preface: The GameData class is used to create an object containing all key game variables for easy management throughout
+gameplay.
+
+Author: TheEmojiNinja
+'''
+
+# Required modules
 import Models.factory as f, Models.mine as m, Models.province as p
 from typing import List
 
+# GameData class declaration
 class GameData:
     def __init__(self):
         

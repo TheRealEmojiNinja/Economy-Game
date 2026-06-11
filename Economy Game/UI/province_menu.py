@@ -1,3 +1,9 @@
+'''
+Preface: This file consists of the UI function for the provinces screen.
+
+Author: TheEmojiNinja
+'''
+# Import required modules
 import Data.game_data as g
 
 # The function that displays the list of provinces and their attributes
@@ -7,7 +13,7 @@ def provincesMenu(game_object : g.GameData):
     print("\t\t\t\t———PROVINCES———\n")
     for province in province_list:
         print(province.printStats() + "\n")
-    print("\t\t\t-Press Enter to Go Back-")
+    print("\t\t\t-Press ENTER to Go Back-")
     print("────────────────────────────────────────────────────────────────────────────────")
 
     while True:

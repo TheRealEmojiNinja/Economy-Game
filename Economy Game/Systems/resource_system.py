@@ -1,3 +1,10 @@
+'''
+Preface: This file includes important functions regarding the resources used in the game: Coal, Iron and Stone.
+
+Author: TheEmojiNinja
+'''
+
+# Import required modules
 import random, Data.game_data as g
 
 # Helper functions for the coal variable
@@ -46,6 +53,8 @@ def randomizeResourceDeposits() -> list:
     num_deposits = random.randrange(1, 3)
     j = 0
     while (j < num_deposits):
-        deposits.append(random.choice(resources))
+        chosen_resource = random.choice(resources)
+        resources.remove(chosen_resource)
+        deposits.append(chosen_resource)
         j += 1
     return deposits
