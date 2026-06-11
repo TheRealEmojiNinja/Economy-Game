@@ -9,6 +9,10 @@ Author: TheEmojiNinja
 
 # Class declaration for a Province
 class Province:
+    
+    resources = ["Coal", "Iron", "Stone"]
+    name, factories, mines, infrastructure = None, None, None, None
+
     province = {"Name":None, "Factories":None, "Mines":None, "Resource_Deposits":[], "Infrastructure_Level":None, "Hidden_Resource_Deposits":[]}
     
     # Constructor with specific parameters to take in arguments that is then applied to the different components of the province

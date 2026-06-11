@@ -35,36 +35,40 @@ Author: TheEmojiNinja
 '''
 
 # Potentially required modules
-import random, math, time, province as p, major_functions as f, console_functions as c, variable_management as vm
+import Systems.province_system as p,  Systems.resource_system as r, Systems.economy_system as e,  Systems.time_system as t, Data.game_data as g
+import UI.main_menu as mm, UI.construction_menu as cm, UI.laws_menu as lm, UI.province_menu as pm
 #from key_variables import currency
 
 # Key variables
 running = True
 
-provinces = []
+game = g.GameData()
 
-vm.randomizeCoalQuantity()
-vm.randomizeStoneQuantity()
-vm.randomizeIronQuantity()
-vm.randomizeCurrencyAmount()
+r.randomizeCoalQuantity(game)
+r.randomizeStoneQuantity(game)
+r.randomizeIronQuantity(game)
+e.randomizeCurrencyAmount(game)
+
 
 # Call the createProvinces method to generate unique provinces
-f.createProvinces(provinces)
+p.createProvinces(game)
+
+
 
 # Main game loop
 while running:
-    c.mainGameScreen()
+    mm.mainGameScreen(game)
     while True:
         response = input("(👆)> ")
         match response:
             case '1':
-                c.provincesMenu(provinces)
+                pm.provincesMenu(game) # Pass in game object
             case '2':
-                c.constructMenu(provinces)
+                cm.constructMenu(game)
             case '3':
-                c.lawsAndManagementMenu(provinces)
+                lm.lawsAndManagementMenu(game)
             case '4':
-                c.updateDay(provinces)
+                t.updateDay(game)
             case _:
                 print("That is not a valid input! ☹️")
                 continue
