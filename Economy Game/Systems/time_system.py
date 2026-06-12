@@ -10,9 +10,10 @@ import Systems.economy_system as e, Systems.development_systems as d, Systems.re
 # The updateDay method simply computes the day's resource outputs and consumption before progressing to another day.
 def updateDay(game_object : g.GameData):
 
-    # Progress the construction of factories and mines 
+    # Progress the construction of factories, mines and infrastructure
     d.updateFactoriesInConstruction(game_object)
     d.updateMinesInConstruction(game_object)
+    d.updateInfrastructureInConstruction(game_object)
 
     # Add the day's worth of coal to total stocks
     obtained_coal = d.getTotalMiningOutputForCoal(game_object)*random.randint(10, 20)

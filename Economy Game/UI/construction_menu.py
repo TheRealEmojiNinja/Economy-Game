@@ -29,7 +29,7 @@ def constructMenu(game_object : g.GameData):
                 case '2':
                     minesMenu(game_object)
                 case '3':
-                    print("Sorry! This feature has not been implemented yet! ☹️")
+                    infrastructureMenu(game_object)
                 case '':
                     constructing = False
                     break
@@ -40,7 +40,7 @@ def constructMenu(game_object : g.GameData):
             break
 
 '''
-The code contained under this docstring manages everything related to the development of factories.
+The code contained under this docstring manages everything related to the development UI of factories.
 '''
 
 # The function that lists the factories menu and asks the user to choose what province to add factories to
@@ -78,7 +78,7 @@ def factoriesMenu(game_object : g.GameData):
 def buildFactories(game_object : g.GameData, index : int):
     print("────────────────────────────────────────────────────────────────────────────────")
     print("\t\t\t\t———FACTORIES———\n")
-    print("Enter the number of factories you want to build (costs x currency and y iron): \n")
+    print(f"Enter the number of factories you want to build (costs {e.getCostOfFactory()} currency and {e.getRequiredIronOfFactory()} iron for one factory): \n")
     print("Currency: " + str(e.getCurrencyAmount(game_object)) + " Iron: " + str(r.getIronQuantity(game_object)))
     print("\n\t\t\t-Press ENTER to Go Back-")
     print("────────────────────────────────────────────────────────────────────────────────")
@@ -98,7 +98,7 @@ def buildFactories(game_object : g.GameData, index : int):
             print("That is not a valid input! ☹️")
 
 '''
-The code contained under this docstring manages everything related to the development of mines.
+The code contained under this docstring manages everything related to the development UI of mines.
 '''
 
 # The function that lists the mines menu and asks the user to choose what province to add mines to
@@ -136,7 +136,7 @@ def minesMenu(game_object : g.GameData):
 def buildMines(game_object : g.GameData, index : int):
     print("────────────────────────────────────────────────────────────────────────────────")
     print("\t\t\t\t———MINES———\n")
-    print("Enter the number of mines you want to build (costs x currency and y stone): \n")
+    print(f"Enter the number of mines you want to build (costs {e.getCostOfMine()} currency and {e.getRequiredStoneOfMine()} stone for one mine): \n")
     print("Currency: " + str(e.getCurrencyAmount(game_object)) + " Stone: " + str(r.getStoneQuantity(game_object)))
     print("\n\t\t\t-Press ENTER to Go Back-")
     print("────────────────────────────────────────────────────────────────────────────────")
@@ -152,5 +152,63 @@ def buildMines(game_object : g.GameData, index : int):
                 print("Purchase successful! " + str(user_response) + " mines are now currently being constructed for " + str(total_cost) + " currency and " + str(total_stone) + " stone! You now have " + str(e.getCurrencyAmount(game_object)) + " currency and " + str(r.getStoneQuantity(game_object)) + " stone.")
             else:
                 print("Either you are building over the remaining mine slots, or you cannot afford " + str(user_response) + " mines for " + str(total_cost) + " currency and " + str(total_stone) + " stone!")
+        except ValueError:
+            print("That is not a valid input! ☹️")  
+
+'''
+The code contained under this docstring manages everything related to the development UI of infrastructure.
+'''
+
+# The function that lists the infrastructure menu and asks the user to choose what province to upgrade infrastructure in
+def infrastructureMenu(game_object : g.GameData):
+    province_list = game_object.provinces
+    on_menu = True
+
+    while on_menu: 
+        province_names = p.getProvinceNames(game_object)
+        print("────────────────────────────────────────────────────────────────────────────────")
+        print("\t\t\t\t———MINES———\n")
+        print("Type the (case-insensitive) name of the specific province \nyou want to upgrade infrastructure in: ")
+        for province in province_list:
+            print(province.getName(), end=' ')
+        print("\n\n\t\t\t-Press ENTER to Go Back-")
+        print("────────────────────────────────────────────────────────────────────────────────")
+
+        while True:
+            user_response = input("(👆)> ").title().strip()
+            if (user_response in province_names):
+                province_index = province_names.index(user_response)
+                infrastructure_slots_maxed = d.isInfrastructureSlotsMaxed(game_object, province_index)
+                if infrastructure_slots_maxed:
+                    print("You have maxed out this province's infrastructure level!")
+                else:
+                    buildInfrastructure(game_object, province_index)
+                break
+            elif (user_response == ''):
+                on_menu = False
+                break
+            else:
+                print("That province is not available! ☹️")     
+
+# A continuation of the infrastructure menu that allows the player to upgrade the infrastructure by a certain level
+def buildInfrastructure(game_object : g.GameData, index : int):
+    print("────────────────────────────────────────────────────────────────────────────────")
+    print("\t\t\t\t———MINES———\n")
+    print(f"Enter the infrastructure level you want to upgrade by (costs {e.getCostOfInfrastructure()} currency and {e.getRequiredStoneOfInfrastructure()} stone for one infrastructure level): \n")
+    print("Currency: " + str(e.getCurrencyAmount(game_object)) + " Stone: " + str(r.getStoneQuantity(game_object)))
+    print("\n\t\t\t-Press ENTER to Go Back-")
+    print("────────────────────────────────────────────────────────────────────────────────")
+
+    while True:
+        user_response = input("(🔢)> ")
+        if (user_response == ''):
+            break
+        try:
+            user_response = int(user_response)
+            result, total_cost, total_stone = d.addInfrastructureToQueue(game_object, user_response, index)
+            if result:
+                print("Purchase successful! Infrastructure is now currently being upgraded by " + str(user_response) + " levels for " + str(total_cost) + " currency and " + str(total_stone) + " stone! You now have " + str(e.getCurrencyAmount(game_object)) + " currency and " + str(r.getStoneQuantity(game_object)) + " stone.")
+            else:
+                print("Either you are building over the remaining mine slots, or you cannot afford " + str(user_response) + " more infrastructure levels for " + str(total_cost) + " currency and " + str(total_stone) + " stone!")
         except ValueError:
             print("That is not a valid input! ☹️")  

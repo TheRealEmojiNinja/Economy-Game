@@ -6,7 +6,7 @@ Author: TheEmojiNinja
 '''
 
 # Required modules
-import Models.factory as f, Models.mine as m, Models.province as p
+import Models.factory as f, Models.mine as m, Models.province as p, Models.infrastructure as i
 from typing import List
 
 # GameData class declaration
@@ -18,6 +18,7 @@ class GameData:
 
         self.factories_being_constructed: List[f.Factory] = []
         self.mines_being_constructed: List[m.Mine] = []
+        self.infrastructure_being_constructed: List[i.Infrastructure]= []
 
         self.resource_deposits = []
 

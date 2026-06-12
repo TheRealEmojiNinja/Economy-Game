@@ -39,6 +39,9 @@ class Province:
     def getMines(self) -> int:
         return self.province["Mines"]
     
+    def getInfrastructureLevel(self) -> int:
+        return self.province["Infrastructure_Level"]
+    
     def getTerrainType(self) -> str:
         return self.province["Terrain"]
     
@@ -51,15 +54,44 @@ class Province:
     def getMaxInfrastructureLevel(self) -> int:
         return self.province["Max_Infrastructure_Level"]
     
+    def getConstructionSpeed(self) -> int:
+        infrastructure_level = self.province["Infrastructure_Level"]
+        match infrastructure_level:
+            case 0:
+                return 30
+            case 1:
+                return 28
+            case 2:
+                return 25
+            case 3:
+                return 22
+            case 4:
+                return 19
+            case 5:
+                return 17
+            case 6:
+                return 15
+            case 7:
+                return 14
+            case 8:
+                return 13
+            case 9:
+                return 11
+            case 10:
+                return 10
+    
     # Helper methods to update the values for certain province components 
     def setName(self, name : str) -> None:
         self.province["Name"] = name
 
-    def addFactories(self, newFactories : int) -> None:
-        self.province["Factories"] += newFactories
+    def addFactories(self, new_factories : int) -> None:
+        self.province["Factories"] += new_factories
 
-    def addMines(self, newMines : int) -> None:
-        self.province["Mines"] += newMines
+    def addMines(self, new_mines : int) -> None:
+        self.province["Mines"] += new_mines
+    
+    def addInfrastructureLevel(self, new_infrastructure_level : int):
+        self.province["Infrastructure_Level"] += new_infrastructure_level
 
     # Helper method to return the province's available resources currently
     def getAvailableResources(self) -> list:

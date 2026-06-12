@@ -43,3 +43,9 @@ def getCostOfMine() -> int:
 
 def getRequiredStoneOfMine() -> int:
     return 500
+
+def getCostOfInfrastructure() -> int:
+    return 350
+
+def getRequiredStoneOfInfrastructure() -> int:
+    return 300

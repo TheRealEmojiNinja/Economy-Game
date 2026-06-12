@@ -7,7 +7,11 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Data.game_data as g, Models.province as p, Models.factory as f, Models.mine as m, Systems.economy_system as e, Systems.resource_system as r
+import Data.game_data as g, Models.province as p, Models.factory as f, Models.mine as m, Models.infrastructure as i, Systems.economy_system as e, Systems.resource_system as r
+
+'''
+The code contained under this docstring manages everything related to the development of factories.
+'''
 
 # The isFactorySlotsMaxed method returns a boolean value that checks if a province's factory slots have been maxed out.
 # before choosing the number of factories to buy
@@ -30,9 +34,13 @@ def overMaxFactoryLimit(game_object : g.GameData, province_index : int, number_o
 def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
     COST_OF_FACTORY = e.getCostOfFactory()
     IRON_NEEDED = e.getRequiredIronOfFactory()
+
     cost = number_of_factories*COST_OF_FACTORY
     required_iron = number_of_factories*IRON_NEEDED
-    time = 20
+
+    province_list = game_object.provinces
+    time = province_list[province_index].getConstructionSpeed()
+
     if (cost <= e.getCurrencyAmount(game_object) and required_iron <= r.getIronQuantity(game_object) and not overMaxFactoryLimit(game_object, province_index, number_of_factories)):
         game_object.factories_being_constructed.append(f.Factory(time, province_index, number_of_factories))
         e.subtractCostFromCurrency(game_object, cost)
@@ -61,6 +69,10 @@ def getTotalFactoryOutput(game_object : g.GameData):
         total += province.getFactories()
     return total
 
+'''
+The code contained under this docstring manages everything related to the development of mines.
+'''
+
 # The isMineSlotsMaxed method returns a boolean value that checks if a province's mine slots have been maxed out
 # before choosing the number of mines to buy
 def isMineSlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
@@ -80,9 +92,13 @@ def overMaxMineLimit(game_object : g.GameData, province_index : int, number_of_m
 def addMinesToQueue(game_object : g.GameData, number_of_mines : int, province_index : int):
     COST_OF_MINE = e.getCostOfMine()
     STONE_NEEDED = e.getRequiredStoneOfMine()
+
     cost = number_of_mines*COST_OF_MINE
     required_stone = number_of_mines*STONE_NEEDED
-    time = 20
+
+    province_list = game_object.provinces
+    time = province_list[province_index].getConstructionSpeed()
+
     if (cost <= e.getCurrencyAmount(game_object) and required_stone <= r.getStoneQuantity(game_object) and not overMaxMineLimit(game_object, province_index, number_of_mines)):
         game_object.mines_being_constructed.append(m.Mine(time, province_index, number_of_mines))
         e.subtractCostFromCurrency(game_object, cost)
@@ -132,3 +148,51 @@ def getTotalMiningOutputForStone(game_object : g.GameData):
         if "Stone" in province.getAvailableResources():
             total += province.getMines()
     return total
+
+'''
+The code contained under this docstring manages everything related to the development of infrastructure.
+'''
+
+# The isInfrastructureSlotsMaxed method returns a boolean value that checks if a province's infrastructure slots have been maxed out
+# before choosing the level to upgrade infrastructure by
+def isInfrastructureSlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
+    province_list = game_object.provinces
+    province = province_list[province_index]
+    return province.getInfrastructureLevel() + len(game_object.infrastructure_being_constructed) == province.getMaxInfrastructureLevel()
+
+# The overMaxInfrastructureLimit method is similar to the isInfrastructureSlotsMaxed method, but this one checks if the infrastructure levels the 
+# user is attempting to buy exceeds the limit based on current infrastructure level and infrastructure currently in construction
+def overMaxInfrastructureLimit(game_object : g.GameData, province_index : int, infrastructure_level_to_be_upgraded_to : int) -> bool:
+    province_list = game_object.provinces
+    province = province_list[province_index]
+    return province.getInfrastructureLevel() + len(game_object.infrastructure_being_constructed) + infrastructure_level_to_be_upgraded_to > province.getMaxInfrastructureLevel()
+
+# The addInfrastructureToQueue method will add infrastructure into current production if the player has enough resources to buy 
+# them. If they do not have enough resources, it will not add any infrastructure.
+def addInfrastructureToQueue(game_object : g.GameData, number_of_infrastructure : int, province_index : int):
+    COST_OF_INFRASTRUCTURE = e.getCostOfInfrastructure()
+    STONE_NEEDED = e.getRequiredStoneOfInfrastructure()
+    TIME_FOR_INFRASTRUCTURE_UPGRADE = 30
+
+    cost = number_of_infrastructure*COST_OF_INFRASTRUCTURE
+    required_stone = number_of_infrastructure*STONE_NEEDED
+
+    if (cost <= e.getCurrencyAmount(game_object) and required_stone <= r.getStoneQuantity(game_object) and not overMaxInfrastructureLimit(game_object, province_index, number_of_infrastructure)):
+        game_object.infrastructure_being_constructed.append(i.Infrastructure(TIME_FOR_INFRASTRUCTURE_UPGRADE, province_index, number_of_infrastructure))
+        e.subtractCostFromCurrency(game_object, cost)
+        r.subtractFromStoneQuantity(game_object, required_stone)
+        return (True, cost, required_stone)
+    else:
+        return (False, cost, required_stone)
+    
+# The updateInfrastructureInConstruction method updates current infrastructure in production by subtracting a day from the
+# remaining number of days before it is finished constructing.
+def updateInfrastructureInConstruction(game_object : g.GameData):
+    province_list = game_object.provinces
+    for infrastructure_instance in game_object.infrastructure_being_constructed:
+        if infrastructure_instance.getTime() < 1:
+            province = province_list[infrastructure_instance.getProvinceIndex()]
+            province.addInfrastructureLevel(infrastructure_instance.getInfrastructureLevel())
+            game_object.infrastructure_being_constructed.remove(infrastructure_instance)
+        elif infrastructure_instance.getTime() > 0:
+            infrastructure_instance.subtractTime(1)
