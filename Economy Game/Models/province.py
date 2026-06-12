@@ -11,20 +11,25 @@ Author: TheEmojiNinja
 class Province:
     
     resources = ["Coal", "Iron", "Stone"]
-    name, factories, mines, infrastructure = None, None, None, None
-
-    province = {"Name":None, "Factories":None, "Mines":None, "Resource_Deposits":[], "Infrastructure_Level":None, "Hidden_Resource_Deposits":[]}
     
     # Constructor with specific parameters to take in arguments that is then applied to the different components of the province
-    def __init__(self, province_name : str, number_of_factories : int, number_of_mines : int, province_resource_deposits : list, infrastructure_level : int) -> None:
+    def __init__(self, province_name : str, number_of_factories : int, 
+                 number_of_mines : int, province_resource_deposits : list, 
+                 infrastructure_level : int, terrain_type : str, 
+                 max_factories_possible : int, max_mines_possible : int, 
+                 max_infrastructure_possible : int) -> None:
         self.province = {"Name":province_name, 
                          "Factories":number_of_factories, 
                          "Mines":number_of_mines, 
                          "Resource_Deposits":province_resource_deposits, 
                          "Infrastructure_Level":infrastructure_level, 
-                         "Hidden_Resource_Deposits":["Coal", "Iron", "Stone"]}
+                         "Hidden_Resource_Deposits":["Coal", "Iron", "Stone"],
+                         "Terrain":terrain_type,
+                         "Max_Factories":max_factories_possible,
+                         "Max_Mines":max_mines_possible,
+                         "Max_Infrastructure_Level":max_infrastructure_possible}
 
-    # Helper methods that get different values for certain province components (name, factories, mines)
+    # Helper methods that get different values for certain province components 
     def getName(self) -> str:
         return self.province["Name"]
     
@@ -34,7 +39,19 @@ class Province:
     def getMines(self) -> int:
         return self.province["Mines"]
     
-    # Helper methods to update the values for certain province components (name, factories, mines)
+    def getTerrainType(self) -> str:
+        return self.province["Terrain"]
+    
+    def getMaxFactories(self) -> int:
+        return self.province["Max_Factories"]
+    
+    def getMaxMines(self) -> int:
+        return self.province["Max_Mines"]
+    
+    def getMaxInfrastructureLevel(self) -> int:
+        return self.province["Max_Infrastructure_Level"]
+    
+    # Helper methods to update the values for certain province components 
     def setName(self, name : str) -> None:
         self.province["Name"] = name
 
@@ -50,8 +67,18 @@ class Province:
 
     # The printStats method prints out all the unique attributes of a province in a formatted manner
     def printStats(self) -> str:
-        stats = self.province["Name"] + " consists of " + str(self.province["Factories"]) + " factories, " + str(self.province["Mines"]) + " mines, \nan infrastructure level of " + str(self.province["Infrastructure_Level"]) + " and the following resources: "
-
+        deposits = ''
         for resource in self.province["Resource_Deposits"]:
-            stats += resource + " "
+            deposits += resource + " "
+
+        stats = f'''{self.province["Name"].upper()}: 
+        Factories: {self.province["Factories"]}
+        Mines: {self.province["Mines"]}
+        Infrastructure Level: {self.province["Infrastructure_Level"]}
+        Terrain Type: {self.province["Terrain"]}
+        Known Resources: {deposits}
+        Max Factories Possible: {self.province["Max_Factories"]}
+        Max Mines Possible: {self.province["Max_Mines"]}
+        Max Infrastructure Level Possible: {self.province["Max_Infrastructure_Level"]}'''
+
         return stats

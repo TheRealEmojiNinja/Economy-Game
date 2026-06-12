@@ -62,13 +62,17 @@ def factoriesMenu(game_object : g.GameData):
             user_response = input("(👆)> ").title().strip()
             if (user_response in province_names):
                 province_index = province_names.index(user_response)
-                buildFactories(game_object, province_index)
+                factory_slots_maxed = d.isFactorySlotsMaxed(game_object, province_index)
+                if factory_slots_maxed:
+                    print("You have maxed out this province's number of factories!")
+                else:
+                    buildFactories(game_object, province_index)
                 break
             elif (user_response == ''):
                 on_menu = False
                 break
             else:
-                print("That is not a valid input! ☹️")            
+                print("That province is not available! ☹️")            
 
 # A continuation of the factories menu that allows the player to buy a number of factories
 def buildFactories(game_object : g.GameData, index : int):
@@ -89,7 +93,7 @@ def buildFactories(game_object : g.GameData, index : int):
             if result:
                 print("Purchase successful! " + str(user_response) + " factories are now currently being constructed for " + str(total_cost) + " currency and " + str(total_iron) + " iron! You now have " + str(e.getCurrencyAmount(game_object)) + " currency and " + str(r.getIronQuantity(game_object)) + " iron.")
             else:
-                print("You unfortunately cannot afford " + str(user_response) + " factories for " + str(total_cost) + " currency and " + str(total_iron) + " iron.")
+                print("Either you are building over the remaining factory slots, or you cannot afford " + str(user_response) + " factories for " + str(total_cost) + " currency and " + str(total_iron) + " iron.")
         except ValueError:
             print("That is not a valid input! ☹️")
 
@@ -116,13 +120,17 @@ def minesMenu(game_object : g.GameData):
             user_response = input("(👆)> ").title().strip()
             if (user_response in province_names):
                 province_index = province_names.index(user_response)
-                buildMines(game_object, province_index)
+                mine_slots_maxed = d.isMineSlotsMaxed(game_object, province_index)
+                if mine_slots_maxed:
+                    print("You have maxed out this province's number of mines!")
+                else:
+                    buildMines(game_object, province_index)
                 break
             elif (user_response == ''):
                 on_menu = False
                 break
             else:
-                print("That is not a valid input! ☹️")          
+                print("That province is not available! ☹️")     
 
 # A continuation of the mines menu that allows the player to buy a number of mines
 def buildMines(game_object : g.GameData, index : int):
@@ -143,6 +151,6 @@ def buildMines(game_object : g.GameData, index : int):
             if result:
                 print("Purchase successful! " + str(user_response) + " mines are now currently being constructed for " + str(total_cost) + " currency and " + str(total_stone) + " stone! You now have " + str(e.getCurrencyAmount(game_object)) + " currency and " + str(r.getStoneQuantity(game_object)) + " stone.")
             else:
-                print("You unfortunately cannot afford " + str(user_response) + " mines for " + str(total_cost) + " currency and " + str(total_stone) + " stone!")
+                print("Either you are building over the remaining mine slots, or you cannot afford " + str(user_response) + " mines for " + str(total_cost) + " currency and " + str(total_stone) + " stone!")
         except ValueError:
             print("That is not a valid input! ☹️")  

@@ -41,5 +41,5 @@ def getRequiredIronOfFactory() -> int:
 def getCostOfMine() -> int:
     return 300
 
-def getRequiredStoneOfFactory() -> int:
+def getRequiredStoneOfMine() -> int:
     return 500
