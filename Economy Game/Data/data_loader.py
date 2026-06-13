@@ -1,5 +1,5 @@
 '''
-Preface: This file is used to load in data from a .csv file to be used in game.
+Preface: This file is used to load in data from .csv files to be used in game.
 
 Author: TheEmojiNinja
 '''

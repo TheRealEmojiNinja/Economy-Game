@@ -6,17 +6,18 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Data.game_data as g, Systems.economy_system as e, Systems.resource_system as r, random
+import Data.game_data as g, Systems.economy_system as e, Systems.resource_system as r, Models.province as p, random
 
 # Get a random event from the choices of events, also dependent upon their weights
 def generateRandomEvent(game_object : g.GameData) -> str:
-    return random.choices(game_object.EVENTS, game_object.EVENT_WEIGHTS, k=1)[0]
+    province = random.choice(game_object.provinces)
+    event = random.choices(game_object.EVENTS, game_object.EVENT_WEIGHTS, k=1)[0]
+    return (event, province)
 
 # Execute the effects of that event
-def executeEvent(game_object : g.GameData, event : str) -> None:
+def executeEvent(game_object : g.GameData, event : str, province : p.Province) -> None:
     match event:
         case "Mine Collapse":
-            province = random.choice(game_object.provinces)
             if province.getMines() > 0:
                 province.updateMines(-1)
                 print(f"Oh no! A mine has collapsed in {province.getName()}!")
@@ -33,7 +34,6 @@ def executeEvent(game_object : g.GameData, event : str) -> None:
             obtained_funds = random.randint(200, 400)
             r.subtractFromCoalQuantity(game_object, lost_coal)
             print(f"A corrupt politician was caught smuggling {lost_coal} coal! They have been forced to pay compensations of {obtained_funds} currency!")
-            print(f"")
         case "Nothing":
             pass
 

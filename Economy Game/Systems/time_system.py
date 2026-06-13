@@ -41,7 +41,9 @@ def updateDay(game_object : g.GameData):
     else:
         print("Cannot continue factory production due to shortage of coal!")    
     
-    ev.executeEvent(game_object, ev.generateRandomEvent(game_object))
+    # Generate a random event and execute it
+    event, province = ev.generateRandomEvent(game_object)
+    ev.executeEvent(game_object, event, province )
     
     # Progress the day
     game_object.day += 1

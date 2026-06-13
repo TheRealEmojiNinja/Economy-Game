@@ -19,6 +19,7 @@ def constructMenu(game_object : g.GameData):
         print("\t\t-👉 (2)Build Mines-")
         print("\t\t-👉 (3)Build Infrastructure-")
         print("\n\t\t\t-Press ENTER to Go Back-")
+        print(d.displayBuildingsInConstruction(game_object)) if d.displayBuildingsInConstruction(game_object) != None else print('', end='')
         print("────────────────────────────────────────────────────────────────────────────────")
 
         while True:
