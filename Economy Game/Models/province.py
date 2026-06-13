@@ -84,13 +84,13 @@ class Province:
     def setName(self, name : str) -> None:
         self.province["Name"] = name
 
-    def addFactories(self, new_factories : int) -> None:
+    def updateFactories(self, new_factories : int) -> None:
         self.province["Factories"] += new_factories
 
-    def addMines(self, new_mines : int) -> None:
+    def updateMines(self, new_mines : int) -> None:
         self.province["Mines"] += new_mines
     
-    def addInfrastructureLevel(self, new_infrastructure_level : int):
+    def updateInfrastructureLevel(self, new_infrastructure_level : int):
         self.province["Infrastructure_Level"] += new_infrastructure_level
 
     # Helper method to return the province's available resources currently

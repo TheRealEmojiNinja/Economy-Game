@@ -31,7 +31,7 @@ def randomizeNumberOfMines() -> int:
 def randomizeInfrastructureLevel() -> int:
     return random.randrange(0, 2)
 
-# Helper functions that return the cost and required resources for constructing factories and mines
+# Helper functions that return the cost and required resources for constructing factories, mines and infrastructure level
 def getCostOfFactory() -> int:
     return 250
 

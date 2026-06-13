@@ -3,6 +3,7 @@ Completed Components
     - Province generation
     - Factory construction
     - Mine construction
+    - Infrastructure upgrades
     - Basic daily progression
     - Consumption of resources for different things (daily production, construction, etc.)
 
@@ -10,11 +11,10 @@ In Progress
 
     - Laws system
     - Resource extraction (uncovering new resource deposits)
+    - Random game events
 
 Planned
 
-    - Infrastructure level
-    - Random game events
     - Satisfaction system
     - Integration with Tkinter GUI
     - Victory conditions? (may be dependent on different economic ideologies the player aims to acheive, for example full capitalist economy, democratic socialist economy, etc.)

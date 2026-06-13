@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Systems.economy_system as e, Systems.development_systems as d, Systems.resource_system as r, Data.game_data as g, random
+import Systems.economy_system as e, Systems.development_systems as d, Systems.resource_system as r, Systems.event_system as ev, Data.game_data as g, random
 
 # The updateDay method simply computes the day's resource outputs and consumption before progressing to another day.
 def updateDay(game_object : g.GameData):
@@ -40,6 +40,8 @@ def updateDay(game_object : g.GameData):
         r.subtractFromCoalQuantity(game_object, used_coal)
     else:
         print("Cannot continue factory production due to shortage of coal!")    
+    
+    ev.executeEvent(game_object, ev.generateRandomEvent(game_object))
     
     # Progress the day
     game_object.day += 1

@@ -56,7 +56,7 @@ def updateFactoriesInConstruction(game_object : g.GameData):
     for factory_instance in game_object.factories_being_constructed:
         if factory_instance.getTime() < 1:
             province = province_list[factory_instance.getProvinceIndex()]
-            province.addFactories(factory_instance.getNumberOfFactories())
+            province.updateFactories(factory_instance.getNumberOfFactories())
             game_object.factories_being_constructed.remove(factory_instance)
         elif factory_instance.getTime() > 0:
             factory_instance.subtractTime(1)
@@ -114,7 +114,7 @@ def updateMinesInConstruction(game_object : g.GameData):
     for mine_instance in game_object.mines_being_constructed:
         if mine_instance.getTime() < 1:
             province = province_list[mine_instance.getProvinceIndex()]
-            province.addMines(mine_instance.getNumberOfMines())
+            province.updateMines(mine_instance.getNumberOfMines())
             game_object.mines_being_constructed.remove(mine_instance)
         elif mine_instance.getTime() > 0:
             mine_instance.subtractTime(1)
@@ -192,7 +192,7 @@ def updateInfrastructureInConstruction(game_object : g.GameData):
     for infrastructure_instance in game_object.infrastructure_being_constructed:
         if infrastructure_instance.getTime() < 1:
             province = province_list[infrastructure_instance.getProvinceIndex()]
-            province.addInfrastructureLevel(infrastructure_instance.getInfrastructureLevel())
+            province.updateInfrastructureLevel(infrastructure_instance.getInfrastructureLevel())
             game_object.infrastructure_being_constructed.remove(infrastructure_instance)
         elif infrastructure_instance.getTime() > 0:
             infrastructure_instance.subtractTime(1)

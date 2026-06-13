@@ -28,5 +28,6 @@ class GameData:
         self.satisfaction_multiplier = 0
 
         self.PROVINCE_NAMES = d.loadProvinceNames()
+        self.EVENTS, self.EVENT_WEIGHTS = d.loadEventsAndWeights()
 
         self.provinces : List[p.Province] = []
