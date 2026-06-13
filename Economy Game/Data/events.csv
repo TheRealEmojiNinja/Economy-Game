@@ -1,6 +1,8 @@
-name,weight
-Electrical Outage,2
-Mine Collapse,1
-Emergency,3
-Extra Funds,6
-Foreign Aid,5
+name,weight,effect
+Electrical Outage,2,True
+Mine Collapse,1,True
+Emergency,3,True
+Extra Funds,6,True
+Foreign Aid,5,True
+Corruption Bust,3,True
+Nothing,10,False
