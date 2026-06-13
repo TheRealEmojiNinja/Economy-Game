@@ -33,6 +33,8 @@ However, these values are dependent upon the terrain characteristics of the prov
 
 Version 1.1.0 should aim to complete the infrastructure system. Depending on the infrastructure level of a province, it can cut the construction speed of buildings within that province only.
 
+Version 1.1.1 should use a .csv file to randomly generate province names.
+
 Version 1.2.0 should aim to implement randomized events that can occur throughout the game. These events can either affect the player positively or negatively. Some ideas for randomized events could be:
 
     - An electrical outage in a province that forces all factories to stop working for a period of time

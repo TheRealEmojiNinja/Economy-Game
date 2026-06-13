@@ -5,7 +5,11 @@ Author: TheEmojiNinja
 '''
 
 # Required modules and components
-import random, Data.game_data as g, Systems.resource_system as r, Systems.economy_system as e, Systems.terrain_system as t, Models.province as p
+import random, Data.game_data as g, Systems.resource_system as r, Systems.economy_system as e, Systems.terrain_system as t, Models.province as p, csv
+
+# This method returns a random province name
+def getRandomProvinceName(game_object : g.GameData) -> str:
+    return game_object.PROVINCE_NAMES.pop(random.randint(0, len(game_object.PROVINCE_NAMES)-1))
 
 # The createProvinces method takes an empty province list and populates it with randomly generated provinces.
 def createProvinces(game_object : g.GameData):
@@ -17,7 +21,7 @@ def createProvinces(game_object : g.GameData):
 
     while (i < num_provinces):
 
-        name = "Province " + str(i+1)
+        name = getRandomProvinceName(game_object)
         factories = e.randomizeNumberOfFactories()
         mines = e.randomizeNumberOfMines()
         infrastructure = e.randomizeInfrastructureLevel()

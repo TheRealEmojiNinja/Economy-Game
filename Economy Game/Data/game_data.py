@@ -6,7 +6,7 @@ Author: TheEmojiNinja
 '''
 
 # Required modules
-import Models.factory as f, Models.mine as m, Models.province as p, Models.infrastructure as i
+import Models.factory as f, Models.mine as m, Models.province as p, Models.infrastructure as i, Data.data_loader as d
 from typing import List
 
 # GameData class declaration
@@ -26,5 +26,7 @@ class GameData:
 
         self.satisfaction = 50
         self.satisfaction_multiplier = 0
+
+        self.PROVINCE_NAMES = d.loadProvinceNames()
 
         self.provinces : List[p.Province] = []
