@@ -35,6 +35,8 @@ Version 1.1.0 should aim to complete the infrastructure system. Depending on the
 
 Version 1.1.1 should use a .csv file to randomly generate province names.
 
+Version 1.1.2 should implement a national debt, that will start off as a high number. Every month, the player is forced to pay a small amount to lower it. If the player is unable to pay for that month, factory output is used to pay it until then.
+
 Version 1.2.0 should aim to implement randomized events that can occur throughout the game. These events can either affect the player positively or negatively. Some ideas for randomized events could be:
 
     - An electrical outage in a province that forces all factories to stop working for a period of time

@@ -1,0 +1,28 @@
+EVENT_DESCRIPTION = {
+    "Emergency_Success":['The government was forced to pay {cost} currency to deal with an emergency.', 
+                 'A viral outbreak has broken out in {province}, requiring {cost} currency to fund relief efforts.',
+                 'A bad harvest in {province} forced us to provide critical food supplies, costing {cost} currency.'],
+    "Emergency_Failure":['A viral outbreak has broken out in {province}, however we do not have {cost} currency to fund relief efforts.',
+                         'A bad harvest in {province} requires critical food supplies for {cost} currency, which we unfortunately cannot pay for at the moment.'],
+    "Mine_Collapse":['A mine has caved in within {province}!',
+                     'Miners in {province} report that a mine has collapsed.',
+                     'An unfortunate event has occured in {province}, where the collapse of a mine resulted in {deaths} casualties.'],
+    "Extra_Funds":['We have searched every coffer and managed to scrape together an extra {profit} currency to help the economy!',
+                   'The good people of {province} have raised {profit} currency to help the development of our nation!',
+                   'An international charity organization has donated {profit} currency to our government!'],
+    "Extra_Ore_Vein":['A bigger than usual {resource} deposit was excavated in {province}, giving us {amount} extra {resource}!',
+                      'Miners in {province} discovered a rich {resource} deposit in {province}! A total of {amount} {resource} was obtained.'],
+    "Global_Market_Forum":['An organization has deduced that global poverty is on the decline, albeit with minor challenges ahead.',
+                           'International economic forums predict increased cooperation in the industrial world.',
+                           'A small group of economists weigh the environmental risks of industrialization.'],
+    "Heavy_Storm_Success":['Rough weather in {province} has caused major property damage. We decided to aid reconstruction efforts with {amount} currency.'
+                           'A tornado just wreaked havoc in {province}. We have paid {cost} currency to fund relief efforts there.'],
+    "Heavy_Storm_Failure":['Rough weather in {province} has caused major property damage. Although we should aid reconstruction efforts, we cannot afford the fee of {cost} currency.',
+                           'A tornado just wreaked havoc in {province}. However we cannot afford to pay {cost} currency to fund relief efforts there.'],
+    "Factory_Maintenance":[],
+    "Festival":['Citizens in {province} held a celebration to mark another year in their history!',
+                'A parade was held in the streets of {province}!'],
+    "Infrastructure_Repair":[],
+    "Smuggling_Bust":['Authorities have arrested smugglers in {province}, confiscating {profit} currency.'
+                      'Law enforcement has successfully busted a small criminal group operating within the country, confiscating {profit} currency.'],
+}

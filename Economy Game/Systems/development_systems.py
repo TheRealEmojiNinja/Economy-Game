@@ -15,23 +15,25 @@ def displayBuildingsInConstruction(game_object : g.GameData) -> None | str:
     province_list = game_object.provinces
 
     if len(game_object.factories_being_constructed) > 0:
-        buildings_in_construction += '\t\t\tFACTORIES IN CONSTRUCTION\n\n'
+        buildings_in_construction += '\n\t\t\tFACTORIES IN CONSTRUCTION\n\n'
         for factory in game_object.factories_being_constructed:
             factory_index = factory.getProvinceIndex()
             province = province_list[factory_index]
             buildings_in_construction += f"{factory.getNumberOfFactories()} factories are being constructed in {province.getName()}, and will complete in {factory.getTime()} days.\n"
+
     if len(game_object.mines_being_constructed) > 0:
         buildings_in_construction += '\n\t\t\tMINES IN CONSTRUCTION\n\n'
         for mine in game_object.mines_being_constructed:
-            mine_index = mine.getNumberOfMines()
+            mine_index = mine.getProvinceIndex()
             province = province_list[mine_index]
             buildings_in_construction += f"{mine.getNumberOfMines()} mines are being constructed in {province.getName()}, and will complete in {mine.getTime()} days.\n"
+
     if len(game_object.infrastructure_being_constructed) > 0:
         buildings_in_construction += '\n\t\t\tINFRASTRUCTURE IN CONSTRUCTION\n\n'
         for infrastructure in game_object.infrastructure_being_constructed:
-            infrastructure_index = infrastructure.getNumberOfMines()
+            infrastructure_index = infrastructure.getProvinceIndex()
             province = province_list[infrastructure_index]
-            buildings_in_construction += f"{infrastructure.getNumberOfMines()} infrastructure levels are being constructed in {province.getName()}, and will complete in {infrastructure.getTime()} days.\n"
+            buildings_in_construction += f"{infrastructure.getInfrastructureLevel()} infrastructure levels are being constructed in {province.getName()}, and will complete in {infrastructure.getTime()} days.\n"
     
     return None if not buildings_in_construction else buildings_in_construction
 

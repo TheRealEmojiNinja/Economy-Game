@@ -7,6 +7,7 @@ Author: TheEmojiNinja
 # Import required modules
 import Systems.province_system as p,  Systems.resource_system as r, Systems.economy_system as e,  Systems.time_system as t, Data.game_data as g
 import UI.main_menu as mm, UI.construction_menu as cm, UI.laws_menu as lm, UI.province_menu as pm
+import time
 
 # Key variables
 running = True

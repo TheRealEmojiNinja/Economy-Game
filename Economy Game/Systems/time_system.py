@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Systems.economy_system as e, Systems.development_systems as d, Systems.resource_system as r, Systems.event_system as ev, Data.game_data as g, random
+import Systems.economy_system as e, Systems.development_systems as d, Systems.resource_system as r, Systems.event_system as ev, Data.game_data as g, random, time
 
 # The updateDay method simply computes the day's resource outputs and consumption before progressing to another day.
 def updateDay(game_object : g.GameData):
@@ -43,7 +43,10 @@ def updateDay(game_object : g.GameData):
     
     # Generate a random event and execute it
     event, province = ev.generateRandomEvent(game_object)
+    time.sleep(0.2)
     ev.executeEvent(game_object, event, province )
+    
+    time.sleep(0.2)
     
     # Progress the day
     game_object.day += 1

@@ -17,7 +17,7 @@ def loadProvinceNames() -> list:
     return province_names
 
 def loadEventsAndWeights() -> tuple[list, list]:
-    events, weights = [], []
+    events, weights, effects = [], [], []
     with open('Economy Game\Data\events.csv', 'r') as file:
         reader = csv.DictReader(file)
         for row in reader:
