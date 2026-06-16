@@ -3,14 +3,14 @@ Electrical Outage,2,True
 Mine Collapse,1,True
 Emergency,3,True
 Extra Funds,6,True
-Foreign Aid,5,True
+Foreign Aid,2,True
 Corruption Bust,3,True
 Global Market Forum,4,False
 Global Tension,2,False
 Extra Ore Vein,5,True
 Heavy Storm,2,True
 Festival,4,False
-Factory Maintainence,3,True
+Factory Maintenance,3,True
 Infrastructure Repair,3,True
 Smuggling Bust,2,True
 Nothing,45,False

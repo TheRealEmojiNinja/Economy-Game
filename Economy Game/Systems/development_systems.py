@@ -46,7 +46,11 @@ The code contained under this docstring manages everything related to the develo
 def isFactorySlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
-    return province.getFactories() + len(game_object.factories_being_constructed) == province.getMaxFactories()
+    in_construction = []
+    for factory in game_object.factories_being_constructed:
+        if factory.getProvinceIndex() == province_index:
+            in_construction.append(factory)
+    return province.getFactories() + len(in_construction) == province.getMaxFactories()
 
 # The overMaxFactoryLimit method is similar to the isFactorySlotsMaxed method, but this one checks if the factories the 
 # user is attempting to buy exceeds the limit based on available factories and factories currently in construction
@@ -94,7 +98,14 @@ def getTotalFactoryOutput(game_object : g.GameData):
     province_list : list[p.Province] = game_object.provinces
     total = 0   
     for province in province_list:
-        total += province.getFactories()
+        if province.getOutageStatus() == True:
+            if province.getOutageTime() < 1:
+                province.updateOutageStatus(False)
+                province.updateOutageTime(-1)
+            else:
+                province.updateOutageTime(-1)
+        else:
+            total += province.getFactories()
     return total
 
 '''
@@ -106,7 +117,11 @@ The code contained under this docstring manages everything related to the develo
 def isMineSlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
-    return province.getMines() + len(game_object.mines_being_constructed) == province.getMaxMines()
+    in_construction = []
+    for mine in game_object.mines_being_constructed:
+        if mine.getProvinceIndex() == province_index:
+            in_construction.append(mine)
+    return province.getMines() + len(in_construction) == province.getMaxMines()
 
 # The overMaxMineLimit method is similar to the isMineSlotsMaxed method, but this one checks if the mines the 
 # user is attempting to buy exceeds the limit based on available mines and mines currently in construction
@@ -186,7 +201,11 @@ The code contained under this docstring manages everything related to the develo
 def isInfrastructureSlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
-    return province.getInfrastructureLevel() + len(game_object.infrastructure_being_constructed) == province.getMaxInfrastructureLevel()
+    in_construction = []
+    for infrastructure in game_object.infrastructure_being_constructed:
+        if infrastructure.getProvinceIndex() == province_index:
+            in_construction.append(infrastructure)
+    return province.getInfrastructureLevel() + len(in_construction) == province.getMaxInfrastructureLevel()
 
 # The overMaxInfrastructureLimit method is similar to the isInfrastructureSlotsMaxed method, but this one checks if the infrastructure levels the 
 # user is attempting to buy exceeds the limit based on current infrastructure level and infrastructure currently in construction

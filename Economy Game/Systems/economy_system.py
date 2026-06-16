@@ -23,29 +23,34 @@ def subtractCostFromCurrency(game_object : g.GameData, cost : int) -> None:
 
 # Functions that randomize starting values for factories, mines and infrastructure level
 def randomizeNumberOfFactories() -> int:
-    return random.randrange(0, 2)
+    # og 0,2
+    return random.randrange(1, 2)
 
 def randomizeNumberOfMines() -> int:
     return random.randrange(1, 3)
 
 def randomizeInfrastructureLevel() -> int:
-    return random.randrange(0, 2)
+    # og 0,2
+    return random.randrange(1, 2)
 
 # Helper functions that return the cost and required resources for constructing factories, mines and infrastructure level
 def getCostOfFactory() -> int:
     return 250
 
 def getRequiredIronOfFactory() -> int:
-    return 500
+    # og 500
+    return 50
 
 def getCostOfMine() -> int:
     return 300
 
 def getRequiredStoneOfMine() -> int:
-    return 500
+    # og 500
+    return 50
 
 def getCostOfInfrastructure() -> int:
     return 350
 
 def getRequiredStoneOfInfrastructure() -> int:
-    return 300
+    # og 300
+    return 30

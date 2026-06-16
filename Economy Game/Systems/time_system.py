@@ -28,14 +28,12 @@ def updateDay(game_object : g.GameData):
     r.addToStoneQuantity(game_object, obtained_stone)
 
     # Subtract coal deposits dependent on number of factories to simulate coal consumption
-    total_factories = 0
-    for province in game_object.provinces:
-        total_factories += province.getFactories()
-    used_coal = total_factories*random.randint(50, 101)
+    total_factories = d.getTotalFactoryOutput(game_object)
+    used_coal = total_factories*random.randint(10, 25)
 
     # Add the day's worth of economic output to total currency if there is sufficient coal
     if game_object.coal > used_coal:
-        profit = d.getTotalFactoryOutput(game_object)*10
+        profit = total_factories*random.randint(10, 20)
         e.addProfitToCurrency(game_object, profit)
         r.subtractFromCoalQuantity(game_object, used_coal)
     else:
@@ -44,8 +42,8 @@ def updateDay(game_object : g.GameData):
     # Generate a random event and execute it
     event, province = ev.generateRandomEvent(game_object)
     time.sleep(0.2)
-    ev.executeEvent(game_object, event, province )
-    
+    ev.executeEvent(game_object, event, province)
+
     time.sleep(0.2)
     
     # Progress the day

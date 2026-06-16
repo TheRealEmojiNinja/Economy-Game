@@ -35,14 +35,14 @@ Version 1.1.0 should aim to complete the infrastructure system. Depending on the
 
 Version 1.1.1 should use a .csv file to randomly generate province names.
 
-Version 1.1.2 should implement a national debt, that will start off as a high number. Every month, the player is forced to pay a small amount to lower it. If the player is unable to pay for that month, factory output is used to pay it until then.
-
 Version 1.2.0 should aim to implement randomized events that can occur throughout the game. These events can either affect the player positively or negatively. Some ideas for randomized events could be:
 
     - An electrical outage in a province that forces all factories to stop working for a period of time
     - A cave collapsing within a province causing it to lose one cave
 
-Version 1.2.1 should aim to implement some randomly generated mini-events or pop-ups that occur after the player hits ENTER to progress through the day. These pop-ups will not affect the player, but can offer tips or information about their economy. It may also have unrelated information about the world this game takes place in that add to immersion. 
+Version 1.2.1 should implement a national debt, that will start off as a high number. Every month, the player is forced to pay a small amount to lower it. If the player is unable to pay for that month, factory output is used to pay it until then.
+
+Version 1.2.2 should aim to implement some randomly generated mini-events or pop-ups that occur after the player hits ENTER to progress through the day. These pop-ups will not affect the player, but can offer tips or information about their economy. It may also have unrelated information about the world this game takes place in that add to immersion. 
 
 Version 1.2.5 should aim to implement a law-based system that will at allow the user to regulate and enact certain laws that can affect the game. This major feature is deemed Version 1.1.5 as the law-based system is intertwined with the satisfaction system for Version 1.2.0, so both are necessary for a fully functioning feature update. Certain laws that the player can enact would be:
 

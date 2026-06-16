@@ -27,7 +27,9 @@ class Province:
                          "Terrain":terrain_type,
                          "Max_Factories":max_factories_possible,
                          "Max_Mines":max_mines_possible,
-                         "Max_Infrastructure_Level":max_infrastructure_possible}
+                         "Max_Infrastructure_Level":max_infrastructure_possible,
+                         "Electrical_Outage":False,
+                         "Outage_Time":-1}
 
     # Helper methods that get different values for certain province components 
     def getName(self) -> str:
@@ -53,6 +55,9 @@ class Province:
     
     def getMaxInfrastructureLevel(self) -> int:
         return self.province["Max_Infrastructure_Level"]
+
+    def getAvailableResources(self) -> list:
+        return self.province["Resource_Deposits"]
     
     def getConstructionSpeed(self) -> int:
         infrastructure_level = self.province["Infrastructure_Level"]
@@ -80,6 +85,12 @@ class Province:
             case 10:
                 return 10
     
+    def getOutageStatus(self) -> bool:
+        return self.province["Electrical_Outage"]
+    
+    def getOutageTime(self) -> int:
+        return self.province["Outage_Time"]
+    
     # Helper methods to update the values for certain province components 
     def setName(self, name : str) -> None:
         self.province["Name"] = name
@@ -92,10 +103,12 @@ class Province:
     
     def updateInfrastructureLevel(self, new_infrastructure_level : int):
         self.province["Infrastructure_Level"] += new_infrastructure_level
-
-    # Helper method to return the province's available resources currently
-    def getAvailableResources(self) -> list:
-        return self.province["Resource_Deposits"]
+    
+    def updateOutageStatus(self, status) -> None:
+        self.province["Electrical_Outage"] = status
+    
+    def updateOutageTime(self, days) -> None:
+        self.province["Outage_Time"] += days
 
     # The printStats method prints out all the unique attributes of a province in a formatted manner
     def printStats(self) -> str:
@@ -111,6 +124,8 @@ class Province:
         Known Resources: {deposits}
         Max Factories Possible: {self.province["Max_Factories"]}
         Max Mines Possible: {self.province["Max_Mines"]}
-        Max Infrastructure Level Possible: {self.province["Max_Infrastructure_Level"]}'''
+        Max Infrastructure Level Possible: {self.province["Max_Infrastructure_Level"]}
+        Outage Status: {'No Outage' if not self.province["Electrical_Outage"] else 'Ongoing Outage'}
+        Number of Days till Outage is Resolved: {'No Outage' if self.province["Outage_Time"] == -1 else self.province["Outage_Time"]}'''
 
         return stats

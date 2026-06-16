@@ -10,7 +10,7 @@ import Data.game_data as g, Systems.resource_system as r, Systems.economy_system
 # The function that displays the main game console
 def mainGameScreen(game_object : g.GameData):
     print("────────────────────────────────────────────────────────────────────────────────")
-    print(f"\t\t\t\t———Day {game_object.day} (v.1.1.1)———\n")
+    print(f"\t\t\t\t———Day {game_object.day} (v.1.2.0)———\n")
     print("\t\t\t  ———Total Resources———")
     print(f"\t🪨  (Coal): {r.getCoalQuantity(game_object)} \t🪨  (Iron): {r.getIronQuantity(game_object)} \t🪨  (Stone): {r.getStoneQuantity(game_object)}")
     print(f"\t\t\t💰 (Economic Budget): {e.getCurrencyAmount(game_object)}")
