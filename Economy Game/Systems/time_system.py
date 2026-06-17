@@ -32,12 +32,15 @@ def updateDay(game_object : g.GameData):
     used_coal = total_factories*random.randint(10, 25)
 
     # Add the day's worth of economic output to total currency if there is sufficient coal
-    if game_object.coal > used_coal:
+    if r.getCoalQuantity(game_object) > used_coal:
         profit = total_factories*random.randint(10, 20)
         e.addProfitToCurrency(game_object, profit)
         r.subtractFromCoalQuantity(game_object, used_coal)
     else:
         print("Cannot continue factory production due to shortage of coal!")    
+
+    if game_object.day % 30 == 0 and game_object.day != 0:
+        e.payDebt(game_object)
     
     # Generate a random event and execute it
     event, province = ev.generateRandomEvent(game_object)

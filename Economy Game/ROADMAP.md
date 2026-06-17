@@ -42,8 +42,6 @@ Version 1.2.0 should aim to implement randomized events that can occur throughou
 
 Version 1.2.1 should implement a national debt, that will start off as a high number. Every month, the player is forced to pay a small amount to lower it. If the player is unable to pay for that month, factory output is used to pay it until then.
 
-Version 1.2.2 should aim to implement some randomly generated mini-events or pop-ups that occur after the player hits ENTER to progress through the day. These pop-ups will not affect the player, but can offer tips or information about their economy. It may also have unrelated information about the world this game takes place in that add to immersion. 
-
 Version 1.2.5 should aim to implement a law-based system that will at allow the user to regulate and enact certain laws that can affect the game. This major feature is deemed Version 1.1.5 as the law-based system is intertwined with the satisfaction system for Version 1.2.0, so both are necessary for a fully functioning feature update. Certain laws that the player can enact would be:
 
     - Set a tax level from [Very Low, Low, Average, High, Very High]
@@ -51,6 +49,10 @@ Version 1.2.5 should aim to implement a law-based system that will at allow the 
     - Choose an economic outlook, like working towards a free-market economy, a closed economy, etc.
 
 Version 1.3.0 should aim to implement a satisfaction system which represents the overall contentness of the population. This is intertwined with the law-based system in Version 1.1.5 as certain laws can either boost or lower the population's satisfaction. If it is too low, it can cause debuffs like slowed construction times and less industrial output. Likewise, if it is high, it can cause buffs like faster construction times and more industrial output. 
+
+Version 1.3.1 should aim to implement some randomly generated mini-events or pop-ups that occur after the player hits ENTER to progress through the day. These pop-ups will not affect the player, but can offer tips or information about their economy. It may also have unrelated information about the world this game takes place in that add to immersion. 
+
+Version 1.3.5 should aim to change a key aspect about industrial production. Instead of earning money directly, factories will use resources (perhaps some extra resources like wood may be added) to create products (like steel) which can then be sold on the market for money. This also compliments the tax system that will be implemented in Version 1.2.5, creating two sources of cash revenue.
 
 Version 1.4.0 should aim to expand the laws-based system by introducing a sub-system that allows the player to pursue certain objectives that may help the player over time. Some ideas for these objectives are:
 

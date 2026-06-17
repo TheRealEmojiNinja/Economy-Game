@@ -19,6 +19,7 @@ r.randomizeCoalQuantity(game)
 r.randomizeStoneQuantity(game)
 r.randomizeIronQuantity(game)
 e.randomizeCurrencyAmount(game)
+e.randomizeDebtAmount(game)
 
 # Call the createProvinces method to generate unique provinces
 p.createProvinces(game)

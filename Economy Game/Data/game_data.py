@@ -15,6 +15,7 @@ class GameData:
         
         self.currency = 0
         self.coal, self.iron, self.stone = 0, 0, 0
+        self.debt = 0
 
         self.factories_being_constructed: List[f.Factory] = []
         self.mines_being_constructed: List[m.Mine] = []

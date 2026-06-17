@@ -13,7 +13,7 @@ def mainGameScreen(game_object : g.GameData):
     print(f"\t\t\t\t———Day {game_object.day} (v.1.2.0)———\n")
     print("\t\t\t  ———Total Resources———")
     print(f"\t🪨  (Coal): {r.getCoalQuantity(game_object)} \t🪨  (Iron): {r.getIronQuantity(game_object)} \t🪨  (Stone): {r.getStoneQuantity(game_object)}")
-    print(f"\t\t\t💰 (Economic Budget): {e.getCurrencyAmount(game_object)}")
+    print(f"\t\t\t💰 (Economic Budget): {e.getCurrencyAmount(game_object)} (National Debt): {e.getDebtAmount(game_object)}")
     print("\n\t\t-👉 (1)View Provinces-")
     print("\t\t-👉 (2)Construct-")
     print("\t\t-👉 (3)Laws/Management-")

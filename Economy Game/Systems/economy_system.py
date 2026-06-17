@@ -21,6 +21,19 @@ def addProfitToCurrency(game_object : g.GameData, profit : int) -> None:
 def subtractCostFromCurrency(game_object : g.GameData, cost : int) -> None:
     game_object.currency -= cost
 
+# Helper functions for the debt variable
+def randomizeDebtAmount(game_object : g.GameData) -> None:
+    game_object.debt = random.randint(100000, 200000)
+
+def getDebtAmount(game_object : g.GameData) -> int:
+    return game_object.debt
+
+def addCurrencyToDebt(game_object : g.GameData, amount : int) -> None:
+    game_object.debt += amount
+
+def subtractCurrencyFromDebt(game_object : g.GameData, amount : int) -> None:
+    game_object.debt -= amount
+
 # Functions that randomize starting values for factories, mines and infrastructure level
 def randomizeNumberOfFactories() -> int:
     # og 0,2
@@ -54,3 +67,19 @@ def getCostOfInfrastructure() -> int:
 def getRequiredStoneOfInfrastructure() -> int:
     # og 300
     return 30
+
+def payDebt(game_object : g.GameData) -> None:
+    amount_to_be_paid = random.randint(250, 500)
+
+    if getCurrencyAmount(game_object) >= amount_to_be_paid and getDebtAmount(game_object) > amount_to_be_paid:
+        subtractCostFromCurrency(game_object, amount_to_be_paid)
+        subtractCurrencyFromDebt(game_object, amount_to_be_paid)
+        print(f"Debt for this month was successfully paid, totalling {amount_to_be_paid} currency!")
+    elif getCurrencyAmount(game_object) >= amount_to_be_paid and getDebtAmount(game_object) <= amount_to_be_paid:
+        amount_to_be_paid = getDebtAmount(game_object)
+        subtractCostFromCurrency(amount_to_be_paid)
+        subtractCurrencyFromDebt(amount_to_be_paid)
+        print(f"Debt for this month was successfully paid, totalling {amount_to_be_paid} currency!")
+    elif getCurrencyAmount(game_object) < amount_to_be_paid:
+        print(f"Debt for this month was not paid! Our government failed to pay {amount_to_be_paid} currency.")
+    
