@@ -29,7 +29,8 @@ class Province:
                          "Max_Mines":max_mines_possible,
                          "Max_Infrastructure_Level":max_infrastructure_possible,
                          "Electrical_Outage":False,
-                         "Outage_Time":-1}
+                         "Outage_Time":-1,
+                         "Maximum_Production":False}
 
     # Helper methods that get different values for certain province components 
     def getName(self) -> str:
@@ -91,6 +92,9 @@ class Province:
     def getOutageTime(self) -> int:
         return self.province["Outage_Time"]
     
+    def getMaximumProductionStatus(self) -> bool:
+        return self.province["Maximum_Production"]
+    
     # Helper methods to update the values for certain province components 
     def setName(self, name : str) -> None:
         self.province["Name"] = name
@@ -104,11 +108,14 @@ class Province:
     def updateInfrastructureLevel(self, new_infrastructure_level : int):
         self.province["Infrastructure_Level"] += new_infrastructure_level
     
-    def updateOutageStatus(self, status) -> None:
+    def updateOutageStatus(self, status : bool) -> None:
         self.province["Electrical_Outage"] = status
     
-    def updateOutageTime(self, days) -> None:
+    def updateOutageTime(self, days : int) -> None:
         self.province["Outage_Time"] += days
+
+    def updateMaximumProductionStatus(self, new_max_production_status : bool) -> None:
+        self.province["Maximum_Production"] = new_max_production_status
 
     # The printStats method prints out all the unique attributes of a province in a formatted manner
     def printStats(self) -> str:
@@ -125,6 +132,7 @@ class Province:
         Max Factories Possible: {self.province["Max_Factories"]}
         Max Mines Possible: {self.province["Max_Mines"]}
         Max Infrastructure Level Possible: {self.province["Max_Infrastructure_Level"]}
+        Maximum Production Status: {'Yes' if self.province["Maximum_Production"] else 'No'}
         Outage Status: {'No Outage' if not self.province["Electrical_Outage"] else 'Ongoing Outage'}
         Number of Days till Outage is Resolved: {'No Outage' if self.province["Outage_Time"] == -1 else self.province["Outage_Time"]}'''
 

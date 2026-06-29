@@ -42,10 +42,10 @@ Version 1.2.0 should aim to implement randomized events that can occur throughou
 
 Version 1.2.1 should implement a national debt, that will start off as a high number. Every month, the player is forced to pay a small amount to lower it. If the player is unable to pay for that month, factory output is used to pay it until then.
 
-Version 1.2.5 should aim to implement a law-based system that will at allow the user to regulate and enact certain laws that can affect the game. This major feature is deemed Version 1.1.5 as the law-based system is intertwined with the satisfaction system for Version 1.2.0, so both are necessary for a fully functioning feature update. Certain laws that the player can enact would be:
+Version 1.2.5 should aim to implement a law-based system that will at allow the user to regulate and enact certain laws that can affect the game. This major feature is deemed Version 1.2.5 as the law-based system is intertwined with the satisfaction system for Version 1.3.0, so both are necessary for a fully functioning feature update. Certain laws that the player can enact would be:
 
     - Set a tax level from [Very Low, Low, Average, High, Very High]
-    - Temporarily force a province to work faster, cutting construction times but also has a negative effect on the satisfaction system outlined in Version 1.2.0
+    - Temporarily force a province to work faster, cutting construction times but also has a negative effect on the satisfaction system outlined in Version 1.3.0
     - Choose an economic outlook, like working towards a free-market economy, a closed economy, etc.
 
 Version 1.3.0 should aim to implement a satisfaction system which represents the overall contentness of the population. This is intertwined with the law-based system in Version 1.1.5 as certain laws can either boost or lower the population's satisfaction. If it is too low, it can cause debuffs like slowed construction times and less industrial output. Likewise, if it is high, it can cause buffs like faster construction times and more industrial output. 

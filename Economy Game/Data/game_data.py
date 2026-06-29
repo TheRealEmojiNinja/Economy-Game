@@ -17,6 +17,8 @@ class GameData:
         self.coal, self.iron, self.stone = 0, 0, 0
         self.debt = 0
 
+        self.tax_level = 0
+
         self.factories_being_constructed: List[f.Factory] = []
         self.mines_being_constructed: List[m.Mine] = []
         self.infrastructure_being_constructed: List[i.Infrastructure]= []
@@ -30,5 +32,7 @@ class GameData:
 
         self.PROVINCE_NAMES = d.loadProvinceNames()
         self.EVENTS, self.EVENT_WEIGHTS = d.loadEventsAndWeights()
+
+        self.EVENT_DESCRIPTIONS = d.loadEventDescriptions()
 
         self.provinces : List[p.Province] = []

@@ -105,7 +105,7 @@ def getTotalFactoryOutput(game_object : g.GameData):
             else:
                 province.updateOutageTime(-1)
         else:
-            total += province.getFactories()
+            total += province.getFactories()*2 if province.getMaximumProductionStatus() else province.getFactories()
     return total
 
 '''

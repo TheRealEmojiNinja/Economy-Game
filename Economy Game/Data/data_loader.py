@@ -16,6 +16,7 @@ def loadProvinceNames() -> list:
             province_names.append(row["name"])
     return province_names
 
+# This method loads all events and their weights from the events.csv file
 def loadEventsAndWeights() -> tuple[list, list]:
     events, weights, effects = [], [], []
     with open('Economy Game\Data\events.csv', 'r') as file:
@@ -24,3 +25,16 @@ def loadEventsAndWeights() -> tuple[list, list]:
             events.append(row["name"])
             weights.append(int(row["weight"]))
     return (events, weights)
+
+# This method loads all event descriptions from the event_descriptions.csv file
+def loadEventDescriptions() -> dict[str, list]:
+    event_descriptions = {}
+    with open('Economy Game\Data\event_descriptions.csv', 'r') as file:
+        reader = csv.DictReader(file)
+        for row in reader:
+            if row["event_type"] not in event_descriptions:
+                event_descriptions[row["event_type"]] = []
+                event_descriptions[row["event_type"]].append(row["description"])
+            else:
+                event_descriptions[row["event_type"]].append(row["description"])
+    return event_descriptions

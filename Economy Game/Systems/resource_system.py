@@ -20,6 +20,9 @@ def addToCoalQuantity(game_object : g.GameData, added_coal : int) -> None:
 def subtractFromCoalQuantity(game_object : g.GameData, subtracted_coal : int) -> None:
     game_object.coal -= subtracted_coal
 
+def randomCoalOutput() -> int:
+    return random.randint(10, 20)
+
 # Helper functions for the iron variable
 def randomizeIronQuantity(game_object : g.GameData) -> None:
     game_object.iron = random.randrange(10, 30)
@@ -33,6 +36,9 @@ def addToIronQuantity(game_object : g.GameData, added_iron : int) -> None:
 def subtractFromIronQuantity(game_object : g.GameData, subtracted_iron : int) -> None:
     game_object.iron -= subtracted_iron
 
+def randomIronOutput() -> int:
+    return random.randint(5, 10)
+
 # Helper functions for the stone variable
 def randomizeStoneQuantity(game_object : g.GameData) -> None:
     game_object.stone = random.randrange(25, 55)
@@ -45,6 +51,9 @@ def addToStoneQuantity(game_object : g.GameData, added_stone : int) -> None:
 
 def subtractFromStoneQuantity(game_object : g.GameData, subtracted_stone : int) -> None:
     game_object.stone -= subtracted_stone
+
+def randomStoneOutput() -> int:
+    return random.randint(5, 10)
 
 # Function that randomizes the resource deposits
 def randomizeResourceDeposits() -> list:
