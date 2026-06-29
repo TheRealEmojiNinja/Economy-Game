@@ -7,7 +7,7 @@ Author: TheEmojiNinja
 
 # Import required modules
 import Data.game_data as g, Models.province as p, random
-import Events.disaster_events as d, Events.economy_events as e, Events.law_events as l, Events.politics_events as p, Events.resource_events as r
+import Systems.Events.disaster_events as d, Systems.Events.economy_events as e, Systems.Events.law_events as l, Systems.Events.politics_events as p, Systems.Events.resource_events as r
 
 # Get a random event from the choices of events, also dependent upon their weights
 def generateRandomEvent(game_object : g.GameData) -> str:

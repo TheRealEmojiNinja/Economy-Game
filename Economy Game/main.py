@@ -25,7 +25,7 @@ e.randomizeDebtAmount(game)
 # Call the createProvinces method to generate unique provinces
 p.createProvinces(game)
 
-testingGUI = False
+testingGUI = True
 
 # Main game loop
 if not testingGUI:
@@ -47,8 +47,7 @@ if not testingGUI:
                     continue
             break
 else:
-    while running:
-        test.mainGameLoop(game)
+    test.mainGameLoop(game)
 
 
 
