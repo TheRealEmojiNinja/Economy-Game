@@ -83,3 +83,14 @@ def payDebt(game_object : g.GameData) -> None:
     elif getCurrencyAmount(game_object) < amount_to_be_paid:
         print(f"Debt for this month was not paid! Our government failed to pay {amount_to_be_paid} currency.")
     
+def getTotalFactories(game_object : g.GameData) -> int:
+    total = 0
+    for province in game_object.provinces:
+        total += province.getFactories()
+    return total
+
+def getTotalMines(game_object : g.GameData) -> int:
+    total = 0
+    for province in game_object.provinces:
+        total += province.getMines()
+    return total

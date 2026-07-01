@@ -45,9 +45,11 @@ def updateDay(game_object : g.GameData):
     # Generate a random event and execute it
     event, province = ev.generateRandomEvent(game_object)
     #time.sleep(0.2)
-    ev.executeEvent(game_object, event, province)
+    event = ev.getEventMessageAndExecuteEvent(game_object, event, province)
 
     #time.sleep(0.2)
     
     # Progress the day
     game_object.day += 1
+
+    return event

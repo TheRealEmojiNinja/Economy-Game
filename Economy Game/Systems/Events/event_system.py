@@ -16,38 +16,38 @@ def generateRandomEvent(game_object : g.GameData) -> str:
     return (event, province)
 
 # Execute the effects of that event
-def executeEvent(game_object : g.GameData, event : str, province : p.Province) -> None:
+def getEventMessageAndExecuteEvent(game_object : g.GameData, event : str, province : p.Province) -> str:
     match event:
         case "Mine Collapse":
-            d.doMineCollapseEvent(game_object, province)
+            return d.doMineCollapseEvent(game_object, province)
         case "Emergency":
-            d.doEmergencyEvent(game_object, province)
+            return d.doEmergencyEvent(game_object, province)
         case "Extra Funds":
-           e.doExtraFundsEvent(game_object, province)
+            return e.doExtraFundsEvent(game_object, province)
         case "Festival":
-            p.doFestivalEvent(game_object, province)
+            return p.doFestivalEvent(game_object, province)
         case "Extra Ore Vein":
-            r.doExtraOreVeinEvent(game_object, province)
+            return r.doExtraOreVeinEvent(game_object, province)
         case "Global Market Forum":
-            e.doGlobalMarketForumEvent(game_object)
+            return e.doGlobalMarketForumEvent(game_object)
         case "Heavy Storm":
-            d.doHeavyStormEvent(game_object, province)
+            return d.doHeavyStormEvent(game_object, province)
         case "Smuggling Bust":
-            l.doSmugglingBustEvent(game_object, province)
+            return l.doSmugglingBustEvent(game_object, province)
         case "Corruption Bust":
-            l.doCorruptionBustEvent(game_object)
+            return l.doCorruptionBustEvent(game_object)
         case "Factory Maintenance":
-            e.doFactoryMaintenanceEvent(game_object, province)
+            return e.doFactoryMaintenanceEvent(game_object, province)
         case "Infrastructure Repair":
-            e.doInfrastructureRepairEvent(game_object, province)
+            return e.doInfrastructureRepairEvent(game_object, province)
         case "Foreign Aid":
-            r.doForeignAidEvent(game_object)
+            return r.doForeignAidEvent(game_object)
         case "Electrical Outage":
-            d.doElectricalOutageEvent(game_object, province)
+            return d.doElectricalOutageEvent(game_object, province)
         case "Global Tension":
-            p.doGlobalTensionEvent()
+            return p.doGlobalTensionEvent(game_object)
         case "Nothing":
-            pass
+            return None
 
 # Complete implementation of this method when working on version v.1.2.1
 def generateRandomPopUp():

@@ -10,7 +10,7 @@ import random, Data.game_data as g, Models.province as p, Systems.economy_system
 def doSmugglingBustEvent(game_object : g.GameData, province : p.Province) -> None:
     confiscated_assets = random.randint(300, 600)
     e.addProfitToCurrency(game_object, confiscated_assets)
-    print(random.choice(game_object.EVENT_DESCRIPTIONS["Smuggling_Bust"]).format(profit=confiscated_assets, province=province.getName()))
+    return random.choice(game_object.EVENT_DESCRIPTIONS["Smuggling_Bust"]).format(profit=confiscated_assets, province=province.getName())
 
 def doCorruptionBustEvent(game_object : g.GameData) -> None:
     resources = ["Coal", "Iron", "Stone"]
@@ -37,4 +37,4 @@ def doCorruptionBustEvent(game_object : g.GameData) -> None:
     
     obtained_funds = random.randint(200, 400)
     e.addProfitToCurrency(game_object, obtained_funds)
-    print(random.choice(game_object.EVENT_DESCRIPTIONS["Corruption_Bust"]).format(amount=lost_resource, resource=resource_type.lower(), profit=obtained_funds))
+    return random.choice(game_object.EVENT_DESCRIPTIONS["Corruption_Bust"]).format(amount=lost_resource, resource=resource_type.lower(), profit=obtained_funds)

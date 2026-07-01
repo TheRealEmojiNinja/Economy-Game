@@ -19,7 +19,7 @@ def doExtraOreVeinEvent(game_object : g.GameData, province : p.Province) -> None
     elif resource_type == 'Stone':
         r.addToStoneQuantity(game_object, obtained_resource)
 
-    print(random.choice(game_object.EVENT_DESCRIPTIONS["Extra_Ore_Vein"]).format(resource=resource_type.lower(), amount=obtained_resource, province=province.getName()))
+    return random.choice(game_object.EVENT_DESCRIPTIONS["Extra_Ore_Vein"]).format(resource=resource_type.lower(), amount=obtained_resource, province=province.getName())
 
 def doForeignAidEvent(game_object : g.GameData) -> None:
     resources = ["Coal", "Iron", "Stone"]
@@ -33,4 +33,4 @@ def doForeignAidEvent(game_object : g.GameData) -> None:
     elif resource_type == 'Stone':
         r.addToStoneQuantity(game_object, aid)
 
-    print(random.choice(game_object.EVENT_DESCRIPTIONS["Foreign_Aid"]).format(amount=aid, resource=resource_type.lower()))
+    return random.choice(game_object.EVENT_DESCRIPTIONS["Foreign_Aid"]).format(amount=aid, resource=resource_type.lower())
