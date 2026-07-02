@@ -37,6 +37,29 @@ def displayBuildingsInConstruction(game_object : g.GameData) -> None | str:
     
     return None if not buildings_in_construction else buildings_in_construction
 
+
+def returnBuildingsInConstruction(game_object : g.GameData):
+    buildings_in_construction = ''
+    province_list = game_object.provinces
+
+    for province in province_list:
+        buildings_in_construction += f"{province.getName()}:\n"
+        for factory in game_object.factories_being_constructed:
+            factory_index = factory.getProvinceIndex()
+            if factory_index == province_list.index(province):
+                buildings_in_construction += f"{factory.getNumberOfFactories()} factories will\nfinish construction\nin {factory.getTime()} days"
+        for mine in game_object.mines_being_constructed:
+            mine_index = mine.getProvinceIndex()
+            if mine_index == province_list.index(province):
+                buildings_in_construction += f"{mine.getNumberOfMines()} mines will\nfinish construction\nin {mine.getTime()} days"
+        for infrastructure in game_object.infrastructure_being_constructed:
+            infrastructure_index = infrastructure.getProvinceIndex()
+            if infrastructure_index == province_list.index(province):
+                buildings_in_construction += f"{infrastructure.getInfrastructureLevel()} infrastructure levels will\nfinish construction\nin {infrastructure.getTime()} days"
+        buildings_in_construction += "\n"
+    
+    return buildings_in_construction
+
 '''
 The code contained under this docstring manages everything related to the development of factories.
 '''

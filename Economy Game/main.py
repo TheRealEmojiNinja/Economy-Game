@@ -8,7 +8,7 @@ Author: TheEmojiNinja
 import Systems.province_system as p,  Systems.resource_system as r, Systems.economy_system as e,  Systems.time_system as t, Data.game_data as g
 import UI.Text.main_menu as mm, UI.Text.construction_menu as cm, UI.Text.laws_menu as lm, UI.Text.province_menu as pm
 import time
-import UI.GUI.test as test
+import UI.GUI.game_gui_interface as gui
 
 # Key variables
 running = True
@@ -47,7 +47,7 @@ if not testingGUI:
                     continue
             break
 else:
-    test.mainGameLoop(game)
+    gui.mainGameLoop(game)
 
 
 
