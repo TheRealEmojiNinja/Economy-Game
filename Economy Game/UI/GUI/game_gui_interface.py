@@ -10,7 +10,7 @@ class EconomyGameInterface:
         self.title = ctk.CTkLabel(root, text="Economy Game")
 
         # Create game tab manager and 4 tabs to manage different aspects of the game
-        self.tabs = ctk.CTkTabview(root, height=800, width=1480)
+        self.tabs = ctk.CTkTabview(root, height=1000, width=1480)
         self.tabs._segmented_button.configure(font=('Tahoma', 17, 'bold'))
         self.tabs.grid(row=0, column=0, pady=5)
 
@@ -78,6 +78,15 @@ class EconomyGameInterface:
 
     def displayProvincesMenu(self, game_object : g.GameData, root : ctk.CTk):
 
+        '''self.province_frames, self.provinces = [], []
+
+        for i in range(len(game_object.provinces)):
+            self.province_frames.append(ctk.CTkFrame(self.provinces_tab, border_width=5, corner_radius=3))
+
+        self.province_frames = [ctk.CTkFrame(self.provinces_tab, border_width=5, corner_radius=3)]
+
+        self.provinces = [ctk.CTkLabel() province for province in game_object.provinces]
+
         # Display each province and its statistics
         i = 0
         j = 0
@@ -92,56 +101,79 @@ class EconomyGameInterface:
                 i += 1
                 j = 0
             else:
-                j += 1
+                j += 1'''
+        
+        # Redo provinces menu
 
     def displayConstructionMenu(self, game_object : g.GameData, root : ctk.CTk):
         # Create a specific frame where the user can choose what province to construct things in
-        self.province_menu_frame = ctk.CTkFrame(self.construction_tab)
-        self.province_menu_frame.pack(side="left")
+        self.province_menu_frame = ctk.CTkFrame(self.construction_tab, border_width=5, corner_radius=20, width=250, height=750)
+        self.province_menu_frame.grid_propagate(False)
+        self.province_menu_frame.grid_columnconfigure(0, weight=1)
+        self.province_menu_frame.grid_rowconfigure((0, 1), weight=1)
+        #self.province_menu_frame.grid_rowconfigure(1, weight=1)
+        self.province_menu_frame.grid(row=0, column=0)
 
         # Get all province names and store them in an options menu
         self.province_names = [province.getName() for province in game_object.provinces]
         self.selected_province = game_object.provinces[0]
-        self.province_options = ctk.CTkOptionMenu(self.province_menu_frame, values=self.province_names)
-        self.province_options.configure(command=lambda:self.changeProvinceSelection(game_object))
+
+        self.province_options_frame = ctk.CTkFrame(self.province_menu_frame, border_width=5, height=300)
+
+        self.province_options_frame.grid_propagate(False)
+        self.province_options_frame.grid_columnconfigure(0, weight=1)
+        self.province_options_frame.grid(row=0, column=0)
+
+        self.province_options = ctk.CTkOptionMenu(self.province_options_frame, values=self.province_names, width=100, height=20, font=('Bahnschrift Light SemiCondensed', 20, 'bold'))
+        self.province_options.configure(command=lambda choice: self.changeProvinceSelection(choice, game_object))
         self.province_options.set(self.province_names[0])
-        self.province_options.pack()
 
-        self.amount_slider_frame = ctk.CTkFrame(self.construction_tab)
-        self.amount_slider_frame.pack(side="left")
+        self.province_options.grid_propagate(False)
+        #self.province_options.grid_columnconfigure(0, weight=1)
+        self.province_options.grid(row=0, column=0, pady=15)
 
-        self.amount_slider = ctk.CTkSlider(self.amount_slider_frame, from_=1, to=10, number_of_steps=9)
+        self.construction_hint = ctk.CTkLabel(self.province_options_frame, text="Use the\ndrop down\nmenu to\nchoose a\nprovince.\nThen use\nthe slider\nto configure\n# of buildings.", font=('Consolas', 20))
+        self.construction_hint.grid(row=1, column=0)
+
+        self.amount_slider_frame = ctk.CTkFrame(self.province_menu_frame, border_width=5, height=300)
+
+        self.amount_slider_frame.grid_propagate(False)
+        self.amount_slider_frame.grid_columnconfigure(0, weight=1)
+        self.amount_slider_frame.grid_rowconfigure((0, 1), weight=1)
+        self.amount_slider_frame.grid(row=1, column=0)
+
+        self.amount_slider = ctk.CTkSlider(self.amount_slider_frame, from_=1, to=10, number_of_steps=9, orientation="vertical", width=30)
         self.amount_slider.set(1)
         self.current_amount = int(self.amount_slider.get())
-        self.amount_label = ctk.CTkLabel(self.amount_slider_frame, text=self.current_amount)
-        self.amount_label.pack()
+        self.amount_label = ctk.CTkLabel(self.amount_slider_frame, text=self.current_amount, font=('Bahnschrift Light SemiCondensed', 30, 'bold'))
+        self.amount_label.grid(row=0, column=0, pady=7)
         self.amount_slider.configure(command=self.updateBuildingAmount)
-        self.amount_slider.pack()
+        self.amount_slider.grid(row=1, column=0, pady=7)
 
         # Create a specific frame to construct factories
         self.factory_construction_frame = ctk.CTkFrame(self.construction_tab, border_width=5, corner_radius=3)
-        self.factory_construction_frame.pack(side="left")
+        self.factory_construction_frame.grid(row=0, column=1)
 
         # Create a specific frame to construct mines
         self.mine_construction_frame = ctk.CTkFrame(self.construction_tab, border_width=5, corner_radius=3)
-        self.mine_construction_frame.pack(side="left")
+        self.mine_construction_frame.grid(row=0, column=2)
 
         # Create a specific frame to construct infrastructure
         self.infrastructure_construction_frame = ctk.CTkFrame(self.construction_tab, border_width=5, corner_radius=3)
-        self.infrastructure_construction_frame.pack(side="left")
+        self.infrastructure_construction_frame.grid(row=0, column=3)
 
         # Create buttons to add
         self.factory_label = ctk.CTkButton(self.factory_construction_frame, text="Add Factories to Queue", command=lambda:self.purchaseFactory(game_object, root))
         self.mine_label = ctk.CTkButton(self.mine_construction_frame, text="Add Factory to Queue")
         self.infrastructure_label = ctk.CTkButton(self.infrastructure_construction_frame, text="Add Factory to Queue")
 
-        self.factory_label.pack()
+        #self.factory_label.pack()
         
-    def changeProvinceSelection(self, game_object: g.GameData):
-        self.selected_province = game_object.provinces[self.province_names.index(self.province_options.get())]
+    def changeProvinceSelection(self, choice, game_object : g.GameData):
+        index = self.province_names.index(choice)
+        self.selected_province = game_object.provinces[index]
 
     def updateBuildingAmount(self, value):
-        print("ACC VALUE: ", int(value))
         self.current_amount = int(value)
         self.amount_label.configure(text=int(value))
 
@@ -154,6 +186,9 @@ class EconomyGameInterface:
         if result:
             result_text = f"Purchase successful! {self.current_amount} factories are now currently being constructed for {cost} currency and {needed_iron} iron!"
             self.construction_label.configure(text=d.returnBuildingsInConstruction(game_object))
+            self.resource_label.configure(text=f"{r.getCoalQuantity(game_object)} coal\n{r.getIronQuantity(game_object)} iron\n{r.getStoneQuantity(game_object)} stone")
+            self.economy_label.configure(text=f"ECONOMY\nCurrency: {e.getCurrencyAmount(game_object)}\nDebt: {e.getDebtAmount(game_object)}")
+            self.building_label.configure(text=f"TOTAL BUILDINGS\nTotal Factories: {e.getTotalFactories(game_object)}\nTotal Mines: {e.getTotalMines(game_object)}")
         else:
             result_text = f"Either you are building over the remaining factory slots, or you cannot afford {self.current_amount} factories for {cost} currency and {needed_iron} iron."
 
