@@ -9,7 +9,7 @@ class ConstructionTab:
         self.province_menu_frame.grid_columnconfigure(0, weight=1)
         self.province_menu_frame.grid_rowconfigure((0, 1), weight=1)
         #self.province_menu_frame.grid_rowconfigure(1, weight=1)
-        self.province_menu_frame.grid(row=0, column=0)
+        self.province_menu_frame.grid(row=0, column=0, rowspan=20, padx=7, pady=7)
 
         # Get all province names and store them in an options menu
         self.province_names = [province.getName() for province in game_object.provinces]
@@ -49,21 +49,21 @@ class ConstructionTab:
 
 
         self.factory_construction_panel = widget.ConstructionWidget(parent, 
-                                                                    "Add Factories to Queue", 
+                                                                    "Add Factories\nto Queue", 
                                                                     f"A Factory costs\n{e.getCostOfFactory()} currency\nand {e.getRequiredIronOfFactory()} iron", 
                                                                     0, 
                                                                     1, 
                                                                     self.purchaseFactory(game_object, parent))
 
         self.mine_construction_panel = widget.ConstructionWidget(parent,
-                                                                 "Add Mines to Queue",
+                                                                 "Add Mines\nto Queue",
                                                                  f"A Mine costs\n{e.getCostOfMine()} currency\nand {e.getRequiredStoneOfMine()} stone",
                                                                  0,
                                                                  2,
                                                                  self.purchaseMine(game_object, parent))
         
         self.infrastructure_construction_panel = widget.ConstructionWidget(parent,
-                                                                           "Add Infrastructure to Queue",
+                                                                           "Add\nInfrastructure\nto Queue",
                                                                            f"Infrastructure costs\n{e.getCostOfInfrastructure()} currency\nand {e.getRequiredStoneOfInfrastructure()} stone",
                                                                            0,
                                                                            3,
@@ -78,7 +78,7 @@ class ConstructionTab:
         self.amount_label.configure(text=int(value))
 
     def purchaseFactory(self, game_object : g.GameData, root : ctk.CTk):
-        print(self.current_amount)
+        '''print(self.current_amount)
         result, cost, needed_iron = d.addFactoriesToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
         result_frame = ctk.CTkFrame(root, border_width=3, corner_radius=3)
         result_frame.place(x=560, y=540)
@@ -96,7 +96,8 @@ class ConstructionTab:
         button = ctk.CTkButton(result_frame, text="CLOSE", command=lambda:self.deleteWidget(result_frame))
 
         result_label.pack(padx=10, pady=10)
-        button.pack(padx=10, pady=10)
+        button.pack(padx=10, pady=10)'''
+        pass
 
     def purchaseMine(self, game_object : g.GameData, root : ctk.CTk):
         pass

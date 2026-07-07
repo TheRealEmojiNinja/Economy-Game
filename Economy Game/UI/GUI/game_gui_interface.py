@@ -1,5 +1,7 @@
 import Systems.time_system as t, Systems.economy_system as e, Systems.resource_system as r, Systems.time_system as t, Systems.development_systems as d, Data.game_data as g
 
+import UI.GUI.information_tab as info, UI.GUI.provinces_tab as prov, UI.GUI.construction_tab as const
+
 import customtkinter as ctk
 import random
 
@@ -14,31 +16,16 @@ class EconomyGameInterface:
         self.tabs._segmented_button.configure(font=('Tahoma', 17, 'bold'))
         self.tabs.grid(row=0, column=0, pady=5)
 
-        self.information_tab = self.tabs.add("Information")
-        self.provinces_tab = self.tabs.add("View Provinces")
-        self.construction_tab = self.tabs.add("Manage Construction")
-        self.laws_tab = self.tabs.add("Manage Laws")
+        #self.laws_tab = self.tabs.add("Manage Laws")
 
-        # Load all menus initially
-        self.displayInformationMenu(game_object, root)
-        self.displayProvincesMenu(game_object, root)
-        self.displayConstructionMenu(game_object, root)
-        self.displayLawsAndManagementMenu(game_object, root)
+        self.information_tab = info.InformationTab(self.tabs.add("Information"), game_object)
+        self.provinces_tab = prov.ProvinceTab(self.tabs.add("View Provinces"), game_object)
+        self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object)
+        self.tabs.tab("Manage Construction")
+
 
         # Set starting tab to the information tab
         self.tabs.set("Information")
-
-    def displayInformationMenu(self, game_object : g.GameData, root : ctk.CTk):
-        pass
-
-    def displayProvincesMenu(self, game_object : g.GameData, root : ctk.CTk):
-        pass
-
-    def displayConstructionMenu(self, game_object : g.GameData, root : ctk.CTk):
-        pass
-        
-    def displayLawsAndManagementMenu(self, game_object : g.GameData, root : ctk.CTk):
-        pass
 
     def displayEvent(self, game_object : g.GameData, root : ctk.CTk, event : str):
         event_frame = ctk.CTkFrame(root, border_width=3, corner_radius=3)
