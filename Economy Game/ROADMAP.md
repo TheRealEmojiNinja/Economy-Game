@@ -69,3 +69,5 @@ There may be multiple versions inbetween major updates that might fix bugs or ad
 5. Satisfaction
 6. Objectives
 7. GUI
+
+Idea #1: Corruption System that influences Corruption Events

@@ -25,54 +25,60 @@ class EconomyGameInterface:
         #self.laws_tab = self.tabs.add("Manage Laws")
 
         #self.information_tab = info.InformationTab(self.tabs.add("Information"), game_object)
-        #self.provinces_tab = prov.ProvinceTab(self.tabs.add("View Provinces"), game_object)
+        self.provinces_tab = prov.ProvinceTab(self.tabs.add("View Provinces"), game_object)
         #self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object)
         #self.tabs.tab("Manage Construction")
 
         self.control_panel_frame = ctk.CTkFrame(root, fg_color='#252A34', width=1480)
         self.control_panel_frame.grid_propagate(False)
-        self.control_panel_frame.grid_rowconfigure((0,1,2), weight=1)
-        self.control_panel_frame.grid_columnconfigure((0, 1, 2, 3), weight=1)
+        self.control_panel_frame.grid_rowconfigure(0, weight=1)
+        self.control_panel_frame.grid_columnconfigure(0, weight=1)
+        #self.control_panel_frame.grid_rowconfigure((0,1,2), weight=1)
+        #self.control_panel_frame.grid_columnconfigure((0, 1, 2, 3), weight=1)
         self.control_panel_frame.grid(row=1, column=0)
+
+        self.centering_frame = ctk.CTkFrame(self.control_panel_frame, fg_color='transparent')
+        self.centering_frame.grid(row=0, column=0)
+        
 
         #self.resource_frame = ctk.CTkFrame(self.control_panel_frame, corner_radius=10, height=60, fg_color='#343B4A')
         #self.resource_frame.grid(row=0, column=0, padx=10, pady=10)
 
-        self.day_label = widget.InfoWidget(self.control_panel_frame, 
+        self.day_label = widget.InfoWidget(self.centering_frame, 
                                                 f"Day {game_object.day}", 
                                                 0, 0)
         
-        self.currency_label = widget.InfoWidget(self.control_panel_frame, 
+        self.currency_label = widget.InfoWidget(self.centering_frame, 
                                                 f"{e.getCurrencyAmount(game_object)} currency", 
                                                 1, 0)
         
-        self.satisfaction_label = widget.InfoWidget(self.control_panel_frame, 
+        self.satisfaction_label = widget.InfoWidget(self.centering_frame, 
                                                 f"{game_object.satisfaction} satisfaction", 
                                                 2, 0)
         
-        self.factories_label = widget.InfoWidget(self.control_panel_frame, 
+        self.factories_label = widget.InfoWidget(self.centering_frame, 
                                                  f"{e.getTotalFactories(game_object)} factories", 
                                                  0, 1)
         
-        self.mines_label = widget.InfoWidget(self.control_panel_frame, 
+        self.mines_label = widget.InfoWidget(self.centering_frame, 
                                                  f"{e.getTotalMines(game_object)} mines", 
                                                  1, 1)
         
-        self.coal_label = widget.InfoWidget(self.control_panel_frame, 
+        self.coal_label = widget.InfoWidget(self.centering_frame, 
                                                  f"{r.getCoalQuantity(game_object)} coal", 
                                                  0, 3)
         
-        self.iron_label = widget.InfoWidget(self.control_panel_frame, 
+        self.iron_label = widget.InfoWidget(self.centering_frame, 
                                                  f"{r.getIronQuantity(game_object)} iron", 
                                                  1, 3)
         
-        self.stone_label = widget.InfoWidget(self.control_panel_frame, 
+        self.stone_label = widget.InfoWidget(self.centering_frame, 
                                                  f"{r.getStoneQuantity(game_object)} stone", 
                                                  2, 3)
 
         
 
-        self.button_frame = ctk.CTkFrame(self.control_panel_frame, corner_radius=10, height=180, width=200, fg_color='#2E3542')
+        self.button_frame = ctk.CTkFrame(self.centering_frame, corner_radius=10, height=180, width=300, fg_color='#2E3542')
         #self.button_frame.grid_propagate(False)
         self.button_frame.grid(row=0, column=2, rowspan=3, padx=5, pady=5)
         
