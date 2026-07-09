@@ -47,7 +47,7 @@ def returnBuildingsInConstruction(game_object : g.GameData):
         for factory in game_object.factories_being_constructed:
             factory_index = factory.getProvinceIndex()
             if factory_index == province_list.index(province):
-                print("first: ", factory_index, " second: ", province_list.index(province))
+                #print("first: ", factory_index, " second: ", province_list.index(province))
                 buildings_in_construction += f"{factory.getNumberOfFactories()} factories will\nfinish construction\nin {factory.getTime()} days\n"
         for mine in game_object.mines_being_constructed:
             mine_index = mine.getProvinceIndex()
