@@ -6,6 +6,8 @@ import customtkinter as ctk
 import random
 import time
 
+from PIL import Image
+
 class EconomyGameInterface:
     def __init__ (self, root : ctk.CTk, game_object : g.GameData):
 
@@ -76,14 +78,19 @@ class EconomyGameInterface:
                                                  f"{r.getStoneQuantity(game_object)} stone", 
                                                  2, 3)
 
+
+        self.play_icon = ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/play-button.png'), size=(50, 50))
+        self.pause_icon = ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/pause-button.png'), size=(50, 50))
         
 
         self.button_frame = ctk.CTkFrame(self.centering_frame, corner_radius=10, height=180, width=300, fg_color='#2E3542')
-        #self.button_frame.grid_propagate(False)
+        self.button_frame.grid_propagate(False)
+        self.button_frame.grid_columnconfigure(0, weight=1)
+        self.button_frame.grid_rowconfigure(0, weight=1)
         self.button_frame.grid(row=0, column=2, rowspan=3, padx=5, pady=5)
         
-        #self.progress_button = ctk.CTkButton(self.button_frame, text="PLAY", command=lambda:self.toggleProgress(game_object, root))
-        #self.progress_button.grid(row=0, column=0)
+        self.progress_button = ctk.CTkButton(self.button_frame, text="", image=self.play_icon, command=lambda:self.toggleProgress(game_object, root), width=50, height=50)
+        self.progress_button.grid(row=0, column=0)
 
 
         # Set starting tab to the information tab
@@ -92,11 +99,11 @@ class EconomyGameInterface:
     def toggleProgress(self, game_object : g.GameData, root : ctk.CTk):
         if not self.progressing: 
             self.progressing = True
-            self.progress_button.configure(text="PAUSE")
+            self.progress_button.configure(image=self.pause_icon)
             self.advanceTime(game_object, root)
         elif self.progressing: 
             self.progressing = False
-            self.progress_button.configure(text="PLAY")
+            self.progress_button.configure(image=self.play_icon)
 
         print(self.progressing)
 
@@ -130,6 +137,15 @@ class EconomyGameInterface:
         #for province in game_object.provinces:
             #self.province_stats.configure(text=province.printStats())
             #print(province.printStats())
+
+        self.day_label.refresh('')
+        self.currency_label.refresh('')
+        self.satisfaction_label.refresh('')
+        self.factories_label.refresh('')
+        self.mines_label.refresh('')
+        self.coal_label.refresh('')
+        self.iron_label.refresh('')
+        self.stone_label.refresh('')
         
 
 

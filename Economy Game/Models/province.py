@@ -58,7 +58,12 @@ class Province:
         return self.province["Max_Infrastructure_Level"]
 
     def getAvailableResources(self) -> list:
-        return self.province["Resource_Deposits"]
+        deposits = ''
+        for deposit in self.province["Resource_Deposits"]:
+            deposits += deposit
+            if self.province["Resource_Deposits"].index(deposit) != len(self.province["Resource_Deposits"])-1:
+                deposits += ', '
+        return deposits
     
     def getConstructionSpeed(self) -> int:
         infrastructure_level = self.province["Infrastructure_Level"]
