@@ -8,7 +8,14 @@ import time
 
 from PIL import Image
 
+from CTkToolTip import *
+
 class EconomyGameInterface:
+
+    icons = {"Play":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/play-button.png'), dark_image=None, size=(50, 50)),
+             "Pause":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/pause-button.png'), dark_image=None, size=(50, 50)),
+             "Currency":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/banknote.png'), dark_image=None, size=(50, 50))}
+
     def __init__ (self, root : ctk.CTk, game_object : g.GameData):
 
         self.progressing = False
@@ -51,8 +58,8 @@ class EconomyGameInterface:
                                                 0, 0)
         
         self.currency_label = widget.InfoWidget(self.centering_frame, 
-                                                f"{e.getCurrencyAmount(game_object)} currency", 
-                                                1, 0)
+                                                f": {e.getCurrencyAmount(game_object)}", 
+                                                1, 0, image=EconomyGameInterface.icons["Currency"])
         
         self.satisfaction_label = widget.InfoWidget(self.centering_frame, 
                                                 f"{game_object.satisfaction} satisfaction", 
@@ -78,18 +85,13 @@ class EconomyGameInterface:
                                                  f"{r.getStoneQuantity(game_object)} stone", 
                                                  2, 3)
 
-
-        self.play_icon = ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/play-button.png'), size=(50, 50))
-        self.pause_icon = ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/pause-button.png'), size=(50, 50))
-        
-
         self.button_frame = ctk.CTkFrame(self.centering_frame, corner_radius=10, height=180, width=300, fg_color='#2E3542')
         self.button_frame.grid_propagate(False)
         self.button_frame.grid_columnconfigure(0, weight=1)
         self.button_frame.grid_rowconfigure(0, weight=1)
         self.button_frame.grid(row=0, column=2, rowspan=3, padx=5, pady=5)
         
-        self.progress_button = ctk.CTkButton(self.button_frame, text="", image=self.play_icon, command=lambda:self.toggleProgress(game_object, root), width=50, height=50)
+        self.progress_button = ctk.CTkButton(self.button_frame, text="", image=EconomyGameInterface.icons["Play"], command=lambda:self.toggleProgress(game_object, root), width=50, height=50)
         self.progress_button.grid(row=0, column=0)
 
 
@@ -99,11 +101,11 @@ class EconomyGameInterface:
     def toggleProgress(self, game_object : g.GameData, root : ctk.CTk):
         if not self.progressing: 
             self.progressing = True
-            self.progress_button.configure(image=self.pause_icon)
+            self.progress_button.configure(image=EconomyGameInterface.icons["Pause"])
             self.advanceTime(game_object, root)
         elif self.progressing: 
             self.progressing = False
-            self.progress_button.configure(image=self.play_icon)
+            self.progress_button.configure(image=EconomyGameInterface.icons["Play"])
 
         print(self.progressing)
 
