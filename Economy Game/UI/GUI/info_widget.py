@@ -1,8 +1,10 @@
 import customtkinter as ctk
 
+import CTkToolTip as ctktooltip
+
 class InfoWidget:
 
-    def __init__(self, parent, info_text : str, row : int, col : int, height : int=50, width : int=200, fg_color='#343B4A', font = ('Consolas', 20), image=None):
+    def __init__(self, parent, info_text : str, row : int, col : int, height : int=50, width : int=200, fg_color='#343B4A', font = ('Consolas', 20), image=None, tooltip_text : str=None):
           
         self.container_frame = ctk.CTkFrame(parent, corner_radius=10, height=height, width=width, fg_color=fg_color)
         self.container_frame.grid_propagate(False)
@@ -20,6 +22,12 @@ class InfoWidget:
         else:
             self.info_label = ctk.CTkLabel(self.container_frame, text=info_text, font=font)
             self.info_label.grid(row=0, column=0)
+
+        if tooltip_text != None:
+            frame_tool_tip = ctktooltip.CTkToolTip(self.container_frame, message=tooltip_text, delay=0)
+            centering_frame_tool_tip = ctktooltip.CTkToolTip(self.centering_frame, message=tooltip_text, delay=0)
+            image_tool_tip = ctktooltip.CTkToolTip(self.image_label, message=tooltip_text, delay=0)
+            text_tool_tip = ctktooltip.CTkToolTip(self.info_label, message=tooltip_text, delay=0)
 
     def refresh(self, new_info_text : str):
         self.info_label.configure(text=new_info_text)
