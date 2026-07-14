@@ -14,8 +14,8 @@ class EconomyGameInterface:
 
     base_size = (35, 35)
 
-    icons = {"Play":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/play-button.png'), dark_image=None, size=base_size),
-             "Pause":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/pause-button.png'), dark_image=None, size=base_size),
+    icons = {"Play":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/play.png'), dark_image=None, size=base_size),
+             "Pause":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/pause.png'), dark_image=None, size=base_size),
              "Currency":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/cash.png'), dark_image=None, size=base_size),
              "Day":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/calendar.png'), dark_image=None, size=base_size),
              "Satisfaction":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/stars-stack.png'), dark_image=None, size=base_size),
@@ -108,7 +108,7 @@ class EconomyGameInterface:
         self.button_frame.grid_rowconfigure(0, weight=1)
         self.button_frame.grid(row=0, column=2, rowspan=3, padx=5, pady=5)
         
-        self.progress_button = ctk.CTkButton(self.button_frame, text="", image=EconomyGameInterface.icons["Play"], command=lambda:self.toggleProgress(game_object, root), width=50, height=50)
+        self.progress_button = ctk.CTkButton(self.button_frame, text="", image=EconomyGameInterface.icons["Play"], command=lambda:self.toggleProgress(game_object, root), width=50, height=50, fg_color='#232633', hover_color='#3E455A')
         self.progress_button.grid(row=0, column=0)
 
 

@@ -8,7 +8,7 @@ class SelectorWidget:
         self.container_frame.grid_propagate(False)
         self.container_frame.grid_columnconfigure(0, weight=1)
         self.container_frame.grid_rowconfigure(0, weight=1)
-        self.container_frame.grid(row=0, column=0, padx=7, pady=7)
+        self.container_frame.grid(row=0, column=0, rowspan=20, padx=7, pady=7)
 
         self.centering_frame = ctk.CTkFrame(self.container_frame, fg_color='transparent')
         self.centering_frame.grid(row=0, column=0)

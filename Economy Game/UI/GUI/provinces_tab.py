@@ -11,9 +11,9 @@ class ProvinceTab:
         self.province_container = ctk.CTkFrame(parent, corner_radius=10, width=600, height=500, fg_color='#292F3B')
         self.province_container.grid_propagate(False)
         self.province_container.grid_columnconfigure(0, weight=1)
-        self.province_container.grid(row=0, column=1, padx=7, pady=7)
+        self.province_container.grid(row=0, column=1, padx=14, pady=14)
 
-        self.title_container = ctk.CTkFrame(self.province_container, fg_color='#313847', width=600, height=50)
+        self.title_container = ctk.CTkFrame(self.province_container, fg_color="#2D3341", width=600, height=50)
         self.title_container.grid_propagate(False)
         self.title_container.grid_rowconfigure(0, weight=1)
         self.title_container.grid_columnconfigure(0, weight=1)
@@ -22,7 +22,7 @@ class ProvinceTab:
         self.province_title = ctk.CTkLabel(self.title_container, text=self.selected_province.getName().upper(), font=('Bahnschrift Light SemiCondensed', 35, 'bold'))
         self.province_title.grid(row=0, column=0, padx=7, pady=7)
 
-        self.stats_container = ctk.CTkFrame(self.province_container, fg_color='#313847', width=600, height=420)
+        self.stats_container = ctk.CTkFrame(self.province_container, fg_color='#2D3341', width=600, height=420)
         self.stats_container.grid_propagate(False)
         self.stats_container.grid_columnconfigure(0, weight=1)
         self.stats_container.grid_rowconfigure(0, weight=1)
