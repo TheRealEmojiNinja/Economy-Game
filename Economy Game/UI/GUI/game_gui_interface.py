@@ -44,7 +44,7 @@ class EconomyGameInterface:
 
         #self.information_tab = info.InformationTab(self.tabs.add("Information"), game_object)
         self.provinces_tab = prov.ProvinceTab(self.tabs.add("View Provinces"), game_object)
-        #self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object)
+        self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object)
         #self.tabs.tab("Manage Construction")
 
         self.control_panel_frame = ctk.CTkFrame(root, fg_color='#252A34', width=1480)

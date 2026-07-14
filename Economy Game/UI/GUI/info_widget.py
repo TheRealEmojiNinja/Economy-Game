@@ -24,10 +24,10 @@ class InfoWidget:
             self.info_label.grid(row=0, column=0)
 
         if tooltip_text != None:
-            frame_tool_tip = ctktooltip.CTkToolTip(self.container_frame, message=tooltip_text, delay=0)
-            centering_frame_tool_tip = ctktooltip.CTkToolTip(self.centering_frame, message=tooltip_text, delay=0)
-            image_tool_tip = ctktooltip.CTkToolTip(self.image_label, message=tooltip_text, delay=0)
-            text_tool_tip = ctktooltip.CTkToolTip(self.info_label, message=tooltip_text, delay=0)
+            self.frame_tool_tip = ctktooltip.CTkToolTip(self.container_frame, message=tooltip_text, delay=0)
+            self.centering_frame_tool_tip = ctktooltip.CTkToolTip(self.centering_frame, message=tooltip_text, delay=0)
+            self.image_tool_tip = ctktooltip.CTkToolTip(self.image_label, message=tooltip_text, delay=0)
+            self.text_tool_tip = ctktooltip.CTkToolTip(self.info_label, message=tooltip_text, delay=0)
 
     def refresh(self, new_info_text : str):
         self.info_label.configure(text=new_info_text)

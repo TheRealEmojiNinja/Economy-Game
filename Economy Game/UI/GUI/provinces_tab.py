@@ -1,27 +1,12 @@
-import customtkinter as ctk, Data.game_data as g, UI.GUI.info_widget as widget
+import customtkinter as ctk, Data.game_data as g, UI.GUI.info_widget as info_widget, UI.GUI.selector_widget as selector_widget
 
 class ProvinceTab:
     def __init__(self, parent, game_object : g.GameData):
-        
-        self.province_selector_frame = ctk.CTkFrame(parent, corner_radius=10, width=300, height=500, fg_color='#292F3B')
-        self.province_selector_frame.grid_propagate(False)
-        self.province_selector_frame.grid_columnconfigure(0, weight=1)
-        self.province_selector_frame.grid_rowconfigure(0, weight=1)
-        self.province_selector_frame.grid(row=0, column=0, padx=7, pady=7)
-
-        self.province_selector_centering_frame = ctk.CTkFrame(self.province_selector_frame, fg_color='transparent')
-        self.province_selector_centering_frame.grid(row=0, column=0)
 
         self.province_names = [province.getName().upper() for province in game_object.provinces]
-
-        self.province_selector_instruction_label = ctk.CTkLabel(self.province_selector_centering_frame, text="Select a province from\nthe dropdown menu\nto view its\ninformation.", font=('Consolas', 20))
-        self.province_selector_instruction_label.grid(row=0, column=0, pady=7)
-
-        self.province_selector = ctk.CTkOptionMenu(self.province_selector_centering_frame, values=self.province_names, font=('Bahnschrift Light SemiCondensed', 20, 'bold'))
-        self.province_selector.configure(command=lambda choice: self.changeProvince(choice, game_object))
-        self.province_selector.set(self.province_names[0])
+        self.province_selector = selector_widget.SelectorWidget(parent, "Select a province from\nthe dropdown menu\nto view its\ninformation.", self.province_names, self.changeProvince, game_object)
         self.selected_province = game_object.provinces[0]
-        self.province_selector.grid(row=1, column=0, pady=7)
+        self.province_selector.setValue(self.province_names[0])
 
         self.province_container = ctk.CTkFrame(parent, corner_radius=10, width=600, height=500, fg_color='#292F3B')
         self.province_container.grid_propagate(False)
@@ -46,23 +31,30 @@ class ProvinceTab:
         self.stats_centering_frame = ctk.CTkFrame(self.stats_container, fg_color='transparent')
         self.stats_centering_frame.grid(row=0, column=0)
 
-        self.factory_info = widget.InfoWidget(self.stats_centering_frame, 
+        self.factory_info = info_widget.InfoWidget(self.stats_centering_frame, 
                                            f"Factories: {self.selected_province.getFactories()}\nOutage Status: {'No Outage' if not self.selected_province.getOutageStatus() else 'Ongoing Outage'}\nDays until Outage\nis Resolved: {'No Outage' if self.selected_province.getOutageTime() == -1 else self.selected_province.getOutageTime()}", 
                                            0, 0,
                                            100, 250,
                                            fg_color='#272C38',
                                            font=('Consolas', 15))
         
-        self.terrain_info = widget.InfoWidget(self.stats_centering_frame,
+        self.terrain_info = info_widget.InfoWidget(self.stats_centering_frame,
                                             f"Terrain Type: {self.selected_province.getTerrainType()}\nMax Factory Limit: {self.selected_province.getMaxFactories()}\nMax Mine Limit: {self.selected_province.getMaxMines()}\nMax Infrastructure Limit: {self.selected_province.getMaxInfrastructureLevel()}",
                                             1, 0,
                                             100, 250,
                                             fg_color='#272C38',
                                             font=('Consolas', 15))
         
-        self.mine_info = widget.InfoWidget(self.stats_centering_frame,
+        self.mine_info = info_widget.InfoWidget(self.stats_centering_frame,
                                             f"Mines: {self.selected_province.getMines()}\nKnown Resource\nDeposits: {self.selected_province.getAvailableResources()}",
                                             0, 1,
+                                            100, 250,
+                                            fg_color='#272C38',
+                                            font=('Consolas', 15))
+        
+        self.infrastructure_info = info_widget.InfoWidget(self.stats_centering_frame,
+                                            f"Infrastructure Level: {self.selected_province.getInfrastructureLevel()}\nConstruction\nTime In Days: {self.selected_province.getConstructionSpeed()}",
+                                            1, 1,
                                             100, 250,
                                             fg_color='#272C38',
                                             font=('Consolas', 15))
@@ -77,5 +69,6 @@ class ProvinceTab:
         self.factory_info.refresh(f"Factories: {self.selected_province.getFactories()}\nOutage Status: {'No Outage' if not self.selected_province.getOutageStatus() else 'Ongoing Outage'}\nDays until Outage\nis Resolved: {'No Outage' if self.selected_province.getOutageTime() == -1 else self.selected_province.getOutageTime()}")
         self.terrain_info.refresh(f"Terrain Type: {self.selected_province.getTerrainType()}\nMax Factory Limit: {self.selected_province.getMaxFactories()}\nMax Mine Limit: {self.selected_province.getMaxMines()}\nMax Infrastructure Limit: {self.selected_province.getMaxInfrastructureLevel()}")
         self.mine_info.refresh(f"Mines: {self.selected_province.getMines()}\nKnown Resource\nDeposits: {self.selected_province.getAvailableResources()}")
+        self.infrastructure_info.refresh(f"Infrastructure Level: {self.selected_province.getInfrastructureLevel()}\nConstruction\nTime In Days: {self.selected_province.getConstructionSpeed()}")
 
 
