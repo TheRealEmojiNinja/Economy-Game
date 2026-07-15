@@ -1,4 +1,4 @@
-import customtkinter as ctk
+import customtkinter as ctk, CTkToolTip as ctktooltip, Systems.economy_system as e
 
 
 class ConstructionWidget:
@@ -6,16 +6,58 @@ class ConstructionWidget:
     button_font = ('Bahnschrift Light SemiCondensed', 25, 'bold')
     text_font = ('Consolas', 20)
 
-    def __init__(self, parent, queue_text : str, requirements : str, row : int, col : int, function):
+    def __init__(self, parent, row : int, col : int, image_one, image_two, image_three, function_one, function_two, function_three):
 
-        self.container_frame = ctk.CTkFrame(parent, border_width=5, corner_radius=20, width=250, height=200)
+        self.container_frame = ctk.CTkFrame(parent, corner_radius=10, width=250, height=250, fg_color='#292F3B')
         self.container_frame.grid_propagate(False)
         self.container_frame.grid_columnconfigure(0, weight=1)
+        self.container_frame.grid_rowconfigure(0, weight=1)
         self.container_frame.grid(row=row, column=col, padx=7, pady=7)
 
-        #self.requirements = ctk.CTkLabel(self.container_frame, text=requirements, font=ConstructionWidget.text_font)
-        #self.requirements.grid(row=0, column=0, pady=15)
+        self.centering_frame = ctk.CTkFrame(self.container_frame, fg_color='transparent')
+        self.centering_frame.grid(row=0, column=0)
 
-        self.add_to_queue_button = ctk.CTkButton(self.container_frame, text=queue_text, command=lambda:function, font=ConstructionWidget.button_font, border_width=5, corner_radius=20, width=200, height=150)
-        self.add_to_queue_button.grid(row=1, column=0, pady=15)
+        self.factory_construction = ctk.CTkButton(self.centering_frame, image=image_one, text='', fg_color='#232633', hover_color='#3E455A', height=60, width=60, command=function_one)
+        self.factory_construction.grid(row=0, column=0, padx=5)
+        self.factory_tool_tip = ctktooltip.CTkToolTip(self.factory_construction, message=f"A factory costs {e.getCostOfFactory()} currency and {e.getRequiredIronOfFactory()} iron.", delay=0)
 
+        self.mine_construction = ctk.CTkButton(self.centering_frame, image=image_two, text='', fg_color='#232633', hover_color='#3E455A', height=60, width=60, command=function_two)
+        self.mine_construction.grid(row=0, column=1, padx=5)
+        self.mine_tool_tip = ctktooltip.CTkToolTip(self.mine_construction, message=f"A mine costs {e.getCostOfMine()} currency and {e.getRequiredStoneOfMine()} stone.", delay=0)
+
+        self.infrastructure_construction = ctk.CTkButton(self.centering_frame, image=image_three, text='', fg_color='#232633', hover_color='#3E455A', height=60, width=60, command=function_three)
+        self.infrastructure_construction.grid(row=0, column=2, padx=5)
+        self.infrastructure_tool_tip = ctktooltip.CTkToolTip(self.infrastructure_construction, message=f"An infrastructure level costs {e.getCostOfInfrastructure()} currency and {e.getRequiredStoneOfInfrastructure()} stone.", delay=0)
+
+    def disableFactoryConstruction(self):
+        self.factory_construction.configure(state="disabled")
+        #self.factory_tool_tip.configure(f"Either you are building over the limit, or you cannot afford these many factories!")
+
+    def enableFactoryConstruction(self):
+        self.factory_construction.configure(state="normal")
+        #self.factory_tool_tip.configure(f"A factory costs {e.getCostOfFactory()} currency and {e.getRequiredIronOfFactory()} iron.")
+    
+    def disableMineonstruction(self):
+        self.mine_construction.configure(state="disabled")
+        #self.mine_tool_tip.configure(f"Either you are building over the limit, or you cannot afford these many mines!")
+
+    def enableMineConstruction(self):
+        self.mine_construction.configure(state="normal")
+        #self.mine_tool_tip.configure(f"A mine costs {e.getCostOfMine()} currency and {e.getRequiredStoneOfMine()} stone.")
+
+    def disableInfrastructureonstruction(self):
+        self.infrastructure_construction.configure(state="disabled")
+        #self.infrastructure_tool_tip.configure(f"Either you are building over the limit, or you cannot afford these many infrastructure levels!")
+    
+    def enableInfrastructureConstruction(self):
+        self.infrastructure_construction.configure(state="normal")
+        #self.infrastructure_tool_tip.configure(f"An infrastructure level costs {e.getCostOfInfrastructure()} currency and {e.getRequiredStoneOfInfrastructure()} stone.")
+
+    def getFactoryConstructionStatus(self):
+        return True if self.factory_construction.cget("state") == "normal" else False
+    
+    def getMineConstructionStatus(self):
+        return self.mine_construction.cget("state")
+    
+    def getInfrastructureConstructionStatus(self):
+        return self.infrastructure_construction.cget("state")

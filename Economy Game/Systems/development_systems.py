@@ -81,7 +81,15 @@ def isFactorySlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
 def overMaxFactoryLimit(game_object : g.GameData, province_index : int, number_of_factories_to_be_bought : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
-    return province.getFactories() + len(game_object.factories_being_constructed) + number_of_factories_to_be_bought > province.getMaxFactories()
+    in_construction = []
+    for factory in game_object.factories_being_constructed:
+        if factory.getProvinceIndex() == province_index:
+            in_construction.append(factory)
+    return province.getFactories() + len(in_construction) + number_of_factories_to_be_bought > province.getMaxFactories()
+
+def factoriesCanBeBought(game_object : g.GameData, province_index : int, number_of_factories_to_be_bought : int):
+    result = number_of_factories_to_be_bought*e.getCostOfFactory() < e.getCurrencyAmount(game_object) and number_of_factories_to_be_bought*e.getRequiredIronOfFactory() < r.getIronQuantity(game_object)
+    return result
 
 # 5 available, 4 in construction, buy 2 more
 

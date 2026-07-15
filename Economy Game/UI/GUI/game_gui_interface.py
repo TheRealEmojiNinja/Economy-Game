@@ -165,6 +165,8 @@ class EconomyGameInterface:
         self.coal_label.refresh(f": {r.getCoalQuantity(game_object)}")
         self.iron_label.refresh(f": {r.getIronQuantity(game_object)}")
         self.stone_label.refresh(f": {r.getStoneQuantity(game_object)}")
+
+        self.construction_tab.updateConstructionActions(game_object)
         
 
 
