@@ -18,7 +18,7 @@ class Province:
                  infrastructure_level : int, terrain_type : str, 
                  max_factories_possible : int, max_mines_possible : int, 
                  max_infrastructure_possible : int) -> None:
-        self.province = {"Name":province_name, 
+        '''self.province = {"Name":province_name, 
                          "Factories":number_of_factories, 
                          "Mines":number_of_mines, 
                          "Resource_Deposits":province_resource_deposits, 
@@ -30,43 +30,58 @@ class Province:
                          "Max_Infrastructure_Level":max_infrastructure_possible,
                          "Electrical_Outage":False,
                          "Outage_Time":-1,
-                         "Maximum_Production":False}
+                         "Maximum_Production":False}'''
+        
+        self.province_name = province_name
+        self.factories = number_of_factories
+        self.mines = number_of_mines
+        self.infrastructure_level = infrastructure_level
+        self.resource_deposits = province_resource_deposits
+        self.province_terrain = terrain_type
+        self.max_factory_limit = max_factories_possible
+        self.max_mine_limit = max_mines_possible
+        self.max_infrastructure_limit = max_infrastructure_possible
+        self.hidden_resource_deposits = Province.resources
+        self.electrical_outage_status = False
+        self.electrical_outage_time = -1
+        self.maximum_production_status = False
+
 
     # Helper methods that get different values for certain province components 
     def getName(self) -> str:
-        return self.province["Name"]
+        return self.province_name
     
     def getFactories(self) -> int:
-        return self.province["Factories"]
-    
+        return self.factories
+
     def getMines(self) -> int:
-        return self.province["Mines"]
+        return self.mines
     
     def getInfrastructureLevel(self) -> int:
-        return self.province["Infrastructure_Level"]
+        return self.infrastructure_level
     
     def getTerrainType(self) -> str:
-        return self.province["Terrain"]
+        return self.province_terrain
     
     def getMaxFactories(self) -> int:
-        return self.province["Max_Factories"]
+        return self.max_factory_limit
     
     def getMaxMines(self) -> int:
-        return self.province["Max_Mines"]
+        return self.max_mine_limit
     
     def getMaxInfrastructureLevel(self) -> int:
-        return self.province["Max_Infrastructure_Level"]
+        return self.max_infrastructure_limit
 
     def getAvailableResources(self) -> list:
         deposits = ''
-        for deposit in self.province["Resource_Deposits"]:
+        for deposit in self.resource_deposits:
             deposits += deposit
-            if self.province["Resource_Deposits"].index(deposit) != len(self.province["Resource_Deposits"])-1:
+            if self.resource_deposits.index(deposit) != len(self.resource_deposits)-1:
                 deposits += ', '
         return deposits
     
     def getConstructionSpeed(self) -> int:
-        infrastructure_level = self.province["Infrastructure_Level"]
+        infrastructure_level = self.infrastructure_level
         match infrastructure_level:
             case 0:
                 return 30
@@ -92,53 +107,32 @@ class Province:
                 return 10
     
     def getOutageStatus(self) -> bool:
-        return self.province["Electrical_Outage"]
+        return self.electrical_outage_status
     
     def getOutageTime(self) -> int:
-        return self.province["Outage_Time"]
+        return self.electrical_outage_time
     
     def getMaximumProductionStatus(self) -> bool:
-        return self.province["Maximum_Production"]
+        return self.maximum_production_status
     
     # Helper methods to update the values for certain province components 
     def setName(self, name : str) -> None:
-        self.province["Name"] = name
+        self.province_name = name
 
     def updateFactories(self, new_factories : int) -> None:
-        self.province["Factories"] += new_factories
+        self.factories += new_factories
 
     def updateMines(self, new_mines : int) -> None:
-        self.province["Mines"] += new_mines
+        self.mines += new_mines
     
     def updateInfrastructureLevel(self, new_infrastructure_level : int):
-        self.province["Infrastructure_Level"] += new_infrastructure_level
+        self.infrastructure_level += new_infrastructure_level
     
     def updateOutageStatus(self, status : bool) -> None:
-        self.province["Electrical_Outage"] = status
+        self.electrical_outage_status = status
     
     def updateOutageTime(self, days : int) -> None:
-        self.province["Outage_Time"] += days
+        self.electrical_outage_time += days
 
     def updateMaximumProductionStatus(self, new_max_production_status : bool) -> None:
-        self.province["Maximum_Production"] = new_max_production_status
-
-    # The printStats method prints out all the unique attributes of a province in a formatted manner
-    def printStats(self) -> str:
-        deposits = ''
-        for resource in self.province["Resource_Deposits"]:
-            deposits += resource + " "
-
-        stats = f'''{self.province["Name"].upper()}: 
-        Factories: {self.province["Factories"]}
-        Mines: {self.province["Mines"]}
-        Infrastructure Level: {self.province["Infrastructure_Level"]}
-        Terrain Type: {self.province["Terrain"]}
-        Known Resources: {deposits}
-        Max Factories Possible: {self.province["Max_Factories"]}
-        Max Mines Possible: {self.province["Max_Mines"]}
-        Max Infrastructure Level Possible: {self.province["Max_Infrastructure_Level"]}
-        Maximum Production Status: {'Yes' if self.province["Maximum_Production"] else 'No'}
-        Outage Status: {'No Outage' if not self.province["Electrical_Outage"] else 'Ongoing Outage'}
-        Number of Days till Outage is Resolved: {'No Outage' if self.province["Outage_Time"] == -1 else self.province["Outage_Time"]}'''
-
-        return stats
+        self.maximum_production_status = new_max_production_status

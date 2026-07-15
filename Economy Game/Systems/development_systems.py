@@ -9,35 +9,7 @@ Author: TheEmojiNinja
 # Import required modules
 import Data.game_data as g, Models.province as p, Models.factory as f, Models.mine as m, Models.infrastructure as i, Systems.economy_system as e, Systems.resource_system as r
 
-# This method returns a string displaying any buildings in construction
-def displayBuildingsInConstruction(game_object : g.GameData) -> None | str:
-    buildings_in_construction = ''
-    province_list = game_object.provinces
-
-    if len(game_object.factories_being_constructed) > 0:
-        buildings_in_construction += '\n\t\t\tFACTORIES IN CONSTRUCTION\n\n'
-        for factory in game_object.factories_being_constructed:
-            factory_index = factory.getProvinceIndex()
-            province = province_list[factory_index]
-            buildings_in_construction += f"{factory.getNumberOfFactories()} factories are being constructed in {province.getName()}, and will complete in {factory.getTime()} days.\n"
-
-    if len(game_object.mines_being_constructed) > 0:
-        buildings_in_construction += '\n\t\t\tMINES IN CONSTRUCTION\n\n'
-        for mine in game_object.mines_being_constructed:
-            mine_index = mine.getProvinceIndex()
-            province = province_list[mine_index]
-            buildings_in_construction += f"{mine.getNumberOfMines()} mines are being constructed in {province.getName()}, and will complete in {mine.getTime()} days.\n"
-
-    if len(game_object.infrastructure_being_constructed) > 0:
-        buildings_in_construction += '\n\t\t\tINFRASTRUCTURE IN CONSTRUCTION\n\n'
-        for infrastructure in game_object.infrastructure_being_constructed:
-            infrastructure_index = infrastructure.getProvinceIndex()
-            province = province_list[infrastructure_index]
-            buildings_in_construction += f"{infrastructure.getInfrastructureLevel()} infrastructure levels are being constructed in {province.getName()}, and will complete in {infrastructure.getTime()} days.\n"
-    
-    return None if not buildings_in_construction else buildings_in_construction
-
-
+# This method returns a string returning any buildings in construction
 def returnBuildingsInConstruction(game_object : g.GameData):
     buildings_in_construction = ''
     province_list = game_object.provinces
@@ -65,19 +37,7 @@ def returnBuildingsInConstruction(game_object : g.GameData):
 The code contained under this docstring manages everything related to the development of factories.
 '''
 
-# The isFactorySlotsMaxed method returns a boolean value that checks if a province's factory slots have been maxed out.
-# before choosing the number of factories to buy
-def isFactorySlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
-    province_list = game_object.provinces
-    province = province_list[province_index]
-    in_construction = []
-    for factory in game_object.factories_being_constructed:
-        if factory.getProvinceIndex() == province_index:
-            in_construction.append(factory)
-    return province.getFactories() + len(in_construction) == province.getMaxFactories()
-
-# The overMaxFactoryLimit method is similar to the isFactorySlotsMaxed method, but this one checks if the factories the 
-# user is attempting to buy exceeds the limit based on available factories and factories currently in construction
+# This method returns a boolean result which explains whether the user is building over the max factory limit.
 def overMaxFactoryLimit(game_object : g.GameData, province_index : int, number_of_factories_to_be_bought : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
@@ -87,32 +47,13 @@ def overMaxFactoryLimit(game_object : g.GameData, province_index : int, number_o
             in_construction.append(factory)
     return province.getFactories() + len(in_construction) + number_of_factories_to_be_bought > province.getMaxFactories()
 
+# This method returns a boolean result that is determined by whether the player has enough resources 
+# to purchase the selected number of factories.
 def factoriesCanBeBought(game_object : g.GameData, number_of_factories_to_be_bought : int):
     result = number_of_factories_to_be_bought*e.getCostOfFactory() < e.getCurrencyAmount(game_object) and number_of_factories_to_be_bought*e.getRequiredIronOfFactory() < r.getIronQuantity(game_object)
     return result
 
-# 5 available, 4 in construction, buy 2 more
-
-# The addFactoriesToQueue method will add factories into current production if the player has enough resources to buy 
-# them. If they do not have enough resources, it will not add any factories.
-'''def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
-    COST_OF_FACTORY = e.getCostOfFactory()
-    IRON_NEEDED = e.getRequiredIronOfFactory()
-
-    cost = number_of_factories*COST_OF_FACTORY
-    required_iron = number_of_factories*IRON_NEEDED
-
-    province_list = game_object.provinces
-    time = province_list[province_index].getConstructionSpeed()
-
-    if (cost <= e.getCurrencyAmount(game_object) and required_iron <= r.getIronQuantity(game_object) and not overMaxFactoryLimit(game_object, province_index, number_of_factories)):
-        game_object.factories_being_constructed.append(f.Factory(time, province_index, number_of_factories))
-        e.subtractCostFromCurrency(game_object, cost)
-        r.subtractFromIronQuantity(game_object, required_iron)
-        return (True, cost, required_iron)
-    else:
-        return (False, cost, required_iron)'''
-
+# This method will add factories into current production.
 def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
     COST_OF_FACTORY = e.getCostOfFactory()
     IRON_NEEDED = e.getRequiredIronOfFactory()
@@ -123,13 +64,12 @@ def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, pro
     province_list = game_object.provinces
     time = province_list[province_index].getConstructionSpeed()
 
-    game_object.factories_being_constructed.append(f.Factory(time, province_index, number_of_factories))
-    e.subtractCostFromCurrency(game_object, cost)
-    r.subtractFromIronQuantity(game_object, required_iron)
-    #return (cost, required_iron)
+    if not overMaxFactoryLimit(game_object, province_index, number_of_factories) and factoriesCanBeBought(game_object, number_of_factories):
+        game_object.factories_being_constructed.append(f.Factory(time, province_index, number_of_factories))
+        e.subtractCostFromCurrency(game_object, cost)
+        r.subtractFromIronQuantity(game_object, required_iron)
 
-
-# The updateFactoriesInConstruction method updates current factories in production by subtracting a day from the
+# This method updates current factories in production by subtracting a day from the
 # remaining number of days before it is finished constructing.
 def updateFactoriesInConstruction(game_object : g.GameData):
     province_list = game_object.provinces
@@ -141,7 +81,7 @@ def updateFactoriesInConstruction(game_object : g.GameData):
         elif factory_instance.getTime() > 0:
             factory_instance.subtractTime(1)
 
-# The getTotalFactoryOutput method essentially returns the total number of factories across all provinces.
+# This method essentially returns the total number of factories across all provinces.
 def getTotalFactoryOutput(game_object : g.GameData):
     province_list : list[p.Province] = game_object.provinces
     total = 0   
@@ -160,19 +100,7 @@ def getTotalFactoryOutput(game_object : g.GameData):
 The code contained under this docstring manages everything related to the development of mines.
 '''
 
-# The isMineSlotsMaxed method returns a boolean value that checks if a province's mine slots have been maxed out
-# before choosing the number of mines to buy
-def isMineSlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
-    province_list = game_object.provinces
-    province = province_list[province_index]
-    in_construction = []
-    for mine in game_object.mines_being_constructed:
-        if mine.getProvinceIndex() == province_index:
-            in_construction.append(mine)
-    return province.getMines() + len(in_construction) == province.getMaxMines()
-
-# The overMaxMineLimit method is similar to the isMineSlotsMaxed method, but this one checks if the mines the 
-# user is attempting to buy exceeds the limit based on available mines and mines currently in construction
+# This method returns a boolean result which explains whether the user is building over the max mine limit.
 def overMaxMineLimit(game_object : g.GameData, province_index : int, number_of_mines_to_be_bought : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
@@ -182,12 +110,13 @@ def overMaxMineLimit(game_object : g.GameData, province_index : int, number_of_m
             in_construction.append(mine)
     return province.getMines() + len(in_construction) + number_of_mines_to_be_bought > province.getMaxMines()
 
+# This method returns a boolean result that is determined by whether the player has enough resources 
+# to purchase the selected number of mines.
 def minesCanBeBought(game_object : g.GameData, number_of_mines_to_be_bought : int):
     result = number_of_mines_to_be_bought*e.getCostOfMine() < e.getCurrencyAmount(game_object) and number_of_mines_to_be_bought*e.getRequiredStoneOfMine() < r.getStoneQuantity(game_object)
     return result
 
-# The addMinesToQueue method will add mines into current production if the player has enough resources to buy 
-# them. If they do not have enough resources, it will not add any mines.
+# This method will add mines into current production.
 def addMinesToQueue(game_object : g.GameData, number_of_mines : int, province_index : int):
     COST_OF_MINE = e.getCostOfMine()
     STONE_NEEDED = e.getRequiredStoneOfMine()
@@ -198,15 +127,12 @@ def addMinesToQueue(game_object : g.GameData, number_of_mines : int, province_in
     province_list = game_object.provinces
     time = province_list[province_index].getConstructionSpeed()
 
-    if (cost <= e.getCurrencyAmount(game_object) and required_stone <= r.getStoneQuantity(game_object) and not overMaxMineLimit(game_object, province_index, number_of_mines)):
+    if not overMaxMineLimit(game_object, province_index, number_of_mines) and minesCanBeBought(game_object, number_of_mines):
         game_object.mines_being_constructed.append(m.Mine(time, province_index, number_of_mines))
         e.subtractCostFromCurrency(game_object, cost)
         r.subtractFromStoneQuantity(game_object, required_stone)
-        return (True, cost, required_stone)
-    else:
-        return (False, cost, required_stone)
 
-# The updateMinesInConstruction method updates current mines in production by subtracting a day from the
+# This method updates current mines in production by subtracting a day from the
 # remaining number of days before it is finished constructing.
 def updateMinesInConstruction(game_object : g.GameData):
     province_list = game_object.provinces
@@ -218,7 +144,7 @@ def updateMinesInConstruction(game_object : g.GameData):
         elif mine_instance.getTime() > 0:
             mine_instance.subtractTime(1)
 
-# The getTotalMiningOutputForCoal method returns the total number of mines across all provinces, provided that 
+# This method returns the total number of mines across all provinces, provided that 
 # province has coal deposits.
 def getTotalMiningOutputForCoal(game_object : g.GameData):
     province_list : list[p.Province] = game_object.provinces
@@ -228,7 +154,7 @@ def getTotalMiningOutputForCoal(game_object : g.GameData):
             total += province.getMines()
     return total
 
-# The getTotalMiningOutputForIron method returns the total number of mines across all provinces, provided that 
+# This method returns the total number of mines across all provinces, provided that 
 # province has iron deposits.
 def getTotalMiningOutputForIron(game_object : g.GameData):
     province_list : list[p.Province] = game_object.provinces
@@ -238,7 +164,7 @@ def getTotalMiningOutputForIron(game_object : g.GameData):
             total += province.getMines()
     return total
 
-# The getTotalMiningOutputForStone method returns the total number of mines across all provinces, provided that 
+# This method returns the total number of mines across all provinces, provided that 
 # province has stone deposits.
 def getTotalMiningOutputForStone(game_object : g.GameData):
     province_list : list[p.Province] = game_object.provinces
@@ -252,19 +178,7 @@ def getTotalMiningOutputForStone(game_object : g.GameData):
 The code contained under this docstring manages everything related to the development of infrastructure.
 '''
 
-# The isInfrastructureSlotsMaxed method returns a boolean value that checks if a province's infrastructure slots have been maxed out
-# before choosing the level to upgrade infrastructure by
-def isInfrastructureSlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
-    province_list = game_object.provinces
-    province = province_list[province_index]
-    in_construction = []
-    for infrastructure in game_object.infrastructure_being_constructed:
-        if infrastructure.getProvinceIndex() == province_index:
-            in_construction.append(infrastructure)
-    return province.getInfrastructureLevel() + len(in_construction) == province.getMaxInfrastructureLevel()
-
-# The overMaxInfrastructureLimit method is similar to the isInfrastructureSlotsMaxed method, but this one checks if the infrastructure levels the 
-# user is attempting to buy exceeds the limit based on current infrastructure level and infrastructure currently in construction
+# This method returns a boolean result which explains whether the user is building over the max mine limit.
 def overMaxInfrastructureLimit(game_object : g.GameData, province_index : int, infrastructure_level_to_be_upgraded_to : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
@@ -274,12 +188,13 @@ def overMaxInfrastructureLimit(game_object : g.GameData, province_index : int, i
             in_construction.append(infrastructure)
     return province.getInfrastructureLevel() + len(in_construction) + infrastructure_level_to_be_upgraded_to > province.getMaxInfrastructureLevel()
 
+# This method returns a boolean result that is determined by whether the player has enough resources 
+# to purchase the selected number of infrastructure levels.
 def infrastructureCanBeBought(game_object : g.GameData, number_of_infrastructure_levels_to_be_bought : int):
     result = number_of_infrastructure_levels_to_be_bought*e.getCostOfInfrastructure() < e.getCurrencyAmount(game_object) and number_of_infrastructure_levels_to_be_bought*e.getRequiredStoneOfInfrastructure() < r.getStoneQuantity(game_object)
     return result
 
-# The addInfrastructureToQueue method will add infrastructure into current production if the player has enough resources to buy 
-# them. If they do not have enough resources, it will not add any infrastructure.
+# This method will add infrastructure into current production.
 def addInfrastructureToQueue(game_object : g.GameData, number_of_infrastructure : int, province_index : int):
     COST_OF_INFRASTRUCTURE = e.getCostOfInfrastructure()
     STONE_NEEDED = e.getRequiredStoneOfInfrastructure()
@@ -288,15 +203,12 @@ def addInfrastructureToQueue(game_object : g.GameData, number_of_infrastructure 
     cost = number_of_infrastructure*COST_OF_INFRASTRUCTURE
     required_stone = number_of_infrastructure*STONE_NEEDED
 
-    if (cost <= e.getCurrencyAmount(game_object) and required_stone <= r.getStoneQuantity(game_object) and not overMaxInfrastructureLimit(game_object, province_index, number_of_infrastructure)):
+    if not overMaxInfrastructureLimit(game_object, province_index, number_of_infrastructure) and infrastructureCanBeBought(game_object, number_of_infrastructure):
         game_object.infrastructure_being_constructed.append(i.Infrastructure(TIME_FOR_INFRASTRUCTURE_UPGRADE, province_index, number_of_infrastructure))
         e.subtractCostFromCurrency(game_object, cost)
         r.subtractFromStoneQuantity(game_object, required_stone)
-        return (True, cost, required_stone)
-    else:
-        return (False, cost, required_stone)
-    
-# The updateInfrastructureInConstruction method updates current infrastructure in production by subtracting a day from the
+
+# This method updates current infrastructure in production by subtracting a day from the
 # remaining number of days before it is finished constructing.
 def updateInfrastructureInConstruction(game_object : g.GameData):
     province_list = game_object.provinces

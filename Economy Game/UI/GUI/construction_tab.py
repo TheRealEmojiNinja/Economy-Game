@@ -62,7 +62,7 @@ class ConstructionTab:
         mines_can_be_bought = not d.overMaxMineLimit(game_object, game_object.provinces.index(self.selected_province), self.current_amount) and d.minesCanBeBought(game_object, self.current_amount)
 
         infrastructure_can_be_bought = not d.overMaxInfrastructureLimit(game_object, game_object.provinces.index(self.selected_province), self.current_amount) and d.infrastructureCanBeBought(game_object, self.current_amount)
-        
+
         if factories_can_be_bought and not self.construction_widget.getFactoryConstructionStatus():
             self.construction_widget.enableFactoryConstruction()
         elif not factories_can_be_bought and self.construction_widget.getFactoryConstructionStatus():
@@ -101,38 +101,22 @@ class ConstructionTab:
         self.updateConstructionActions(game_object)
 
     def purchaseFactory(self, game_object : g.GameData):
-        '''print(self.current_amount)
-        result, cost, needed_iron = d.addFactoriesToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
-        result_frame = ctk.CTkFrame(root, border_width=3, corner_radius=3)
-        result_frame.place(x=560, y=540)
-
-        if result:
-            result_text = f"Purchase successful! {self.current_amount} factories are now currently being constructed for {cost} currency and {needed_iron} iron!"
-            self.construction_label.configure(text=d.returnBuildingsInConstruction(game_object))
-            self.resource_label.configure(text=f"{r.getCoalQuantity(game_object)} coal\n{r.getIronQuantity(game_object)} iron\n{r.getStoneQuantity(game_object)} stone")
-            self.economy_label.configure(text=f"{e.getCurrencyAmount(game_object)} currency\n{e.getDebtAmount(game_object)} in debt")
-            self.building_label.configure(text=f"{e.getTotalFactories(game_object)} total factories\n{e.getTotalMines(game_object)} total mines")
-        else:
-            result_text = f"Either you are building over the remaining factory slots, or you cannot afford {self.current_amount} factories for {cost} currency and {needed_iron} iron."
-
-        result_label = ctk.CTkLabel(result_frame, text=result_text)
-        button = ctk.CTkButton(result_frame, text="CLOSE", command=lambda:self.deleteWidget(result_frame))
-
-        result_label.pack(padx=10, pady=10)
-        button.pack(padx=10, pady=10)'''
 
         d.addFactoriesToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
         self.refreshBuildingsInConstruction(game_object)
+        self.updateConstructionActions(game_object)
         self.refresh_callback(game_object)
 
     def purchaseMine(self, game_object : g.GameData):
         d.addMinesToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
         self.refreshBuildingsInConstruction(game_object)
+        self.updateConstructionActions(game_object)
         self.refresh_callback(game_object)
 
     def purchaseInfrastructure(self, game_object : g.GameData):
         d.addInfrastructureToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
         self.refreshBuildingsInConstruction(game_object)
+        self.updateConstructionActions(game_object)
         self.refresh_callback(game_object)
 
     def deleteWidget(self, widget : ctk.CTk):
