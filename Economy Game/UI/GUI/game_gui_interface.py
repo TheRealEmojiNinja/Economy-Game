@@ -44,7 +44,7 @@ class EconomyGameInterface:
 
         #self.information_tab = info.InformationTab(self.tabs.add("Information"), game_object)
         self.provinces_tab = prov.ProvinceTab(self.tabs.add("View Provinces"), game_object)
-        self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object)
+        self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object, self.refreshValues)
         #self.tabs.tab("Manage Construction")
 
         self.control_panel_frame = ctk.CTkFrame(root, fg_color='#252A34', width=1480)
@@ -157,6 +157,13 @@ class EconomyGameInterface:
             #self.province_stats.configure(text=province.printStats())
             #print(province.printStats())
 
+        self.refreshValues(game_object)
+
+        self.construction_tab.updateConstructionActions(game_object)
+        self.construction_tab.refreshBuildingsInConstruction(game_object)
+        self.provinces_tab.updateProvinceView()
+    
+    def refreshValues(self, game_object : g.GameData):
         self.day_label.refresh(f": {game_object.day}")
         self.currency_label.refresh(f": {e.getCurrencyAmount(game_object)}")
         self.satisfaction_label.refresh(f": {game_object.satisfaction}")
@@ -165,8 +172,6 @@ class EconomyGameInterface:
         self.coal_label.refresh(f": {r.getCoalQuantity(game_object)}")
         self.iron_label.refresh(f": {r.getIronQuantity(game_object)}")
         self.stone_label.refresh(f": {r.getStoneQuantity(game_object)}")
-
-        self.construction_tab.updateConstructionActions(game_object)
         
 
 

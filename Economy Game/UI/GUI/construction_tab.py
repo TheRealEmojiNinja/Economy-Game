@@ -13,7 +13,9 @@ class ConstructionTab:
              "Mine":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/gold-mine.png'), dark_image=None, size=bigger_size),
              "Infrastructure":ctk.CTkImage(light_image=Image.open('Economy Game/Assets/Graphics/road.png'), dark_image=None, size=bigger_size)}
     
-    def __init__(self, parent, game_object):
+    def __init__(self, parent, game_object, refresh_callback : function):
+
+        self.refresh_callback = refresh_callback
 
         self.province_names = [province.getName().upper() for province in game_object.provinces]
         self.province_selector = selector_widget.SelectorWidget(parent, 
@@ -30,24 +32,51 @@ class ConstructionTab:
                                                                          ConstructionTab.icons["Minus"], ConstructionTab.icons["Plus"], 
                                                                          self.decreaseAmount, self.increaseAmount, game_object)
 
-        self.construction_widget = construction_widget.ConstructionWidget(parent, 1, 1, ConstructionTab.icons["Factory"], ConstructionTab.icons["Mine"], ConstructionTab.icons["Infrastructure"], self.purchaseFactory, self.purchaseMine, self.purchaseInfrastructure)
+        self.construction_widget = construction_widget.ConstructionWidget(parent, 1, 1, 
+                                                                          ConstructionTab.icons["Factory"], 
+                                                                          ConstructionTab.icons["Mine"], 
+                                                                          ConstructionTab.icons["Infrastructure"], game_object,
+                                                                          self.purchaseFactory, self.purchaseMine, self.purchaseInfrastructure)
+
+        self.construction_stats = ctk.CTkScrollableFrame(parent, corner_radius=10, width=300, height=500, fg_color='#292F3B')
+        self.construction_stats.grid(row=0, column=2, rowspan=20, padx=7, pady=7)
+        self.construction_stats.columnconfigure(0, weight=1)
+
+        self.construction_title = ctk.CTkLabel(self.construction_stats, text="BUILDINGS IN\nCONSTRUCTION", font=('Bahnschrift Light SemiCondensed', 25, 'bold'))
+        self.construction_title.grid(row=0, column=0, pady=5)
+
+        self.construction_label = ctk.CTkLabel(self.construction_stats, text=d.returnBuildingsInConstruction(game_object), font=('Consolas', 18))
+        self.construction_label.grid(row=1, column=0, pady=8)
 
         self.updateConstructionActions(game_object)
         
     def changeProvinceSelection(self, choice, game_object : g.GameData):
             index = self.province_names.index(choice)
             self.selected_province = game_object.provinces[index]
-            #self.updateConstructionActions(game_object)
+            self.updateConstructionActions(game_object)
     
     def updateConstructionActions(self, game_object : g.GameData):
-        print("UPDATING")
-        factories_can_be_bought = not d.overMaxFactoryLimit(game_object, game_object.provinces.index(self.selected_province), self.current_amount) and d.factoriesCanBeBought(game_object, game_object.provinces.index(self.selected_province), self.current_amount)
-        print(self.construction_widget.getFactoryConstructionStatus())
+        
+        factories_can_be_bought = not d.overMaxFactoryLimit(game_object, game_object.provinces.index(self.selected_province), self.current_amount) and d.factoriesCanBeBought(game_object, self.current_amount)
+        
+        mines_can_be_bought = not d.overMaxMineLimit(game_object, game_object.provinces.index(self.selected_province), self.current_amount) and d.minesCanBeBought(game_object, self.current_amount)
+
+        infrastructure_can_be_bought = not d.overMaxInfrastructureLimit(game_object, game_object.provinces.index(self.selected_province), self.current_amount) and d.infrastructureCanBeBought(game_object, self.current_amount)
+        
         if factories_can_be_bought and not self.construction_widget.getFactoryConstructionStatus():
             self.construction_widget.enableFactoryConstruction()
         elif not factories_can_be_bought and self.construction_widget.getFactoryConstructionStatus():
             self.construction_widget.disableFactoryConstruction()
+        
+        if mines_can_be_bought and not self.construction_widget.getMineConstructionStatus():
+            self.construction_widget.enableMineConstruction()
+        elif not mines_can_be_bought and self.construction_widget.getMineConstructionStatus():
+            self.construction_widget.disableMineConstruction()
 
+        if infrastructure_can_be_bought and not self.construction_widget.getInfrastructureConstructionStatus():
+            self.construction_widget.enableInfrastructureConstruction()
+        elif not infrastructure_can_be_bought and self.construction_widget.getInfrastructureConstructionStatus():
+            self.construction_widget.disableInfrastructureonstruction()
     
     def decreaseAmount(self, game_object : g.GameData):
         if self.current_amount > 0:
@@ -58,7 +87,7 @@ class ConstructionTab:
             self.number_of_buildings_spinbox.disableLeftButton()
         
         self.number_of_buildings_spinbox.refresh(self.current_amount)
-        #self.updateConstructionActions(game_object)
+        self.updateConstructionActions(game_object)
 
     def increaseAmount(self, game_object : g.GameData):
         if self.current_amount < 10:
@@ -69,9 +98,9 @@ class ConstructionTab:
             self.number_of_buildings_spinbox.disableRightButton()
 
         self.number_of_buildings_spinbox.refresh(self.current_amount)
-        #self.updateConstructionActions(game_object)
+        self.updateConstructionActions(game_object)
 
-    def purchaseFactory(self, game_object : g.GameData, root : ctk.CTk):
+    def purchaseFactory(self, game_object : g.GameData):
         '''print(self.current_amount)
         result, cost, needed_iron = d.addFactoriesToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
         result_frame = ctk.CTkFrame(root, border_width=3, corner_radius=3)
@@ -91,15 +120,23 @@ class ConstructionTab:
 
         result_label.pack(padx=10, pady=10)
         button.pack(padx=10, pady=10)'''
-        pass
 
-    def purchaseMine(self, game_object : g.GameData, root : ctk.CTk):
-        result, cost, needed_stone = d.addMinesToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
+        d.addFactoriesToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
+        self.refreshBuildingsInConstruction(game_object)
+        self.refresh_callback(game_object)
 
-        pass
+    def purchaseMine(self, game_object : g.GameData):
+        d.addMinesToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
+        self.refreshBuildingsInConstruction(game_object)
+        self.refresh_callback(game_object)
 
-    def purchaseInfrastructure(self, game_object : g.GameData, root : ctk.CTk):
-        pass
+    def purchaseInfrastructure(self, game_object : g.GameData):
+        d.addInfrastructureToQueue(game_object, self.current_amount, game_object.provinces.index(self.selected_province))
+        self.refreshBuildingsInConstruction(game_object)
+        self.refresh_callback(game_object)
 
     def deleteWidget(self, widget : ctk.CTk):
         widget.destroy()
+
+    def refreshBuildingsInConstruction(self, game_object: g.GameData):
+        self.construction_label.configure(text=d.returnBuildingsInConstruction(game_object))

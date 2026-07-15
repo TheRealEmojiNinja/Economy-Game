@@ -87,7 +87,7 @@ def overMaxFactoryLimit(game_object : g.GameData, province_index : int, number_o
             in_construction.append(factory)
     return province.getFactories() + len(in_construction) + number_of_factories_to_be_bought > province.getMaxFactories()
 
-def factoriesCanBeBought(game_object : g.GameData, province_index : int, number_of_factories_to_be_bought : int):
+def factoriesCanBeBought(game_object : g.GameData, number_of_factories_to_be_bought : int):
     result = number_of_factories_to_be_bought*e.getCostOfFactory() < e.getCurrencyAmount(game_object) and number_of_factories_to_be_bought*e.getRequiredIronOfFactory() < r.getIronQuantity(game_object)
     return result
 
@@ -95,7 +95,7 @@ def factoriesCanBeBought(game_object : g.GameData, province_index : int, number_
 
 # The addFactoriesToQueue method will add factories into current production if the player has enough resources to buy 
 # them. If they do not have enough resources, it will not add any factories.
-def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
+'''def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
     COST_OF_FACTORY = e.getCostOfFactory()
     IRON_NEEDED = e.getRequiredIronOfFactory()
 
@@ -111,7 +111,23 @@ def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, pro
         r.subtractFromIronQuantity(game_object, required_iron)
         return (True, cost, required_iron)
     else:
-        return (False, cost, required_iron)
+        return (False, cost, required_iron)'''
+
+def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
+    COST_OF_FACTORY = e.getCostOfFactory()
+    IRON_NEEDED = e.getRequiredIronOfFactory()
+
+    cost = number_of_factories*COST_OF_FACTORY
+    required_iron = number_of_factories*IRON_NEEDED
+
+    province_list = game_object.provinces
+    time = province_list[province_index].getConstructionSpeed()
+
+    game_object.factories_being_constructed.append(f.Factory(time, province_index, number_of_factories))
+    e.subtractCostFromCurrency(game_object, cost)
+    r.subtractFromIronQuantity(game_object, required_iron)
+    #return (cost, required_iron)
+
 
 # The updateFactoriesInConstruction method updates current factories in production by subtracting a day from the
 # remaining number of days before it is finished constructing.
@@ -160,7 +176,15 @@ def isMineSlotsMaxed(game_object : g.GameData, province_index : int) -> bool:
 def overMaxMineLimit(game_object : g.GameData, province_index : int, number_of_mines_to_be_bought : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
-    return province.getMines() + len(game_object.mines_being_constructed) + number_of_mines_to_be_bought > province.getMaxMines()
+    in_construction = []
+    for mine in game_object.mines_being_constructed:
+        if mine.getProvinceIndex() == province_index:
+            in_construction.append(mine)
+    return province.getMines() + len(in_construction) + number_of_mines_to_be_bought > province.getMaxMines()
+
+def minesCanBeBought(game_object : g.GameData, number_of_mines_to_be_bought : int):
+    result = number_of_mines_to_be_bought*e.getCostOfMine() < e.getCurrencyAmount(game_object) and number_of_mines_to_be_bought*e.getRequiredStoneOfMine() < r.getStoneQuantity(game_object)
+    return result
 
 # The addMinesToQueue method will add mines into current production if the player has enough resources to buy 
 # them. If they do not have enough resources, it will not add any mines.
@@ -244,7 +268,15 @@ def isInfrastructureSlotsMaxed(game_object : g.GameData, province_index : int) -
 def overMaxInfrastructureLimit(game_object : g.GameData, province_index : int, infrastructure_level_to_be_upgraded_to : int) -> bool:
     province_list = game_object.provinces
     province = province_list[province_index]
-    return province.getInfrastructureLevel() + len(game_object.infrastructure_being_constructed) + infrastructure_level_to_be_upgraded_to > province.getMaxInfrastructureLevel()
+    in_construction = []
+    for infrastructure in game_object.infrastructure_being_constructed:
+        if infrastructure.getProvinceIndex() == province_index:
+            in_construction.append(infrastructure)
+    return province.getInfrastructureLevel() + len(in_construction) + infrastructure_level_to_be_upgraded_to > province.getMaxInfrastructureLevel()
+
+def infrastructureCanBeBought(game_object : g.GameData, number_of_infrastructure_levels_to_be_bought : int):
+    result = number_of_infrastructure_levels_to_be_bought*e.getCostOfInfrastructure() < e.getCurrencyAmount(game_object) and number_of_infrastructure_levels_to_be_bought*e.getRequiredStoneOfInfrastructure() < r.getStoneQuantity(game_object)
+    return result
 
 # The addInfrastructureToQueue method will add infrastructure into current production if the player has enough resources to buy 
 # them. If they do not have enough resources, it will not add any infrastructure.
