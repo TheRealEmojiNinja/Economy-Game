@@ -1,4 +1,7 @@
-import customtkinter as ctk, UI.GUI.selector_widget as selector_widget, UI.GUI.spin_box_widget as spin_box_widget, UI.GUI.construction_widget as construction_widget, Systems.development_systems as d, Systems.economy_system as e, Data.game_data as g
+import customtkinter as ctk
+import UI.GUI.selector_widget as selector_widget, UI.GUI.spin_box_widget as spin_box_widget
+import UI.GUI.construction_widget as construction_widget, UI.GUI.scrollable_widget as scrollable_widget
+import Systems.development_systems as d, Systems.economy_system as e, Data.game_data as g
 
 from PIL import Image
 
@@ -37,8 +40,10 @@ class ConstructionTab:
                                                                           ConstructionTab.icons["Mine"], 
                                                                           ConstructionTab.icons["Infrastructure"], game_object,
                                                                           self.purchaseFactory, self.purchaseMine, self.purchaseInfrastructure)
+        
+        self.buildings_in_construction_widget = scrollable_widget.ScrollableWidget(parent, "BUILDINGS IN\nCONSTRUCTION", d.returnBuildingsInConstruction(game_object), 0, 2)
 
-        self.construction_stats = ctk.CTkScrollableFrame(parent, corner_radius=10, width=300, height=500, fg_color='#292F3B')
+        '''self.construction_stats = ctk.CTkScrollableFrame(parent, corner_radius=10, width=300, height=500, fg_color='#292F3B')
         self.construction_stats.grid(row=0, column=2, rowspan=20, padx=7, pady=7)
         self.construction_stats.columnconfigure(0, weight=1)
 
@@ -46,7 +51,7 @@ class ConstructionTab:
         self.construction_title.grid(row=0, column=0, pady=5)
 
         self.construction_label = ctk.CTkLabel(self.construction_stats, text=d.returnBuildingsInConstruction(game_object), font=('Consolas', 18))
-        self.construction_label.grid(row=1, column=0, pady=8)
+        self.construction_label.grid(row=1, column=0, pady=8)'''
 
         self.updateConstructionActions(game_object)
         
@@ -122,5 +127,5 @@ class ConstructionTab:
     def deleteWidget(self, widget : ctk.CTk):
         widget.destroy()
 
-    def refreshBuildingsInConstruction(self, game_object: g.GameData):
-        self.construction_label.configure(text=d.returnBuildingsInConstruction(game_object))
+    def refreshBuildingsInConstruction(self, game_object : g.GameData):
+        self.buildings_in_construction_widget.refresh(d.returnBuildingsInConstruction(game_object))

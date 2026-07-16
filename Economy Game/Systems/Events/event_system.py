@@ -52,3 +52,18 @@ def getEventMessageAndExecuteEvent(game_object : g.GameData, event : str, provin
 # Complete implementation of this method when working on version v.1.2.1
 def generateRandomPopUp():
     pass
+
+def getEventHistory(game_object : g.GameData):
+    event_history = ''
+
+    for event in game_object.event_history:
+        event_history += event + '\n\n'
+    
+    return event_history
+
+def addToEventHistory(game_object : g.GameData, event : str):
+
+    if len(game_object.event_history) > 9:
+        game_object.event_history.pop(0)
+    if event != None:
+        game_object.event_history.append(event)

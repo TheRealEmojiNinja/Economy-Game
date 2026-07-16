@@ -36,3 +36,5 @@ class GameData:
         self.EVENT_DESCRIPTIONS = d.loadEventDescriptions()
 
         self.provinces : List[p.Province] = []
+
+        self.event_history = []

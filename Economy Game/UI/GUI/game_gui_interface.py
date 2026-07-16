@@ -1,6 +1,6 @@
 import Systems.time_system as t, Systems.economy_system as e, Systems.resource_system as r, Systems.time_system as t, Systems.development_systems as d, Data.game_data as g
 
-import UI.GUI.information_tab as info, UI.GUI.provinces_tab as prov, UI.GUI.construction_tab as const, UI.GUI.info_widget as widget
+import UI.GUI.dashboard_tab as dashboard, UI.GUI.provinces_tab as prov, UI.GUI.construction_tab as const, UI.GUI.info_widget as widget
 
 import customtkinter as ctk
 import random
@@ -29,6 +29,8 @@ class EconomyGameInterface:
 
         self.progressing = False
 
+        self.game_speed = 3000
+
         # Set title of game window
         self.title = ctk.CTkLabel(root, text="Economy Game")
 
@@ -42,7 +44,7 @@ class EconomyGameInterface:
 
         #self.laws_tab = self.tabs.add("Manage Laws")
 
-        #self.information_tab = info.InformationTab(self.tabs.add("Information"), game_object)
+        self.dashboard_tab = dashboard.DashBoardTab(self.tabs.add("Dashboard"), game_object)
         self.provinces_tab = prov.ProvinceTab(self.tabs.add("View Provinces"), game_object)
         self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object, self.refreshValues)
         #self.tabs.tab("Manage Construction")
@@ -51,16 +53,10 @@ class EconomyGameInterface:
         self.control_panel_frame.grid_propagate(False)
         self.control_panel_frame.grid_rowconfigure(0, weight=1)
         self.control_panel_frame.grid_columnconfigure(0, weight=1)
-        #self.control_panel_frame.grid_rowconfigure((0,1,2), weight=1)
-        #self.control_panel_frame.grid_columnconfigure((0, 1, 2, 3), weight=1)
         self.control_panel_frame.grid(row=1, column=0)
 
         self.centering_frame = ctk.CTkFrame(self.control_panel_frame, fg_color='transparent')
         self.centering_frame.grid(row=0, column=0)
-        
-
-        #self.resource_frame = ctk.CTkFrame(self.control_panel_frame, corner_radius=10, height=60, fg_color='#343B4A')
-        #self.resource_frame.grid(row=0, column=0, padx=10, pady=10)
 
         self.day_label = widget.InfoWidget(self.centering_frame, 
                                                 f": {game_object.day}", 
@@ -133,12 +129,12 @@ class EconomyGameInterface:
             root.after(2000, self.advanceTime, game_object, root)
 
     def displayEvent(self, game_object : g.GameData, root : ctk.CTk, event : str):
-        event_frame = ctk.CTkFrame(root, border_width=3, corner_radius=3)
+        '''event_frame = ctk.CTkFrame(root, border_width=3, corner_radius=3)
         event_frame.place(x=random.randint(100, 1020), y=random.randint(100, 680))
         event_label = ctk.CTkLabel(event_frame, text=event)
         event_button = ctk.CTkButton(event_frame, text="CLOSE", command=lambda:self.deleteWidget(event_frame))
         event_label.pack(padx=10, pady=10)
-        event_button.pack(padx=10, pady=10)
+        event_button.pack(padx=10, pady=10)'''
 
     def deleteWidget(self, widget : ctk.CTk):
         widget.destroy()
@@ -148,10 +144,10 @@ class EconomyGameInterface:
 
         print("progressing")
 
-        event = t.updateDay(game_object)
+        t.updateDay(game_object)
 
-        if event != None:
-            self.displayEvent(game_object, root, event)
+        #if event != None:
+            #self.displayEvent(game_object, root, event)
 
         #for province in game_object.provinces:
             #self.province_stats.configure(text=province.printStats())
@@ -162,6 +158,7 @@ class EconomyGameInterface:
         self.construction_tab.updateConstructionActions(game_object)
         self.construction_tab.refreshBuildingsInConstruction(game_object)
         self.provinces_tab.updateProvinceView()
+        self.dashboard_tab.refreshValues(game_object)
     
     def refreshValues(self, game_object : g.GameData):
         self.day_label.refresh(f": {game_object.day}")
