@@ -24,14 +24,16 @@ def createProvinces(game_object : g.GameData):
         name = getRandomProvinceName(game_object)
         factories = e.randomizeNumberOfFactories()
         mines = e.randomizeNumberOfMines()
+        sawmills = e.randomizeNumberOfSawmills()
         infrastructure = e.randomizeInfrastructureLevel()
         deposits = r.randomizeResourceDeposits()
         terrain = t.randomizeTerrainType()
         max_factories = t.maxFactoryCount(terrain)
         max_mines = t.maxMineCount(terrain)
+        max_sawmills = t.maxSawmillCount(terrain)
         max_infrastructure = t.maxInfrastructureCount(terrain)
 
-        province = p.Province(name, factories, mines, deposits, infrastructure, terrain, max_factories, max_mines, max_infrastructure)
+        province = p.Province(name, factories, mines, sawmills, deposits, infrastructure, terrain, max_factories, max_mines, max_infrastructure)
         province_list.append(province)
 
         i += 1

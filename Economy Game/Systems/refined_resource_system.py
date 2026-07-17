@@ -7,12 +7,12 @@ Author: TheEmojiNinja
 # Import required modules
 import random, Data.game_data as g
 
-# Helper functions for the coal variable
-def randomizeCoalQuantity(game_object : g.GameData) -> None:
-    game_object.coal = random.randrange(1000, 2000)
+# Helper functions for the steel variable
+def randomizeSteelQuantity(game_object : g.GameData) -> None:
+    game_object.steel = random.randrange(45, 95)
 
-def getCoalQuantity(game_object : g.GameData) -> int:
-    return game_object.coal
+def getSteelQuantity(game_object : g.GameData) -> int:
+    return game_object.steel
 
 def addToCoalQuantity(game_object : g.GameData, added_coal : int) -> None:
     game_object.coal += added_coal
@@ -51,6 +51,45 @@ def addToStoneQuantity(game_object : g.GameData, added_stone : int) -> None:
 
 def subtractFromStoneQuantity(game_object : g.GameData, subtracted_stone : int) -> None:
     game_object.stone -= subtracted_stone
+
+# Helper functions for the timber variable
+def randomizeTimberQuantity(game_object : g.GameData) -> None:
+    game_object.timber = random.randrange(50, 105)
+
+def getTimberQuantity(game_object : g.GameData) -> int:
+    return game_object.timber
+
+def addToTimberQuantity(game_object : g.GameData, added_timber : int) -> None:
+    game_object.timber += added_timber
+
+def subtractFromTimberQuantity(game_object : g.GameData, subtracted_timber : int) -> None:
+    game_object.timber -= subtracted_timber
+
+# Helper functions for the copper variable
+def randomizeCopperQuantity(game_object : g.GameData) -> None:
+    game_object.copper = random.randrange(5, 25)
+
+def getCopperQuantity(game_object : g.GameData) -> int:
+    return game_object.copper
+
+def addToCopperQuantity(game_object : g.GameData, added_copper : int) -> None:
+    game_object.copper += added_copper
+
+def subtractFromCopperQuantity(game_object : g.GameData, subtracted_copper : int) -> None:
+    game_object.copper -= subtracted_copper
+
+# Helper functions for the copper variable
+def randomizeCopperQuantity(game_object : g.GameData) -> None:
+    game_object.copper = random.randrange(5, 25)
+
+def getCopperQuantity(game_object : g.GameData) -> int:
+    return game_object.copper
+
+def addToCopperQuantity(game_object : g.GameData, added_copper : int) -> None:
+    game_object.copper += added_copper
+
+def subtractFromCopperQuantity(game_object : g.GameData, subtracted_copper : int) -> None:
+    game_object.copper -= subtracted_copper
 
 def randomStoneOutput() -> int:
     return random.randint(5, 10)
