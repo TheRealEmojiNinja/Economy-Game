@@ -13,7 +13,6 @@ def doElectricalOutageEvent(game_object : g.GameData, province : p.Province) -> 
     days = random.randint(2, 7)
     province.updateOutageStatus(True)
     province.updateOutageTime(days+1)
-    #print(province.printStats())
     return random.choice(game_object.EVENT_DESCRIPTIONS["Electrical_Outage"]).format(province=province.getName(), days=days)
 
 def doMineCollapseEvent(game_object : g.GameData, province : p.Province) -> None:
