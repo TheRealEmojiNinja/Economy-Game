@@ -23,8 +23,6 @@ e.randomizeDebtAmount(game)
 # Call the createProvinces method to generate unique provinces
 p.createProvinces(game)
 
-testingGUI = True
-
 # Main game loop
 gui.mainGameLoop(game)
 

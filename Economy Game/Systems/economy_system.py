@@ -36,37 +36,41 @@ def subtractCurrencyFromDebt(game_object : g.GameData, amount : int) -> None:
 
 # Functions that randomize starting values for factories, mines and infrastructure level
 def randomizeNumberOfFactories() -> int:
-    # og 0,2
     return random.randrange(1, 2)
 
 def randomizeNumberOfMines() -> int:
     return random.randrange(1, 3)
 
+def randomizeNumberOfSawmills() -> int:
+    return random.randrange(1, 3)
+
 def randomizeInfrastructureLevel() -> int:
-    # og 0,2
     return random.randrange(1, 2)
 
 # Helper functions that return the cost and required resources for constructing factories, mines and infrastructure level
-def getCostOfFactory() -> int:
-    return 250
+def getRequirementsOfFactoryConstruction() -> tuple[int]:
+    cost_of_factory = 1000
+    required_stone_for_factory = 600
+    required_iron_for_factory = 350
+    required_copper_for_factory = 200
+    return (cost_of_factory, required_stone_for_factory, required_iron_for_factory, required_copper_for_factory)
 
-def getRequiredIronOfFactory() -> int:
-    # og 500
-    return 50
+def getRequirementsOfMineConstruction() -> tuple[int]:
+    cost_of_mine = 600
+    required_wood_for_mine = 450
+    return (cost_of_mine, required_wood_for_mine)
 
-def getCostOfMine() -> int:
-    return 300
+def getRequirementsOfSawmillConstruction() -> tuple[int]:
+    cost_of_sawmill = 450
+    required_stone_for_sawmill = 300
+    required_wood_for_sawmill = 100
+    return (cost_of_sawmill, required_stone_for_sawmill, required_wood_for_sawmill)
 
-def getRequiredStoneOfMine() -> int:
-    # og 500
-    return 50
-
-def getCostOfInfrastructure() -> int:
-    return 350
-
-def getRequiredStoneOfInfrastructure() -> int:
-    # og 300
-    return 30
+def getRequirementsOfInfrastructureConstruction() -> tuple[int]:
+    cost_of_infrastructure = 350
+    required_stone_for_infrastructure = 300
+    required_wood_for_infrastructure = 200
+    return (cost_of_infrastructure, required_stone_for_infrastructure, required_wood_for_infrastructure)
 
 def payDebt(game_object : g.GameData) -> None:
     amount_to_be_paid = random.randint(250, 500)

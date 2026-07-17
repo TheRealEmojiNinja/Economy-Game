@@ -1,16 +1,16 @@
 '''
-Preface: The Factory class is used to create a unique factory.
+Preface: The Sawmill class is used to create a unique sawmill.
 
 Author: TheEmojiNinja
 '''
 
-# Factory class declaration
-class Factory:
+# Sawmill class declaration
+class Sawmill:
 
     def __init__(self, time : int, province_index : int, number : int) -> None:
         self.construction_time = time
         self.province_index = province_index
-        self.number_of_factories = number
+        self.number_of_sawmills = number
     
     def getTime(self) -> int:
         return self.construction_time
@@ -18,8 +18,8 @@ class Factory:
     def getProvinceIndex(self) -> int:
         return self.province_index
     
-    def getNumberOfFactories(self) -> int:
-        return self.number_of_factories
+    def getNumberOfSawmills(self) -> int:
+        return self.number_of_sawmills
     
     def addTime(self, time : int) -> int:
         self.construction_time += time

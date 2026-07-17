@@ -62,6 +62,13 @@ Version 1.4.0 should aim to expand the laws-based system by introducing a sub-sy
 There may be multiple versions inbetween major updates that might fix bugs or add minor modifications/features to the game.
 
 
+Due to the transition from a text-based UI to a GUI, the previous roadmap is considered outdated and henceforth a new one will be developed below:
+
+Version 1.2.0 will be deemed the starting point.
+
+Version 1.2.5 will implement new resources into the game: timber and copper. In addition, some resources will have to be made with raw materials now, such as steel, fuel and wood.
+
+
 1. Building Limits
 2. Infrastructure
 3. Random Events

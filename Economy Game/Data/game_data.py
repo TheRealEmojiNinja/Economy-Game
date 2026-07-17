@@ -6,7 +6,7 @@ Author: TheEmojiNinja
 '''
 
 # Required modules
-import Models.factory as f, Models.mine as m, Models.province as p, Models.infrastructure as i, Data.data_loader as d
+import Models.factory as f, Models.mine as m, Models.province as p, Models.infrastructure as i, Models.sawmill as s, Data.data_loader as d
 from typing import List
 
 # GameData class declaration
@@ -14,14 +14,24 @@ class GameData:
     def __init__(self):
         
         self.currency = 0
-        self.coal, self.iron, self.stone = 0, 0, 0
         self.debt = 0
+
+        self.coal = 0
+        self.iron = 0
+        self.stone = 0
+        self.timber = 0
+        self.copper = 0
+        
+        self.steel = 0
+        self.fuel = 0
+        self.wood = 0
 
         self.tax_level = 0
 
         self.factories_being_constructed: List[f.Factory] = []
         self.mines_being_constructed: List[m.Mine] = []
         self.infrastructure_being_constructed: List[i.Infrastructure]= []
+        self.sawmills_being_constructed: List[s.Sawmill] = []
 
         self.resource_deposits = []
 

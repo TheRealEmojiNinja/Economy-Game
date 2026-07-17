@@ -6,9 +6,6 @@ Author: TheEmojiNinja
 
 # Infrastructure class declaration
 class Infrastructure:
-    construction_time = 0
-    province_index = 0
-    updated_infrastructure_level = 0
 
     def __init__(self, time : int, province_index : int, number : int) -> None:
         self.construction_time = time

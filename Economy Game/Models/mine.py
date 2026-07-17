@@ -6,9 +6,6 @@ Author: TheEmojiNinja
 
 # Mine class declaration
 class Mine:
-    construction_time = 0
-    province_index = 0
-    number_of_mines = 0
 
     def __init__(self, time : int, province_index : int, number : int) -> None:
         self.construction_time = time

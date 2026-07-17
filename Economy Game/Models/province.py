@@ -14,32 +14,22 @@ class Province:
     
     # Constructor with specific parameters to take in arguments that is then applied to the different components of the province
     def __init__(self, province_name : str, number_of_factories : int, 
-                 number_of_mines : int, province_resource_deposits : list, 
+                 number_of_mines : int, number_of_sawmills : int,
+                 province_resource_deposits : list, 
                  infrastructure_level : int, terrain_type : str, 
                  max_factories_possible : int, max_mines_possible : int, 
-                 max_infrastructure_possible : int) -> None:
-        '''self.province = {"Name":province_name, 
-                         "Factories":number_of_factories, 
-                         "Mines":number_of_mines, 
-                         "Resource_Deposits":province_resource_deposits, 
-                         "Infrastructure_Level":infrastructure_level, 
-                         "Hidden_Resource_Deposits":["Coal", "Iron", "Stone"],
-                         "Terrain":terrain_type,
-                         "Max_Factories":max_factories_possible,
-                         "Max_Mines":max_mines_possible,
-                         "Max_Infrastructure_Level":max_infrastructure_possible,
-                         "Electrical_Outage":False,
-                         "Outage_Time":-1,
-                         "Maximum_Production":False}'''
+                 max_sawmills_possible : int, max_infrastructure_possible : int) -> None:
         
         self.province_name = province_name
         self.factories = number_of_factories
         self.mines = number_of_mines
+        self.sawmills = number_of_sawmills
         self.infrastructure_level = infrastructure_level
         self.resource_deposits = province_resource_deposits
         self.province_terrain = terrain_type
         self.max_factory_limit = max_factories_possible
         self.max_mine_limit = max_mines_possible
+        self.max_sawmill_limit = max_sawmills_possible
         self.max_infrastructure_limit = max_infrastructure_possible
         self.hidden_resource_deposits = Province.resources
         self.electrical_outage_status = False
