@@ -30,19 +30,18 @@ def minesCanBeBought(game_object : g.GameData, number_of_mines_to_be_bought : in
 
 # This method will add mines into current production.
 def addMinesToQueue(game_object : g.GameData, number_of_mines : int, province_index : int):
-    COST_OF_MINE = e.getCostOfMine()
-    STONE_NEEDED = e.getRequiredStoneOfMine()
+    COST_OF_MINE, REQUIRED_WOOD_FOR_MINE = economy.getRequirementsOfMineConstruction()
 
     cost = number_of_mines*COST_OF_MINE
-    required_stone = number_of_mines*STONE_NEEDED
+    required_wood = number_of_mines*REQUIRED_WOOD_FOR_MINE
 
     province_list = game_object.provinces
     time = province_list[province_index].getConstructionSpeed()
 
     if not overMaxMineLimit(game_object, province_index, number_of_mines) and minesCanBeBought(game_object, number_of_mines):
         game_object.mines_being_constructed.append(m.Mine(time, province_index, number_of_mines))
-        e.subtractCostFromCurrency(game_object, cost)
-        r.subtractFromStoneQuantity(game_object, required_stone)
+        economy.subtractCostFromCurrency(game_object, cost)
+        refined_resource.subtractFromWoodQuantity(game_object, required_wood)
 
 # This method updates current mines in production by subtracting a day from the
 # remaining number of days before it is finished constructing.

@@ -5,27 +5,11 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Systems.economy_system as e, Systems.development_systems as d, Systems.resource_system as r, Systems.Events.event_system as ev, Data.game_data as g, random, time
+import Systems.economy_system as e, Systems.Development.factory_development as factory_development, Systems.Development.mine_development as mine_development, Systems.Development.sawmill_development as sawmill_development, Systems.Development.infrastructure_development as infrastructure_development
+import Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource, Systems.Events.event_system as ev, Data.game_data as g, random, time
 
 # The updateDay method simply computes the day's resource outputs and consumption before progressing to another day.
 def updateDay(game_object : g.GameData):
-
-    # Progress the construction of factories, mines and infrastructure
-    d.updateFactoriesInConstruction(game_object)
-    d.updateMinesInConstruction(game_object)
-    d.updateInfrastructureInConstruction(game_object)
-
-    # Add the day's worth of coal to total stocks
-    obtained_coal = d.getTotalMiningOutputForCoal(game_object)*r.randomCoalOutput()
-    r.addToCoalQuantity(game_object, obtained_coal)
-
-    # Add the day's worth of iron to total stocks
-    obtained_iron = d.getTotalMiningOutputForIron(game_object)*r.randomIronOutput()
-    r.addToIronQuantity(game_object, obtained_iron)
-
-    # Add the day's worth of stone to total stocks
-    obtained_stone = d.getTotalMiningOutputForStone(game_object)*r.randomStoneOutput()
-    r.addToStoneQuantity(game_object, obtained_stone)
 
     # Subtract coal deposits dependent on number of factories to simulate coal consumption
     total_factories = d.getTotalFactoryOutput(game_object)
@@ -54,4 +38,43 @@ def updateDay(game_object : g.GameData):
     # Progress the day
     game_object.day += 1
 
+# Progress the construction of factories, mines, sawmills and infrastructure
+def updateBuildingsInConstruction(game_object : g.GameData) -> None:
+    factory_development.updateFactoriesInConstruction(game_object)
+    mine_development.updateMinesInConstruction(game_object)
+    sawmill_development.updateSawmillsInConstruction(game_object)
+    infrastructure_development.updateInfrastructureInConstruction(game_object)
+
+def updateRawResourceGains(game_object : g.GameData) -> None:
+    obtained_coal = mine_development.getTotalMiningOutputForCoal(game_object)*raw_resource.randomCoalOutput()
+    raw_resource.addToCoalQuantity(game_object, obtained_coal)
+
+    obtained_iron = mine_development.getTotalMiningOutputForIron(game_object)*raw_resource.randomIronOutput()
+    raw_resource.addToIronQuantity(game_object, obtained_iron)
     
+    obtained_stone = mine_development.getTotalMiningOutputForStone(game_object)*raw_resource.randomStoneOutput()
+    raw_resource.addToStoneQuantity(game_object, obtained_stone)
+
+    obtained_copper = mine_development.getTotalMiningOutputForCopper(game_object)*raw_resource.randomCopperOutput()
+    raw_resource.addToCopperQuantity(game_object, obtained_copper)
+
+    obtained_timber = sawmill_development.getTotalLumberOutputForTimber(game_object)*raw_resource.randomTimberOutput()
+    raw_resource.addToTimberQuantity(game_object, obtained_timber)
+
+def updateRefinedResourceGains(game_object : g.GameData) -> None:
+    province_list = game_object.provinces
+    obtained_steel = 0
+    obtained_fuel = 0
+    obtained_wood = 0
+    
+    for province in province_list:
+        if province.getSteelProductionStatus():
+            obtained_steel += refined_resource.calculateSteelOutput(game_object)*factory_development.getTotalFactoryOutput(game_object)
+        if province.getFuelProductionStatus():
+            obtained_fuel += refined_resource.calculateFuelOutput(game_object)
+        if province.getWoodProductionStatus():
+            obtained_wood += refined_resource.calculateWoodOutput()*sawmill_development.getTotalLumberOutputForTimber(game_object)
+
+    refined_resource.addToSteelQuantity(game_object, obtained_steel)
+    refined_resource.addToFuelQuantity(game_object, obtained_fuel)
+    refined_resource.addToWoodQuantity(game_object, obtained_wood)

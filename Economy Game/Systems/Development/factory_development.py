@@ -32,19 +32,22 @@ def factoriesCanBeBought(game_object : g.GameData, number_of_factories_to_be_bou
 
 # This method will add factories into current production.
 def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
-    COST_OF_FACTORY = e.getCostOfFactory()
-    IRON_NEEDED = e.getRequiredIronOfFactory()
+    COST_OF_FACTORY, REQUIRED_STONE_FOR_FACTORY, REQUIRED_IRON_FOR_FACTORY, REQUIRED_COPPER_FOR_FACTORY = economy.getRequirementsOfFactoryConstruction()
 
     cost = number_of_factories*COST_OF_FACTORY
-    required_iron = number_of_factories*IRON_NEEDED
+    required_stone = number_of_factories*REQUIRED_STONE_FOR_FACTORY
+    required_iron = number_of_factories*REQUIRED_IRON_FOR_FACTORY
+    required_copper = number_of_factories*REQUIRED_COPPER_FOR_FACTORY
 
     province_list = game_object.provinces
     time = province_list[province_index].getConstructionSpeed()
 
     if not overMaxFactoryLimit(game_object, province_index, number_of_factories) and factoriesCanBeBought(game_object, number_of_factories):
         game_object.factories_being_constructed.append(f.Factory(time, province_index, number_of_factories))
-        e.subtractCostFromCurrency(game_object, cost)
-        r.subtractFromIronQuantity(game_object, required_iron)
+        economy.subtractCostFromCurrency(game_object, cost)
+        raw_resource.subtractFromStoneQuantity(game_object, required_stone)
+        raw_resource.subtractFromIronQuantity(game_object, required_iron)
+        raw_resource.subtractFromCopperQuantity(game_object, required_copper)
 
 # This method updates current factories in production by subtracting a day from the
 # remaining number of days before it is finished constructing.

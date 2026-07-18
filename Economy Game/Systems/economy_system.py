@@ -98,12 +98,3 @@ def getTotalMines(game_object : g.GameData) -> int:
     for province in game_object.provinces:
         total += province.getMines()
     return total
-
-def getSteelProductionStatus(game_object : g.GameData) -> bool:
-    return game_object.steel_production
-
-def getFuelProductionStatus(game_object : g.GameData) -> bool:
-    return game_object.fuel_production
-
-def getWoodProductionStatus(game_object : g.GameData) -> bool:
-    return game_object.wood_production

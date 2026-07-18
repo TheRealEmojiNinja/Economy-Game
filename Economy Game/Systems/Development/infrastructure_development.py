@@ -30,18 +30,19 @@ def infrastructureCanBeBought(game_object : g.GameData, number_of_infrastructure
     return cost_requirements_met and stone_requirements_met and wood_requirements_met
 
 # This method will add infrastructure into current production.
-def addInfrastructureToQueue(game_object : g.GameData, number_of_infrastructure : int, province_index : int):
-    COST_OF_INFRASTRUCTURE = e.getCostOfInfrastructure()
-    STONE_NEEDED = e.getRequiredStoneOfInfrastructure()
+def addInfrastructureToQueue(game_object : g.GameData, number_of_infrastructure_levels : int, province_index : int):
+    COST_OF_INFRASTRUCTURE, REQUIRED_STONE_FOR_INFRASTRUCTURE, REQUIRED_WOOD_FOR_INFRASTRUCTURE = economy.getRequirementsOfInfrastructureConstruction()
     TIME_FOR_INFRASTRUCTURE_UPGRADE = 30
 
-    cost = number_of_infrastructure*COST_OF_INFRASTRUCTURE
-    required_stone = number_of_infrastructure*STONE_NEEDED
+    cost = number_of_infrastructure_levels*COST_OF_INFRASTRUCTURE
+    required_stone = number_of_infrastructure_levels*REQUIRED_STONE_FOR_INFRASTRUCTURE
+    required_wood = number_of_infrastructure_levels*REQUIRED_WOOD_FOR_INFRASTRUCTURE
 
-    if not overMaxInfrastructureLimit(game_object, province_index, number_of_infrastructure) and infrastructureCanBeBought(game_object, number_of_infrastructure):
-        game_object.infrastructure_being_constructed.append(i.Infrastructure(TIME_FOR_INFRASTRUCTURE_UPGRADE, province_index, number_of_infrastructure))
-        e.subtractCostFromCurrency(game_object, cost)
-        r.subtractFromStoneQuantity(game_object, required_stone)
+    if not overMaxInfrastructureLimit(game_object, province_index, number_of_infrastructure_levels) and infrastructureCanBeBought(game_object, number_of_infrastructure_levels):
+        game_object.infrastructure_being_constructed.append(i.Infrastructure(TIME_FOR_INFRASTRUCTURE_UPGRADE, province_index, number_of_infrastructure_levels))
+        economy.subtractCostFromCurrency(game_object, cost)
+        raw_resource.subtractFromStoneQuantity(game_object, required_stone)
+        refined_resource.subtractFromWoodQuantity(game_object, required_wood)
 
 # This method updates current infrastructure in production by subtracting a day from the
 # remaining number of days before it is finished constructing.

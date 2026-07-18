@@ -25,7 +25,7 @@ def calculateSteelOutput(game_object : g.GameData) -> int:
     IRON_REQUIREMENTS = 10
     PRODUCED_STEEL = 2
 
-    if raw_resource.getIronQuantity(game_object) > IRON_REQUIREMENTS and economy.getSteelProductionStatus(game_object):
+    if raw_resource.getIronQuantity(game_object) > IRON_REQUIREMENTS:
         raw_resource.subtractFromIronQuantity(game_object, IRON_REQUIREMENTS)
         return PRODUCED_STEEL
     else:
@@ -44,11 +44,11 @@ def addToFuelQuantity(game_object : g.GameData, added_fuel : int) -> None:
 def subtractFromFuelQuantity(game_object : g.GameData, subtracted_fuel : int) -> None:
     game_object.fuel -= subtracted_fuel
 
-def randomFuelOutput(game_object : g.GameData) -> int:
+def calculateFuelOutput(game_object : g.GameData) -> int:
     COAL_REQUIREMENTS = 20
     PRODUCED_FUEL = 5
 
-    if raw_resource.getCoalQuantity(game_object) > COAL_REQUIREMENTS and economy.getFuelProductionStatus(game_object):
+    if raw_resource.getCoalQuantity(game_object) > COAL_REQUIREMENTS:
         raw_resource.subtractFromCoalQuantity(COAL_REQUIREMENTS)
         return PRODUCED_FUEL
     else:
@@ -67,11 +67,11 @@ def addToWoodQuantity(game_object : g.GameData, added_wood : int) -> None:
 def subtractFromWoodQuantity(game_object : g.GameData, subtracted_wood : int) -> None:
     game_object.wood -= subtracted_wood
 
-def randomWoodOutput(game_object : g.GameData) -> int:
+def calculateWoodOutput(game_object : g.GameData) -> int:
     TIMBER_REQUIREMENTS = 10
     PRODUCED_WOOD = 5
 
-    if raw_resource.getTimberQuantity(game_object) > TIMBER_REQUIREMENTS and economy.getWoodProductionStatus(game_object):
+    if raw_resource.getTimberQuantity(game_object) > TIMBER_REQUIREMENTS:
         raw_resource.subtractFromTimberQuantity(TIMBER_REQUIREMENTS)
         return PRODUCED_WOOD
     else:

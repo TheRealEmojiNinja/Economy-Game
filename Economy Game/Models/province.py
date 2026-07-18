@@ -31,6 +31,9 @@ class Province:
         self.max_mine_limit = max_mines_possible
         self.max_sawmill_limit = max_sawmills_possible
         self.max_infrastructure_limit = max_infrastructure_possible
+        self.steel_production = False
+        self.fuel_production = False
+        self.wood_production = False
         self.hidden_resource_deposits = Province.resources
         self.electrical_outage_status = False
         self.electrical_outage_time = -1
@@ -67,6 +70,15 @@ class Province:
     
     def getMaxInfrastructureLevel(self) -> int:
         return self.max_infrastructure_limit
+    
+    def getSteelProductionStatus(self) -> bool:
+        return self.steel_production
+    
+    def getFuelProductionStatus(self) -> bool:
+        return self.fuel_production
+    
+    def getWoodProductionStatus(self) -> bool:
+        return self.wood_production
 
     def getAvailableResources(self) -> list:
         deposits = ''
@@ -124,8 +136,17 @@ class Province:
     def updateSawmills(self, new_sawmills : int) -> None:
         self.sawmills += new_sawmills
 
-    def updateInfrastructureLevel(self, new_infrastructure_level : int):
+    def updateInfrastructureLevel(self, new_infrastructure_level : int) -> None:
         self.infrastructure_level += new_infrastructure_level
+
+    def updateSteelProductionStatus(self, new_status : bool) -> None:
+        self.steel_production = new_status
+
+    def updateFuelProductionStatus(self, new_status : bool) -> None:
+        self.fuel_production = new_status
+    
+    def updateWoodProductionStatus(self, new_status : bool) -> None:
+        self.wood_production = new_status
     
     def updateOutageStatus(self, status : bool) -> None:
         self.electrical_outage_status = status
