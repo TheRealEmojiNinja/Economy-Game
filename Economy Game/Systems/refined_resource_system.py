@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import random, Data.game_data as g
+import random, Data.game_data as g, Systems.raw_resource_system as raw_resource, Systems.economy_system as economy
 
 # Helper functions for the steel variable
 def randomizeSteelQuantity(game_object : g.GameData) -> None:
@@ -14,95 +14,65 @@ def randomizeSteelQuantity(game_object : g.GameData) -> None:
 def getSteelQuantity(game_object : g.GameData) -> int:
     return game_object.steel
 
-def addToCoalQuantity(game_object : g.GameData, added_coal : int) -> None:
-    game_object.coal += added_coal
+def addToSteelQuantity(game_object : g.GameData, added_steel : int) -> None:
+    game_object.steel += added_steel
 
-def subtractFromCoalQuantity(game_object : g.GameData, subtracted_coal : int) -> None:
-    game_object.coal -= subtracted_coal
+def subtractFromSteelQuantity(game_object : g.GameData, subtracted_steel : int) -> None:
+    game_object.steel -= subtracted_steel
 
-def randomCoalOutput() -> int:
-    return random.randint(10, 20)
+def calculateSteelOutput(game_object : g.GameData) -> int:
 
-# Helper functions for the iron variable
-def randomizeIronQuantity(game_object : g.GameData) -> None:
-    game_object.iron = random.randrange(10, 30)
+    IRON_REQUIREMENTS = 10
+    PRODUCED_STEEL = 2
 
-def getIronQuantity(game_object : g.GameData) -> int:
-    return game_object.iron
+    if raw_resource.getIronQuantity(game_object) > IRON_REQUIREMENTS and economy.getSteelProductionStatus(game_object):
+        raw_resource.subtractFromIronQuantity(game_object, IRON_REQUIREMENTS)
+        return PRODUCED_STEEL
+    else:
+        return 0
 
-def addToIronQuantity(game_object : g.GameData, added_iron : int) -> None:
-    game_object.iron += added_iron
+# Helper functions for the fuel variable
+def randomizeFuelQuantity(game_object : g.GameData) -> None:
+    game_object.fuel = random.randrange(10, 30)
 
-def subtractFromIronQuantity(game_object : g.GameData, subtracted_iron : int) -> None:
-    game_object.iron -= subtracted_iron
+def getFuelQuantity(game_object : g.GameData) -> int:
+    return game_object.fuel
 
-def randomIronOutput() -> int:
-    return random.randint(5, 10)
+def addToFuelQuantity(game_object : g.GameData, added_fuel : int) -> None:
+    game_object.fuel += added_fuel
 
-# Helper functions for the stone variable
-def randomizeStoneQuantity(game_object : g.GameData) -> None:
-    game_object.stone = random.randrange(25, 55)
+def subtractFromFuelQuantity(game_object : g.GameData, subtracted_fuel : int) -> None:
+    game_object.fuel -= subtracted_fuel
 
-def getStoneQuantity(game_object : g.GameData) -> int:
-    return game_object.stone
+def randomFuelOutput(game_object : g.GameData) -> int:
+    COAL_REQUIREMENTS = 20
+    PRODUCED_FUEL = 5
 
-def addToStoneQuantity(game_object : g.GameData, added_stone : int) -> None:
-    game_object.stone += added_stone
+    if raw_resource.getCoalQuantity(game_object) > COAL_REQUIREMENTS and economy.getFuelProductionStatus(game_object):
+        raw_resource.subtractFromCoalQuantity(COAL_REQUIREMENTS)
+        return PRODUCED_FUEL
+    else:
+        return 0
 
-def subtractFromStoneQuantity(game_object : g.GameData, subtracted_stone : int) -> None:
-    game_object.stone -= subtracted_stone
+# Helper functions for the wood variable
+def randomizeWoodQuantity(game_object : g.GameData) -> None:
+    game_object.wood = random.randrange(25, 55)
 
-# Helper functions for the timber variable
-def randomizeTimberQuantity(game_object : g.GameData) -> None:
-    game_object.timber = random.randrange(50, 105)
+def getWoodQuantity(game_object : g.GameData) -> int:
+    return game_object.wood
 
-def getTimberQuantity(game_object : g.GameData) -> int:
-    return game_object.timber
+def addToWoodQuantity(game_object : g.GameData, added_wood : int) -> None:
+    game_object.wood += added_wood
 
-def addToTimberQuantity(game_object : g.GameData, added_timber : int) -> None:
-    game_object.timber += added_timber
+def subtractFromWoodQuantity(game_object : g.GameData, subtracted_wood : int) -> None:
+    game_object.wood -= subtracted_wood
 
-def subtractFromTimberQuantity(game_object : g.GameData, subtracted_timber : int) -> None:
-    game_object.timber -= subtracted_timber
+def randomWoodOutput(game_object : g.GameData) -> int:
+    TIMBER_REQUIREMENTS = 10
+    PRODUCED_WOOD = 5
 
-# Helper functions for the copper variable
-def randomizeCopperQuantity(game_object : g.GameData) -> None:
-    game_object.copper = random.randrange(5, 25)
-
-def getCopperQuantity(game_object : g.GameData) -> int:
-    return game_object.copper
-
-def addToCopperQuantity(game_object : g.GameData, added_copper : int) -> None:
-    game_object.copper += added_copper
-
-def subtractFromCopperQuantity(game_object : g.GameData, subtracted_copper : int) -> None:
-    game_object.copper -= subtracted_copper
-
-# Helper functions for the copper variable
-def randomizeCopperQuantity(game_object : g.GameData) -> None:
-    game_object.copper = random.randrange(5, 25)
-
-def getCopperQuantity(game_object : g.GameData) -> int:
-    return game_object.copper
-
-def addToCopperQuantity(game_object : g.GameData, added_copper : int) -> None:
-    game_object.copper += added_copper
-
-def subtractFromCopperQuantity(game_object : g.GameData, subtracted_copper : int) -> None:
-    game_object.copper -= subtracted_copper
-
-def randomStoneOutput() -> int:
-    return random.randint(5, 10)
-
-# Function that randomizes the resource deposits
-def randomizeResourceDeposits() -> list:
-    resources = ['Iron', 'Coal', 'Stone']
-    deposits = []
-    num_deposits = random.randrange(1, 3)
-    j = 0
-    while (j < num_deposits):
-        chosen_resource = random.choice(resources)
-        resources.remove(chosen_resource)
-        deposits.append(chosen_resource)
-        j += 1
-    return deposits
+    if raw_resource.getTimberQuantity(game_object) > TIMBER_REQUIREMENTS and economy.getWoodProductionStatus(game_object):
+        raw_resource.subtractFromTimberQuantity(TIMBER_REQUIREMENTS)
+        return PRODUCED_WOOD
+    else:
+        return 0

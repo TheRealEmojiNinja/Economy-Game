@@ -96,9 +96,9 @@ def randomStoneOutput() -> int:
 
 # Function that randomizes the resource deposits
 def randomizeResourceDeposits() -> list:
-    resources = ['Iron', 'Coal', 'Stone']
+    resources = ['Iron', 'Copper', 'Coal', 'Stone']
     deposits = []
-    num_deposits = random.randrange(1, 3)
+    num_deposits = random.randrange(1, 4)
     j = 0
     while (j < num_deposits):
         chosen_resource = random.choice(resources)

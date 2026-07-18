@@ -26,6 +26,10 @@ class GameData:
         self.fuel = 0
         self.wood = 0
 
+        self.steel_production = False
+        self.fuel_production = False
+        self.wood_production = False
+
         self.tax_level = 0
 
         self.factories_being_constructed: List[f.Factory] = []

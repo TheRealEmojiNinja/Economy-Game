@@ -47,6 +47,9 @@ class Province:
     def getMines(self) -> int:
         return self.mines
     
+    def getSawmills(self) -> int:
+        return self.sawmills
+    
     def getInfrastructureLevel(self) -> int:
         return self.infrastructure_level
     
@@ -58,6 +61,9 @@ class Province:
     
     def getMaxMines(self) -> int:
         return self.max_mine_limit
+    
+    def getMaxSawmills(self) -> int:
+        return self.max_sawmill_limit
     
     def getMaxInfrastructureLevel(self) -> int:
         return self.max_infrastructure_limit
@@ -115,6 +121,9 @@ class Province:
     def updateMines(self, new_mines : int) -> None:
         self.mines += new_mines
     
+    def updateSawmills(self, new_sawmills : int) -> None:
+        self.sawmills += new_sawmills
+
     def updateInfrastructureLevel(self, new_infrastructure_level : int):
         self.infrastructure_level += new_infrastructure_level
     

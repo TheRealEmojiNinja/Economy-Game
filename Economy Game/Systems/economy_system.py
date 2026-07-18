@@ -48,29 +48,29 @@ def randomizeInfrastructureLevel() -> int:
     return random.randrange(1, 2)
 
 # Helper functions that return the cost and required resources for constructing factories, mines and infrastructure level
-def getRequirementsOfFactoryConstruction() -> tuple[int]:
-    cost_of_factory = 1000
-    required_stone_for_factory = 600
-    required_iron_for_factory = 350
-    required_copper_for_factory = 200
-    return (cost_of_factory, required_stone_for_factory, required_iron_for_factory, required_copper_for_factory)
+def getRequirementsOfFactoryConstruction() -> tuple[int, int, int, int]:
+    COST_OF_FACTORY = 1000
+    REQUIRED_STONE_FOR_FACTORY = 600
+    REQUIRED_IRON_FOR_FACTORY = 350
+    REQUIRED_COPPER_FOR_FACTORY = 200
+    return (COST_OF_FACTORY, REQUIRED_STONE_FOR_FACTORY, REQUIRED_IRON_FOR_FACTORY, REQUIRED_COPPER_FOR_FACTORY)
 
-def getRequirementsOfMineConstruction() -> tuple[int]:
-    cost_of_mine = 600
-    required_wood_for_mine = 450
-    return (cost_of_mine, required_wood_for_mine)
+def getRequirementsOfMineConstruction() -> tuple[int, int]:
+    COST_OF_MINE = 600
+    REQUIRED_WOOD_FOR_MINE = 450
+    return (COST_OF_MINE, REQUIRED_WOOD_FOR_MINE)
 
-def getRequirementsOfSawmillConstruction() -> tuple[int]:
-    cost_of_sawmill = 450
-    required_stone_for_sawmill = 300
-    required_wood_for_sawmill = 100
-    return (cost_of_sawmill, required_stone_for_sawmill, required_wood_for_sawmill)
+def getRequirementsOfSawmillConstruction() -> tuple[int, int, int]:
+    COST_OF_SAWMILL = 450
+    REQUIRED_STONE_FOR_SAWMILL = 300
+    REQUIRED_WOOD_FOR_SAWMILL = 100
+    return (COST_OF_SAWMILL, REQUIRED_STONE_FOR_SAWMILL, REQUIRED_WOOD_FOR_SAWMILL)
 
-def getRequirementsOfInfrastructureConstruction() -> tuple[int]:
-    cost_of_infrastructure = 350
-    required_stone_for_infrastructure = 300
-    required_wood_for_infrastructure = 200
-    return (cost_of_infrastructure, required_stone_for_infrastructure, required_wood_for_infrastructure)
+def getRequirementsOfInfrastructureConstruction() -> tuple[int, int, int]:
+    COST_OF_INFRASTRUCTURE = 350
+    REQUIRED_STONE_FOR_INFRASTRUCTURE = 300
+    REQUIRED_WOOD_FOR_INFRASTRUCTURE = 200
+    return (COST_OF_INFRASTRUCTURE, REQUIRED_STONE_FOR_INFRASTRUCTURE, REQUIRED_WOOD_FOR_INFRASTRUCTURE)
 
 def payDebt(game_object : g.GameData) -> None:
     amount_to_be_paid = random.randint(250, 500)
@@ -98,3 +98,12 @@ def getTotalMines(game_object : g.GameData) -> int:
     for province in game_object.provinces:
         total += province.getMines()
     return total
+
+def getSteelProductionStatus(game_object : g.GameData) -> bool:
+    return game_object.steel_production
+
+def getFuelProductionStatus(game_object : g.GameData) -> bool:
+    return game_object.fuel_production
+
+def getWoodProductionStatus(game_object : g.GameData) -> bool:
+    return game_object.wood_production

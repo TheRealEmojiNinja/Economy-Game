@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import random
+import random, Data.game_data as g
 
 # This method returns a random terrain type
 def randomizeTerrainType() -> str:

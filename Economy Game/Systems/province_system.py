@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Required modules and components
-import random, Data.game_data as g, Systems.resource_system as r, Systems.economy_system as e, Systems.terrain_system as t, Models.province as p, csv
+import random, Data.game_data as g, Systems.raw_resource_system as raw_resource, Systems.economy_system as e, Systems.terrain_system as t, Models.province as p, csv
 
 # This method returns a random province name
 def getRandomProvinceName(game_object : g.GameData) -> str:
@@ -26,14 +26,16 @@ def createProvinces(game_object : g.GameData):
         mines = e.randomizeNumberOfMines()
         sawmills = e.randomizeNumberOfSawmills()
         infrastructure = e.randomizeInfrastructureLevel()
-        deposits = r.randomizeResourceDeposits()
+        deposits = raw_resource.randomizeResourceDeposits()
         terrain = t.randomizeTerrainType()
+        if terrain in ['Mountainous', 'Forested']:
+            deposits.append('Timber')
         max_factories = t.maxFactoryCount(terrain)
         max_mines = t.maxMineCount(terrain)
         max_sawmills = t.maxSawmillCount(terrain)
         max_infrastructure = t.maxInfrastructureCount(terrain)
 
-        province = p.Province(name, factories, mines, sawmills, deposits, infrastructure, terrain, max_factories, max_mines, max_infrastructure)
+        province = p.Province(name, factories, mines, sawmills, deposits, infrastructure, terrain, max_factories, max_mines, max_sawmills, max_infrastructure)
         province_list.append(province)
 
         i += 1
