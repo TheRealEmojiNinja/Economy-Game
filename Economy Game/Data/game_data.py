@@ -37,6 +37,7 @@ class GameData:
         self.resource_deposits = []
 
         self.day = 1
+        self.date = [1, 1, 2000]
 
         self.satisfaction = 50
         self.satisfaction_multiplier = 0

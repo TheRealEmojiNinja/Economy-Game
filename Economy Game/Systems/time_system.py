@@ -9,34 +9,48 @@ import Systems.economy_system as e, Systems.Development.factory_development as f
 import Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource, Systems.Events.event_system as ev, Data.game_data as g, random, time
 
 # The updateDay method simply computes the day's resource outputs and consumption before progressing to another day.
-def updateDay(game_object : g.GameData):
+def updateProgression(game_object : g.GameData) -> None:
+    progressDate(game_object)
+    updateBuildingsInConstruction(game_object)
+    updateRawResourceGains(game_object)
+    updateRefinedResourceGains(game_object)
+    throwRandomEvent(game_object)
 
-    # Subtract coal deposits dependent on number of factories to simulate coal consumption
-    total_factories = d.getTotalFactoryOutput(game_object)
-    used_coal = total_factories*random.randint(10, 25)
-
-    # Add the day's worth of economic output to total currency if there is sufficient coal
-    if r.getCoalQuantity(game_object) > used_coal:
-        profit = total_factories*random.randint(10, 20)
-        e.addProfitToCurrency(game_object, profit)
-        r.subtractFromCoalQuantity(game_object, used_coal)
-    else:
-        print("Cannot continue factory production due to shortage of coal!")    
-
-    if game_object.day % 30 == 0 and game_object.day != 0:
-        e.payDebt(game_object)
+def progressDate(game_object : g.GameData) -> None:
     
-    # Generate a random event and execute it
-    event, province = ev.generateRandomEvent(game_object)
-    #time.sleep(0.2)
-    event = ev.getEventMessageAndExecuteEvent(game_object, event, province)
+    month = game_object.date[0]
+    day = game_object.date[1]
+    year = game_object.date[2]
 
-    ev.addToEventHistory(game_object, event)
+    match month:
+        case 1:
+            day = day+1 if day != 31 else day = 1 and month = month+1
+        case 2:
+            day = day+1 if day != 28 else day = 1 and month = month+1
+        case 3:
+            day = day+1 if day != 31 else day = 1 and month = month+1
+        case 4:
+            day = day+1 if day != 30 else day = 1 and month = month+1
+        case 5:
+            day = day+1 if day != 31 else day = 1 and month = month+1
+        case 6:
+            day = day+1 if day != 30 else day = 1 and month = month+1
+        case 7:
+            day = day+1 if day != 31 else day = 1 and month = month+1
+        case 8:
+            day = day+1 if day != 31 else day = 1 and month = month+1
+        case 9:
+            day = day+1 if day != 30 else day = 1 and month = month+1
+        case 10:
+            day = day+1 if day != 31 else day = 1 and month = month+1
+        case 11:
+            day = day+1 if day != 30 else day = 1 and month = month+1
+        case 12:
+            day = day+1 if day != 31 else day = 1 and month = 1 and year = year+1
 
-    #time.sleep(0.2)
-    
-    # Progress the day
-    game_object.day += 1
+    game_object.date[0] = month
+    game_object.date[1] = day
+    game_object.date[2] = year
 
 # Progress the construction of factories, mines, sawmills and infrastructure
 def updateBuildingsInConstruction(game_object : g.GameData) -> None:
@@ -78,4 +92,13 @@ def updateRefinedResourceGains(game_object : g.GameData) -> None:
 
     refined_resource.addToSteelQuantity(game_object, obtained_steel)
     refined_resource.addToFuelQuantity(game_object, obtained_fuel)
-    refined_resource.addToWoodQuantity(game_object, obtained_wood)
+    refined_resource.addToWoodQuantity(game_object, obtained_wood) 
+
+def throwRandomEvent(game_object : g.GameData):
+    event, province = ev.generateRandomEvent(game_object)
+    executed_event = ev.getEventMessageAndExecuteEvent(game_object, event, province)
+    ev.addToEventHistory(game_object, executed_event)
+
+def updateDebt(game_object : g.GameData) -> None:
+    if game_object.day % 30 == 0 and game_object.day != 0:
+        e.payDebt(game_object)

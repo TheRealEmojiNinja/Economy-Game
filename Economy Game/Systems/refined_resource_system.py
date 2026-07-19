@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import random, Data.game_data as g, Systems.raw_resource_system as raw_resource, Systems.economy_system as economy
+import random, Data.game_data as g, Systems.raw_resource_system as raw_resource, Systems.economy_system as economy, Systems.refined_resource_system as refined_resource
 
 # Helper functions for the steel variable
 def randomizeSteelQuantity(game_object : g.GameData) -> None:
@@ -21,12 +21,13 @@ def subtractFromSteelQuantity(game_object : g.GameData, subtracted_steel : int) 
     game_object.steel -= subtracted_steel
 
 def calculateSteelOutput(game_object : g.GameData) -> int:
-
     IRON_REQUIREMENTS = 10
+    FUEL_REQUIREMENTS = 1
     PRODUCED_STEEL = 2
 
-    if raw_resource.getIronQuantity(game_object) > IRON_REQUIREMENTS:
+    if raw_resource.getIronQuantity(game_object) > IRON_REQUIREMENTS and refined_resource.getFuelQuantity(game_object) > FUEL_REQUIREMENTS:
         raw_resource.subtractFromIronQuantity(game_object, IRON_REQUIREMENTS)
+        refined_resource.subtractFromFuelQuantity(game_object, FUEL_REQUIREMENTS)
         return PRODUCED_STEEL
     else:
         return 0
