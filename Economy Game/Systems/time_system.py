@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Systems.economy_system as e, Systems.Development.factory_development as factory_development, Systems.Development.mine_development as mine_development, Systems.Development.sawmill_development as sawmill_development, Systems.Development.infrastructure_development as infrastructure_development
+import Systems.economy_system as e, Systems.Development.factory_development as factory_development, Systems.Development.mine_development as mine_development, Systems.Development.sawmill_development as sawmill_development, Systems.Development.refinery_development as refinery_development, Systems.Development.infrastructure_development as infrastructure_development
 import Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource, Systems.Events.event_system as ev, Data.game_data as g, random, time
 
 # The updateDay method simply computes the day's resource outputs and consumption before progressing to another day.
@@ -43,6 +43,7 @@ def updateBuildingsInConstruction(game_object : g.GameData) -> None:
     factory_development.updateFactoriesInConstruction(game_object)
     mine_development.updateMinesInConstruction(game_object)
     sawmill_development.updateSawmillsInConstruction(game_object)
+    refinery_development.updateRefineriesInConstruction(game_object)
     infrastructure_development.updateInfrastructureInConstruction(game_object)
 
 def updateRawResourceGains(game_object : g.GameData) -> None:

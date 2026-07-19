@@ -30,19 +30,19 @@ def sawmillsCanBeBought(game_object : g.GameData, number_of_sawmills_to_be_bough
 
     return cost_requirements_met and stone_requirements_met and wood_requirements_met and terrain_type_valid
 
-# This method will add factories into current production.
-def addSawmillsToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
+# This method will add sawmills into current production.
+def addSawmillsToQueue(game_object : g.GameData, number_of_sawmills : int, province_index : int):
     COST_OF_SAWMILL, REQUIRED_STONE_FOR_SAWMILL, REQUIRED_WOOD_FOR_SAWMILL = economy.getRequirementsOfSawmillConstruction()
 
-    cost = number_of_factories*COST_OF_SAWMILL
-    required_stone = number_of_factories*REQUIRED_STONE_FOR_SAWMILL
-    required_wood = number_of_factories*REQUIRED_WOOD_FOR_SAWMILL
+    cost = number_of_sawmills*COST_OF_SAWMILL
+    required_stone = number_of_sawmills*REQUIRED_STONE_FOR_SAWMILL
+    required_wood = number_of_sawmills*REQUIRED_WOOD_FOR_SAWMILL
 
     province_list = game_object.provinces
     time = province_list[province_index].getConstructionSpeed()
 
-    if not overMaxSawmillLimit(game_object, province_index, number_of_factories) and sawmillsCanBeBought(game_object, number_of_factories):
-        game_object.sawmills_being_constructed.append(s.Sawmill(time, province_index, number_of_factories))
+    if not overMaxSawmillLimit(game_object, province_index, number_of_sawmills) and sawmillsCanBeBought(game_object, number_of_sawmills):
+        game_object.sawmills_being_constructed.append(s.Sawmill(time, province_index, number_of_sawmills))
         economy.subtractCostFromCurrency(game_object, cost)
         raw_resource.subtractFromStoneQuantity(game_object, required_stone)
         refined_resource.subtractFromWoodQuantity(game_object, required_wood)

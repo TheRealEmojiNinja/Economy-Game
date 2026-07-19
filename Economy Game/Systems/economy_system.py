@@ -66,6 +66,12 @@ def getRequirementsOfSawmillConstruction() -> tuple[int, int, int]:
     REQUIRED_WOOD_FOR_SAWMILL = 100
     return (COST_OF_SAWMILL, REQUIRED_STONE_FOR_SAWMILL, REQUIRED_WOOD_FOR_SAWMILL)
 
+def getRequirementsOfRefineryConstruction() -> tuple[int, int, int]:
+    COST_OF_REFINERY = 750
+    REQUIRED_IRON_FOR_REFINERY = 250
+    REQUIRED_COPPER_FOR_REFINERY = 100
+    return(COST_OF_REFINERY, REQUIRED_IRON_FOR_REFINERY, REQUIRED_COPPER_FOR_REFINERY)
+
 def getRequirementsOfInfrastructureConstruction() -> tuple[int, int, int]:
     COST_OF_INFRASTRUCTURE = 350
     REQUIRED_STONE_FOR_INFRASTRUCTURE = 300

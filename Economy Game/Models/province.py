@@ -15,21 +15,24 @@ class Province:
     # Constructor with specific parameters to take in arguments that is then applied to the different components of the province
     def __init__(self, province_name : str, number_of_factories : int, 
                  number_of_mines : int, number_of_sawmills : int,
-                 province_resource_deposits : list, 
-                 infrastructure_level : int, terrain_type : str, 
+                 number_of_refineries : int, infrastructure_level : int, 
+                 terrain_type : str, province_resource_deposits : list, 
                  max_factories_possible : int, max_mines_possible : int, 
-                 max_sawmills_possible : int, max_infrastructure_possible : int) -> None:
+                 max_sawmills_possible : int, max_refineries_possible : int,
+                 max_infrastructure_possible : int) -> None:
         
         self.province_name = province_name
         self.factories = number_of_factories
         self.mines = number_of_mines
         self.sawmills = number_of_sawmills
+        self.refineries = number_of_refineries
         self.infrastructure_level = infrastructure_level
         self.resource_deposits = province_resource_deposits
         self.province_terrain = terrain_type
         self.max_factory_limit = max_factories_possible
         self.max_mine_limit = max_mines_possible
         self.max_sawmill_limit = max_sawmills_possible
+        self.max_refinery_limit = max_refineries_possible
         self.max_infrastructure_limit = max_infrastructure_possible
         self.steel_production = False
         self.fuel_production = False
@@ -53,6 +56,9 @@ class Province:
     def getSawmills(self) -> int:
         return self.sawmills
     
+    def getRefineries(self) -> int:
+        return self.refineries
+    
     def getInfrastructureLevel(self) -> int:
         return self.infrastructure_level
     
@@ -67,6 +73,9 @@ class Province:
     
     def getMaxSawmills(self) -> int:
         return self.max_sawmill_limit
+
+    def getMaxRefineries(self) -> int:
+        return self.max_refinery_limit
     
     def getMaxInfrastructureLevel(self) -> int:
         return self.max_infrastructure_limit
@@ -135,6 +144,9 @@ class Province:
     
     def updateSawmills(self, new_sawmills : int) -> None:
         self.sawmills += new_sawmills
+
+    def updateRefineries(self, new_refineries : int) -> None:
+        self.refineries += new_refineries
 
     def updateInfrastructureLevel(self, new_infrastructure_level : int) -> None:
         self.infrastructure_level += new_infrastructure_level

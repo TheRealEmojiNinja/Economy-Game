@@ -47,6 +47,18 @@ def maxSawmillCount(terrain_type : str) -> int:
             return 20
         case "Plains":
             return 5
+
+# This method defines the max sawmill count depending on the terrain
+def maxRefineryCount(terrain_type : str) -> int:
+    match terrain_type:
+        case "Urban":
+            return 10
+        case "Mountainous":
+            return 5
+        case "Forested":
+            return 5
+        case "Plains":
+            return 5
         
 # This method defines the max infrastructure count depending on the terrain
 def maxInfrastructureCount(terrain_type : str) -> int:
