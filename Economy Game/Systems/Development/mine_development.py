@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Data.game_data as g, Models.province as p, Models.factory as f, Models.mine as m, Models.infrastructure as i, Systems.economy_system as economy, Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource
+import Data.game_data as g, Models.province as p, Models.mine as m, Systems.economy_system as economy, Systems.Resource.refined_resource_system as refined_resource
 
 # This method returns a boolean result which explains whether the user is building over the max mine limit.
 def overMaxMineLimit(game_object : g.GameData, province_index : int, number_of_mines_to_be_bought : int) -> bool:

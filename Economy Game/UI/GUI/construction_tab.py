@@ -1,7 +1,7 @@
 import customtkinter as ctk
 import UI.GUI.selector_widget as selector_widget, UI.GUI.spin_box_widget as spin_box_widget
 import UI.GUI.construction_widget as construction_widget, UI.GUI.scrollable_widget as scrollable_widget
-import Systems.development_systems as d, Systems.economy_system as e, Data.game_data as g
+import Systems.Development.general_development as development, Systems.economy_system as e, Data.game_data as g
 
 from PIL import Image
 

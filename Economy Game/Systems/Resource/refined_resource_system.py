@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import random, Data.game_data as g, Systems.raw_resource_system as raw_resource, Systems.economy_system as economy, Systems.refined_resource_system as refined_resource
+import random, Data.game_data as g, Systems.Resource.raw_resource_system as raw_resource, Systems.economy_system as economy
 
 # Helper functions for the steel variable
 def randomizeSteelQuantity(game_object : g.GameData) -> None:
@@ -25,9 +25,9 @@ def calculateSteelOutput(game_object : g.GameData) -> int:
     FUEL_REQUIREMENTS = 1
     PRODUCED_STEEL = 2
 
-    if raw_resource.getIronQuantity(game_object) > IRON_REQUIREMENTS and refined_resource.getFuelQuantity(game_object) > FUEL_REQUIREMENTS:
+    if raw_resource.getIronQuantity(game_object) > IRON_REQUIREMENTS and getFuelQuantity(game_object) > FUEL_REQUIREMENTS:
         raw_resource.subtractFromIronQuantity(game_object, IRON_REQUIREMENTS)
-        refined_resource.subtractFromFuelQuantity(game_object, FUEL_REQUIREMENTS)
+        subtractFromFuelQuantity(game_object, FUEL_REQUIREMENTS)
         return PRODUCED_STEEL
     else:
         return 0
@@ -75,5 +75,30 @@ def calculateWoodOutput(game_object : g.GameData) -> int:
     if raw_resource.getTimberQuantity(game_object) > TIMBER_REQUIREMENTS:
         raw_resource.subtractFromTimberQuantity(TIMBER_REQUIREMENTS)
         return PRODUCED_WOOD
+    else:
+        return 0
+    
+# Helper functions for the cement variable
+def randomizeCementQuantity(game_object : g.GameData) -> None:
+    game_object.cement = random.randrange(45, 105)
+
+def getCementQuantity(game_object : g.GameData) -> int:
+    return game_object.cement
+
+def addToCementQuantity(game_object : g.GameData, added_cement : int) -> None:
+    game_object.cement += added_cement
+
+def subtractFromCementQuantity(game_object : g.GameData, subtracted_cement : int) -> None:
+    game_object.cement -= subtracted_cement
+
+def calculateCementOutput(game_object : g.GameData) -> int:
+    STONE_REQUIREMENTS = 20
+    IRON_REQUIREMENTS = 5
+    PRODUCED_CEMENT = 10
+
+    if raw_resource.getStoneQuantity(game_object) > STONE_REQUIREMENTS and raw_resource.getIronQuantity(game_object) > IRON_REQUIREMENTS:
+        raw_resource.subtractFromStoneQuantity(game_object, STONE_REQUIREMENTS)
+        raw_resource.subtractFromIronQuantity(game_object, IRON_REQUIREMENTS)
+        return PRODUCED_CEMENT
     else:
         return 0

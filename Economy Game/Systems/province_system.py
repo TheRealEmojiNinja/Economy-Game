@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Required modules and components
-import random, Data.game_data as g, Systems.raw_resource_system as raw_resource, Systems.economy_system as e, Systems.terrain_system as t, Models.province as p, csv
+import random, Data.game_data as g, Systems.Resource.raw_resource_system as raw_resource, Systems.economy_system as e, Systems.terrain_system as t, Models.province as p, csv
 
 # This method returns a random province name
 def getRandomProvinceName(game_object : g.GameData) -> str:
@@ -25,6 +25,8 @@ def createProvinces(game_object : g.GameData):
         factories = e.randomizeNumberOfFactories()
         mines = e.randomizeNumberOfMines()
         sawmills = e.randomizeNumberOfSawmills()
+        refineries = e.randomizeNumberOfRefineries()
+        cement_plants = e.randomizeNumberOfCementPlants()
         infrastructure = e.randomizeInfrastructureLevel()
         deposits = raw_resource.randomizeResourceDeposits()
         terrain = t.randomizeTerrainType()
@@ -33,9 +35,18 @@ def createProvinces(game_object : g.GameData):
         max_factories = t.maxFactoryCount(terrain)
         max_mines = t.maxMineCount(terrain)
         max_sawmills = t.maxSawmillCount(terrain)
+        max_refineries = t.maxRefineryCount(terrain)
         max_infrastructure = t.maxInfrastructureCount(terrain)
 
-        province = p.Province(name, factories, mines, sawmills, deposits, infrastructure, terrain, max_factories, max_mines, max_sawmills, max_infrastructure)
+        province = p.Province(province_name=name, 
+                              number_of_factories=factories, number_of_mines=mines, 
+                              number_of_sawmills=sawmills, number_of_refineries=refineries, 
+                              infrastructure_level=infrastructure, 
+                              terrain_type=terrain, province_resource_deposits=deposits, 
+                              max_factories_possible=max_factories, max_mines_possible=max_mines, 
+                              max_sawmills_possible=max_sawmills, max_refineries_possible=max_refineries, 
+                              max_infrastructure_possible=max_infrastructure)
+
         province_list.append(province)
 
         i += 1

@@ -52,6 +52,18 @@ def maxSawmillCount(terrain_type : str) -> int:
 def maxRefineryCount(terrain_type : str) -> int:
     match terrain_type:
         case "Urban":
+            return 15
+        case "Mountainous":
+            return 5
+        case "Forested":
+            return 10
+        case "Plains":
+            return 10
+        
+# This method defines the max cement plant count depending on the terrain
+def maxCementPlantCount(terrain_type : str) -> int:
+    match terrain_type:
+        case "Urban":
             return 10
         case "Mountainous":
             return 5

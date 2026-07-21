@@ -1,4 +1,4 @@
-import Systems.time_system as t, Systems.economy_system as e, Systems.resource_system as r, Systems.time_system as t, Systems.development_systems as d, Data.game_data as g
+import Systems.time_system as t, Systems.economy_system as economy, Systems.Resource.raw_resource_system as raw_resource, Systems.time_system as t, Systems.Development.general_development as dev, Data.game_data as g
 
 import UI.GUI.dashboard_tab as dashboard, UI.GUI.provinces_tab as prov, UI.GUI.construction_tab as const, UI.GUI.info_widget as widget
 
@@ -27,7 +27,14 @@ class EconomyGameInterface:
 
     def __init__ (self, root : ctk.CTk, game_object : g.GameData):
 
-        self.progressing = False
+        x=0.5
+
+        self.frame = ctk.CTkFrame(root, fg_color='red')
+        self.frame.place(relx=x, rely=0.5, anchor='center')
+
+        root.bind("<Escape>", lambda event: root.attributes("-fullscreen", "False"))
+
+        '''self.progressing = False
 
         self.game_speed = 3000
 
@@ -44,9 +51,9 @@ class EconomyGameInterface:
 
         #self.laws_tab = self.tabs.add("Manage Laws")
 
-        self.dashboard_tab = dashboard.DashBoardTab(self.tabs.add("Dashboard"), game_object)
+        #self.dashboard_tab = dashboard.DashBoardTab(self.tabs.add("Dashboard"), game_object)
         self.provinces_tab = prov.ProvinceTab(self.tabs.add("View Provinces"), game_object)
-        self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object, self.refreshValues)
+        #self.construction_tab = const.ConstructionTab(self.tabs.add("Manage Construction"), game_object, self.refreshValues)
         #self.tabs.tab("Manage Construction")
 
         self.control_panel_frame = ctk.CTkFrame(root, fg_color='#252A34', width=1480)
@@ -64,9 +71,9 @@ class EconomyGameInterface:
                                                 tooltip_text=f"You are on day {game_object.day}.")
         
         self.currency_label = widget.InfoWidget(self.centering_frame, 
-                                                f": {e.getCurrencyAmount(game_object)}", 
+                                                f": {economy.getCurrencyAmount(game_object)}", 
                                                 1, 0, image=EconomyGameInterface.icons["Currency"],
-                                                tooltip_text=f"You have {e.getCurrencyAmount(game_object)} currency.")
+                                                tooltip_text=f"You have {economy.getCurrencyAmount(game_object)} currency.")
         
         self.satisfaction_label = widget.InfoWidget(self.centering_frame, 
                                                 f": {game_object.satisfaction}", 
@@ -74,29 +81,29 @@ class EconomyGameInterface:
                                                 tooltip_text=f"The current satisfaction level is {game_object.satisfaction}.")
         
         self.factories_label = widget.InfoWidget(self.centering_frame, 
-                                                 f": {e.getTotalFactories(game_object)}", 
+                                                 f": {economy.getTotalFactories(game_object)}", 
                                                  0, 1, image=EconomyGameInterface.icons["Factory"],
-                                                 tooltip_text=f"You have {e.getTotalFactories(game_object)} factories total.")
+                                                 tooltip_text=f"You have {economy.getTotalFactories(game_object)} factories total.")
         
         self.mines_label = widget.InfoWidget(self.centering_frame, 
-                                                 f": {e.getTotalMines(game_object)}", 
+                                                 f": {economy.getTotalMines(game_object)}", 
                                                  1, 1, image=EconomyGameInterface.icons["Mine"],
-                                                 tooltip_text=f"You have {e.getTotalMines(game_object)} mines total.")
+                                                 tooltip_text=f"You have {economy.getTotalMines(game_object)} mines total.")
         
         self.coal_label = widget.InfoWidget(self.centering_frame, 
-                                                 f": {r.getCoalQuantity(game_object)}", 
+                                                 f": {raw_resource.getCoalQuantity(game_object)}", 
                                                  0, 3, image=EconomyGameInterface.icons["Coal"],
-                                                 tooltip_text=f"You have {r.getCoalQuantity(game_object)} coal.")
+                                                 tooltip_text=f"You have {raw_resource.getCoalQuantity(game_object)} coal.")
         
         self.iron_label = widget.InfoWidget(self.centering_frame, 
-                                                 f": {r.getIronQuantity(game_object)}", 
+                                                 f": {raw_resource.getIronQuantity(game_object)}", 
                                                  1, 3, image=EconomyGameInterface.icons["Iron"],
-                                                 tooltip_text=f"You have {r.getIronQuantity(game_object)} iron.")
+                                                 tooltip_text=f"You have {raw_resource.getIronQuantity(game_object)} iron.")
         
         self.stone_label = widget.InfoWidget(self.centering_frame, 
-                                                 f": {r.getStoneQuantity(game_object)}", 
+                                                 f": {raw_resource.getStoneQuantity(game_object)}", 
                                                  2, 3, image=EconomyGameInterface.icons["Stone"],
-                                                 tooltip_text=f"You have {r.getStoneQuantity(game_object)} stone.")
+                                                 tooltip_text=f"You have {raw_resource.getStoneQuantity(game_object)} stone.")
 
         self.button_frame = ctk.CTkFrame(self.centering_frame, corner_radius=10, height=180, width=300, fg_color='#2E3542')
         self.button_frame.grid_propagate(False)
@@ -109,7 +116,7 @@ class EconomyGameInterface:
 
 
         # Set starting tab to the information tab
-        #self.tabs.set("Information")
+        #self.tabs.set("Information")'''
 
     def toggleProgress(self, game_object : g.GameData, root : ctk.CTk):
         if not self.progressing: 
@@ -162,22 +169,22 @@ class EconomyGameInterface:
     
     def refreshValues(self, game_object : g.GameData):
         self.day_label.refresh(f": {game_object.day}")
-        self.currency_label.refresh(f": {e.getCurrencyAmount(game_object)}")
+        self.currency_label.refresh(f": {economy.getCurrencyAmount(game_object)}")
         self.satisfaction_label.refresh(f": {game_object.satisfaction}")
-        self.factories_label.refresh(f": {e.getTotalFactories(game_object)}")
-        self.mines_label.refresh(f": {e.getTotalMines(game_object)}")
-        self.coal_label.refresh(f": {r.getCoalQuantity(game_object)}")
-        self.iron_label.refresh(f": {r.getIronQuantity(game_object)}")
-        self.stone_label.refresh(f": {r.getStoneQuantity(game_object)}")
+        self.factories_label.refresh(f": {economy.getTotalFactories(game_object)}")
+        self.mines_label.refresh(f": {economy.getTotalMines(game_object)}")
+        self.coal_label.refresh(f": {raw_resource.getCoalQuantity(game_object)}")
+        self.iron_label.refresh(f": {raw_resource.getIronQuantity(game_object)}")
+        self.stone_label.refresh(f": {raw_resource.getStoneQuantity(game_object)}")
         
 
 
 def mainGameLoop(game_object : g.GameData):
+    ctk.deactivate_automatic_dpi_awareness()
     window = ctk.CTk(fg_color='#1B1E24')
     window.title("Economy Game")
     window.geometry("1920x1080")
-    window.configure()
-
+    window.wm_attributes("-fullscreen", True)
 
     game_interface = EconomyGameInterface(window, game_object)
 

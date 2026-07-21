@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Data.game_data as g, Models.province as p, Models.sawmill as s, Systems.economy_system as economy, Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource
+import Data.game_data as g, Models.province as p, Models.sawmill as s, Systems.economy_system as economy, Systems.Resource.raw_resource_system as raw_resource, Systems.Resource.refined_resource_system as refined_resource
 
 # This method returns a boolean result which explains whether the user is building over the max sawmill limit.
 def overMaxSawmillLimit(game_object : g.GameData, province_index : int, number_of_sawmills_to_be_bought : int) -> bool:
@@ -21,21 +21,21 @@ def overMaxSawmillLimit(game_object : g.GameData, province_index : int, number_o
 # to purchase the selected number of sawmills.
 def sawmillsCanBeBought(game_object : g.GameData, number_of_sawmills_to_be_bought : int, province : p.Province):
 
-    COST_OF_SAWMILL, REQUIRED_STONE_FOR_SAWMILL, REQUIRED_WOOD_FOR_SAWMILL = economy.getRequirementsOfSawmillConstruction()
+    COST_OF_SAWMILL, REQUIRED_CEMENT_FOR_SAWMILL, REQUIRED_WOOD_FOR_SAWMILL = economy.getRequirementsOfSawmillConstruction()
 
     cost_requirements_met = number_of_sawmills_to_be_bought*COST_OF_SAWMILL < economy.getCurrencyAmount(game_object)
-    stone_requirements_met = number_of_sawmills_to_be_bought*REQUIRED_STONE_FOR_SAWMILL < raw_resource.getStoneQuantity(game_object)
+    cement_requirements_met = number_of_sawmills_to_be_bought*REQUIRED_CEMENT_FOR_SAWMILL < refined_resource.getCementQuantity(game_object)
     wood_requirements_met = number_of_sawmills_to_be_bought*REQUIRED_WOOD_FOR_SAWMILL < refined_resource.getWoodQuantity(game_object)
     terrain_type_valid = True if province.getTerrainType() in ['Mountainous', 'Forested'] else False
 
-    return cost_requirements_met and stone_requirements_met and wood_requirements_met and terrain_type_valid
+    return cost_requirements_met and cement_requirements_met and wood_requirements_met and terrain_type_valid
 
 # This method will add sawmills into current production.
 def addSawmillsToQueue(game_object : g.GameData, number_of_sawmills : int, province_index : int):
-    COST_OF_SAWMILL, REQUIRED_STONE_FOR_SAWMILL, REQUIRED_WOOD_FOR_SAWMILL = economy.getRequirementsOfSawmillConstruction()
+    COST_OF_SAWMILL, REQUIRED_CEMENT_FOR_SAWMILL, REQUIRED_WOOD_FOR_SAWMILL = economy.getRequirementsOfSawmillConstruction()
 
     cost = number_of_sawmills*COST_OF_SAWMILL
-    required_stone = number_of_sawmills*REQUIRED_STONE_FOR_SAWMILL
+    required_cement = number_of_sawmills*REQUIRED_CEMENT_FOR_SAWMILL
     required_wood = number_of_sawmills*REQUIRED_WOOD_FOR_SAWMILL
 
     province_list = game_object.provinces
@@ -44,7 +44,7 @@ def addSawmillsToQueue(game_object : g.GameData, number_of_sawmills : int, provi
     if not overMaxSawmillLimit(game_object, province_index, number_of_sawmills) and sawmillsCanBeBought(game_object, number_of_sawmills):
         game_object.sawmills_being_constructed.append(s.Sawmill(time, province_index, number_of_sawmills))
         economy.subtractCostFromCurrency(game_object, cost)
-        raw_resource.subtractFromStoneQuantity(game_object, required_stone)
+        refined_resource.subtractFromCementQuantity(game_object, required_cement)
         refined_resource.subtractFromWoodQuantity(game_object, required_wood)
 
 # This method updates current sawmills in production by subtracting a day from the

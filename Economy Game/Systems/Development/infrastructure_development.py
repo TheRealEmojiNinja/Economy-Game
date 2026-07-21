@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Data.game_data as g, Models.province as p, Models.infrastructure as i, Systems.economy_system as economy, Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource
+import Data.game_data as g, Models.infrastructure as i, Systems.economy_system as economy, Systems.Resource.refined_resource_system as refined_resource
 
 # This method returns a boolean result which explains whether the user is building over the max mine limit.
 def overMaxInfrastructureLimit(game_object : g.GameData, province_index : int, infrastructure_level_to_be_upgraded_to : int) -> bool:
@@ -21,27 +21,27 @@ def overMaxInfrastructureLimit(game_object : g.GameData, province_index : int, i
 # to purchase the selected number of infrastructure levels.
 def infrastructureCanBeBought(game_object : g.GameData, number_of_infrastructure_levels_to_be_bought : int):
 
-    COST_OF_INFRASTRUCTURE, REQUIRED_STONE_FOR_INFRASTRUCTURE, REQUIRED_WOOD_FOR_INFRASTRUCTURE = economy.getRequirementsOfInfrastructureConstruction()
+    COST_OF_INFRASTRUCTURE, REQUIRED_CEMENT_FOR_INFRASTRUCTURE, REQUIRED_WOOD_FOR_INFRASTRUCTURE = economy.getRequirementsOfInfrastructureConstruction()
 
     cost_requirements_met = number_of_infrastructure_levels_to_be_bought*COST_OF_INFRASTRUCTURE < economy.getCurrencyAmount(game_object)
-    stone_requirements_met = number_of_infrastructure_levels_to_be_bought*REQUIRED_STONE_FOR_INFRASTRUCTURE < raw_resource.getStoneQuantity(game_object)
+    cement_requirements_met = number_of_infrastructure_levels_to_be_bought*REQUIRED_CEMENT_FOR_INFRASTRUCTURE < refined_resource.getCementQuantity(game_object)
     wood_requirements_met = number_of_infrastructure_levels_to_be_bought*REQUIRED_WOOD_FOR_INFRASTRUCTURE < refined_resource.getWoodQuantity(game_object)
 
-    return cost_requirements_met and stone_requirements_met and wood_requirements_met
+    return cost_requirements_met and cement_requirements_met and wood_requirements_met
 
 # This method will add infrastructure into current production.
 def addInfrastructureToQueue(game_object : g.GameData, number_of_infrastructure_levels : int, province_index : int):
-    COST_OF_INFRASTRUCTURE, REQUIRED_STONE_FOR_INFRASTRUCTURE, REQUIRED_WOOD_FOR_INFRASTRUCTURE = economy.getRequirementsOfInfrastructureConstruction()
+    COST_OF_INFRASTRUCTURE, REQUIRED_CEMENT_FOR_INFRASTRUCTURE, REQUIRED_WOOD_FOR_INFRASTRUCTURE = economy.getRequirementsOfInfrastructureConstruction()
     TIME_FOR_INFRASTRUCTURE_UPGRADE = 30
 
     cost = number_of_infrastructure_levels*COST_OF_INFRASTRUCTURE
-    required_stone = number_of_infrastructure_levels*REQUIRED_STONE_FOR_INFRASTRUCTURE
+    required_cement = number_of_infrastructure_levels*REQUIRED_CEMENT_FOR_INFRASTRUCTURE
     required_wood = number_of_infrastructure_levels*REQUIRED_WOOD_FOR_INFRASTRUCTURE
 
     if not overMaxInfrastructureLimit(game_object, province_index, number_of_infrastructure_levels) and infrastructureCanBeBought(game_object, number_of_infrastructure_levels):
         game_object.infrastructure_being_constructed.append(i.Infrastructure(TIME_FOR_INFRASTRUCTURE_UPGRADE, province_index, number_of_infrastructure_levels))
         economy.subtractCostFromCurrency(game_object, cost)
-        raw_resource.subtractFromStoneQuantity(game_object, required_stone)
+        refined_resource.subtractFromCementQuantity(game_object, required_cement)
         refined_resource.subtractFromWoodQuantity(game_object, required_wood)
 
 # This method updates current infrastructure in production by subtracting a day from the

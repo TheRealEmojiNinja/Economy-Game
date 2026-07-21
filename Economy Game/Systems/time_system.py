@@ -5,8 +5,8 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Systems.economy_system as e, Systems.Development.factory_development as factory_development, Systems.Development.mine_development as mine_development, Systems.Development.sawmill_development as sawmill_development, Systems.Development.refinery_development as refinery_development, Systems.Development.infrastructure_development as infrastructure_development
-import Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource, Systems.Events.event_system as ev, Data.game_data as g, random, time
+import Systems.economy_system as economy, Systems.Development.factory_development as factory_development, Systems.Development.mine_development as mine_development, Systems.Development.sawmill_development as sawmill_development, Systems.Development.refinery_development as refinery_development, Systems.Development.cement_plant_development as cement_plant_development, Systems.Development.infrastructure_development as infrastructure_development
+import Systems.Resource.raw_resource_system as raw_resource, Systems.Resource.refined_resource_system as refined_resource, Systems.Events.event_system as ev, Data.game_data as g, random, time
 
 # The updateDay method simply computes the day's resource outputs and consumption before progressing to another day.
 def updateProgression(game_object : g.GameData) -> None:
@@ -24,29 +24,78 @@ def progressDate(game_object : g.GameData) -> None:
 
     match month:
         case 1:
-            day = day+1 if day != 31 else day = 1 and month = month+1
+            if day != 31:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 2:
-            day = day+1 if day != 28 else day = 1 and month = month+1
+            if day != 28:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 3:
-            day = day+1 if day != 31 else day = 1 and month = month+1
+            if day != 31:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 4:
-            day = day+1 if day != 30 else day = 1 and month = month+1
+            if day != 30:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 5:
-            day = day+1 if day != 31 else day = 1 and month = month+1
+            if day != 31:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 6:
-            day = day+1 if day != 30 else day = 1 and month = month+1
+            if day != 30:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 7:
-            day = day+1 if day != 31 else day = 1 and month = month+1
+            if day != 31:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 8:
-            day = day+1 if day != 31 else day = 1 and month = month+1
+            if day != 31:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 9:
-            day = day+1 if day != 30 else day = 1 and month = month+1
+            if day != 30:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 10:
-            day = day+1 if day != 31 else day = 1 and month = month+1
+            if day != 31:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 11:
-            day = day+1 if day != 30 else day = 1 and month = month+1
+            if day != 30:
+                day += 1
+            else:
+                day = 1
+                month += 1
         case 12:
-            day = day+1 if day != 31 else day = 1 and month = 1 and year = year+1
+            if day != 31:
+                day += 1
+            else:
+                day = 1
+                month = 1
+                year += 1
 
     game_object.date[0] = month
     game_object.date[1] = day
@@ -58,6 +107,7 @@ def updateBuildingsInConstruction(game_object : g.GameData) -> None:
     mine_development.updateMinesInConstruction(game_object)
     sawmill_development.updateSawmillsInConstruction(game_object)
     refinery_development.updateRefineriesInConstruction(game_object)
+    cement_plant_development.updateCementPlantsInConstruction(game_object)
     infrastructure_development.updateInfrastructureInConstruction(game_object)
 
 def updateRawResourceGains(game_object : g.GameData) -> None:
@@ -81,6 +131,7 @@ def updateRefinedResourceGains(game_object : g.GameData) -> None:
     obtained_steel = 0
     obtained_fuel = 0
     obtained_wood = 0
+    obtained_cement = 0
     
     for province in province_list:
         if province.getSteelProductionStatus():
@@ -88,11 +139,14 @@ def updateRefinedResourceGains(game_object : g.GameData) -> None:
         if province.getFuelProductionStatus():
             obtained_fuel += refined_resource.calculateFuelOutput(game_object)
         if province.getWoodProductionStatus():
-            obtained_wood += refined_resource.calculateWoodOutput()*sawmill_development.getTotalLumberOutputForTimber(game_object)
+            obtained_wood += refined_resource.calculateWoodOutput(game_object)*sawmill_development.getTotalLumberOutputForTimber(game_object)
+
+    obtained_cement += refined_resource.calculateCementOutput(game_object)*cement_plant_development.getTotalCementPlantOutput(game_object)
 
     refined_resource.addToSteelQuantity(game_object, obtained_steel)
     refined_resource.addToFuelQuantity(game_object, obtained_fuel)
     refined_resource.addToWoodQuantity(game_object, obtained_wood) 
+    refined_resource.addToCementQuantity(game_object, obtained_cement)
 
 def throwRandomEvent(game_object : g.GameData):
     event, province = ev.generateRandomEvent(game_object)
@@ -101,4 +155,4 @@ def throwRandomEvent(game_object : g.GameData):
 
 def updateDebt(game_object : g.GameData) -> None:
     if game_object.day % 30 == 0 and game_object.day != 0:
-        e.payDebt(game_object)
+        economy.payDebt(game_object)

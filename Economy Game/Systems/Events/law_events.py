@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import random, Data.game_data as g, Models.province as p, Systems.economy_system as e, Systems.resource_system as r
+import random, Data.game_data as g, Models.province as p, Systems.economy_system as e, Systems.Resource.raw_resource_system as raw_resource
 
 def doSmugglingBustEvent(game_object : g.GameData, province : p.Province) -> None:
     confiscated_assets = random.randint(300, 600)
@@ -19,21 +19,21 @@ def doCorruptionBustEvent(game_object : g.GameData) -> None:
 
     resource_amount = 0
     if resource_type == 'Coal':
-        resource_amount = r.getCoalQuantity(game_object)
+        resource_amount = raw_resource.getCoalQuantity(game_object)
     elif resource_type == 'Iron':
-        resource_amount = r.getIronQuantity(game_object)
+        resource_amount = raw_resource.getIronQuantity(game_object)
     elif resource_type == 'Stone':
-        resource_amount = r.getStoneQuantity(game_object)
+        resource_amount = raw_resource.getStoneQuantity(game_object)
 
     if lost_resource > resource_amount:
         return None
     else:
         if resource_type == 'Coal':
-            r.subtractFromCoalQuantity(game_object, lost_resource)
+            raw_resource.subtractFromCoalQuantity(game_object, lost_resource)
         elif resource_type == 'Iron':
-            r.subtractFromIronQuantity(game_object, lost_resource)
+            raw_resource.subtractFromIronQuantity(game_object, lost_resource)
         elif resource_type == 'Stone':
-            r.subtractFromStoneQuantity(game_object, lost_resource)
+            raw_resource.subtractFromStoneQuantity(game_object, lost_resource)
     
     obtained_funds = random.randint(200, 400)
     e.addProfitToCurrency(game_object, obtained_funds)

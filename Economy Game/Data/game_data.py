@@ -6,7 +6,9 @@ Author: TheEmojiNinja
 '''
 
 # Required modules
-import Models.factory as factory, Models.mine as mine, Models.province as p, Models.infrastructure as infrastructure, Models.sawmill as sawmill, Models.refinery as refinery, Data.data_loader as d
+import Models.factory as factory, Models.mine as mine, Models.province as p, Models.infrastructure as infrastructure
+import Models.sawmill as sawmill, Models.refinery as refinery, Models.cement_plant as cement_plant
+import Data.data_loader as d
 from typing import List
 
 # GameData class declaration
@@ -25,14 +27,17 @@ class GameData:
         self.steel = 0
         self.fuel = 0
         self.wood = 0
+        self.cement = 0
 
         self.tax_level = 0
 
         self.factories_being_constructed: List[factory.Factory] = []
         self.mines_being_constructed: List[mine.Mine] = []
-        self.infrastructure_being_constructed: List[infrastructure.Infrastructure]= []
         self.sawmills_being_constructed: List[sawmill.Sawmill] = []
         self.refineries_being_constructed: List[refinery.Refinery] = []
+        self.cement_plants_being_constructed : List[cement_plant.CementPlant] = []
+        self.infrastructure_being_constructed: List[infrastructure.Infrastructure]= []
+        
 
         self.resource_deposits = []
 

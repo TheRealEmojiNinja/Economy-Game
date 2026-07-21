@@ -1,4 +1,4 @@
-import customtkinter as ctk, Systems.resource_system as r, Systems.Events.event_system as event, Systems.development_systems as d, Data.game_data as g, UI.GUI.scrollable_widget as scrollable_widget
+import customtkinter as ctk, Systems.Resource.raw_resource_system as r, Systems.Events.event_system as event, Systems.Development.general_development as d, Data.game_data as g, UI.GUI.scrollable_widget as scrollable_widget
 
 class DashBoardTab:
 

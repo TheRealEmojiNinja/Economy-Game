@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Data.game_data as g, Models.province as p, Models.refinery as refinery, Systems.economy_system as economy, Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource
+import Data.game_data as g, Models.province as p, Models.refinery as refinery, Systems.economy_system as economy, Systems.Resource.raw_resource_system as raw_resource
 
 # This method returns a boolean result which explains whether the user is building over the max sawmill limit.
 def overMaxRefineryLimit(game_object : g.GameData, province_index : int, number_of_refineries_to_be_bought : int) -> bool:

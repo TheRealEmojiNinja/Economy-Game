@@ -19,6 +19,38 @@ Planned
     - Integration with Tkinter GUI
     - Victory conditions? (may be dependent on different economic ideologies the player aims to acheive, for example full capitalist economy, democratic socialist economy, etc.)
 
+
+Due to the transition from a text-based UI to a GUI, the previous roadmap is considered outdated and henceforth a new one will be developed below:
+
+Version 1.2.0 will be deemed the starting point.
+
+Version 1.2.5 will implement new resources into the game: timber and copper. In addition, some resources will have to be made with raw materials now, such as steel, fuel and wood.
+
+Version 1.2.6 will add Cement Plants to create cement using stone and a bit of iron. This building also uses fuel to create it. Cement will be used to construct new infrastructure and buildings in replacement of stone.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Version 1.0.0 will be defined as a game system where you can develop more factories and mines within different provinces to earn even more money as the days progress. It will not have any end goal yet. In addition, uses should be implemented for coal, iron and stone. Coal should be used daily to power existing factories. Iron should be used to construct more factories (in addition to it costing money). Stone should be used to construct mines (in addition to it costing money) and in the future, infrastructure.
 
 Version 1.0.1 should create province terrain characteristics (urban, forested, mountainous, etc.).
@@ -62,11 +94,6 @@ Version 1.4.0 should aim to expand the laws-based system by introducing a sub-sy
 There may be multiple versions inbetween major updates that might fix bugs or add minor modifications/features to the game.
 
 
-Due to the transition from a text-based UI to a GUI, the previous roadmap is considered outdated and henceforth a new one will be developed below:
-
-Version 1.2.0 will be deemed the starting point.
-
-Version 1.2.5 will implement new resources into the game: timber and copper. In addition, some resources will have to be made with raw materials now, such as steel, fuel and wood.
 
 
 1. Building Limits

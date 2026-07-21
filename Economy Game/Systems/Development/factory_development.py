@@ -5,7 +5,7 @@ Author: TheEmojiNinja
 '''
 
 # Import required modules
-import Data.game_data as g, Models.province as p, Models.factory as f, Systems.economy_system as economy, Systems.raw_resource_system as raw_resource, Systems.refined_resource_system as refined_resource
+import Data.game_data as g, Models.province as p, Models.factory as f, Systems.economy_system as economy, Systems.Resource.raw_resource_system as raw_resource, Systems.Resource.refined_resource_system as refined_resource
 
 # This method returns a boolean result which explains whether the user is building over the max factory limit.
 def overMaxFactoryLimit(game_object : g.GameData, province_index : int, number_of_factories_to_be_bought : int) -> bool:
@@ -21,21 +21,21 @@ def overMaxFactoryLimit(game_object : g.GameData, province_index : int, number_o
 # to purchase the selected number of factories.
 def factoriesCanBeBought(game_object : g.GameData, number_of_factories_to_be_bought : int):
 
-    COST_OF_FACTORY, REQUIRED_STONE_FOR_FACTORY, REQUIRED_IRON_FOR_FACTORY, REQUIRED_COPPER_FOR_FACTORY = economy.getRequirementsOfFactoryConstruction()
+    COST_OF_FACTORY, REQUIRED_CEMENT_FOR_FACTORY, REQUIRED_IRON_FOR_FACTORY, REQUIRED_COPPER_FOR_FACTORY = economy.getRequirementsOfFactoryConstruction()
 
     cost_requirements_met = number_of_factories_to_be_bought*COST_OF_FACTORY < economy.getCurrencyAmount(game_object)
-    stone_requirements_met = number_of_factories_to_be_bought*REQUIRED_STONE_FOR_FACTORY < raw_resource.getStoneQuantity(game_object)
+    cement_requirements_met = number_of_factories_to_be_bought*REQUIRED_CEMENT_FOR_FACTORY < refined_resource.getCementQuantity(game_object)
     iron_requirements_met = number_of_factories_to_be_bought*REQUIRED_IRON_FOR_FACTORY < raw_resource.getIronQuantity(game_object)
     copper_requirements_met = number_of_factories_to_be_bought*REQUIRED_COPPER_FOR_FACTORY < raw_resource.getCopperQuantity(game_object)
 
-    return cost_requirements_met and stone_requirements_met and iron_requirements_met and copper_requirements_met
+    return cost_requirements_met and cement_requirements_met and iron_requirements_met and copper_requirements_met
 
 # This method will add factories into current production.
 def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, province_index : int):
-    COST_OF_FACTORY, REQUIRED_STONE_FOR_FACTORY, REQUIRED_IRON_FOR_FACTORY, REQUIRED_COPPER_FOR_FACTORY = economy.getRequirementsOfFactoryConstruction()
+    COST_OF_FACTORY, REQUIRED_CEMENT_FOR_FACTORY, REQUIRED_IRON_FOR_FACTORY, REQUIRED_COPPER_FOR_FACTORY = economy.getRequirementsOfFactoryConstruction()
 
     cost = number_of_factories*COST_OF_FACTORY
-    required_stone = number_of_factories*REQUIRED_STONE_FOR_FACTORY
+    required_cement = number_of_factories*REQUIRED_CEMENT_FOR_FACTORY
     required_iron = number_of_factories*REQUIRED_IRON_FOR_FACTORY
     required_copper = number_of_factories*REQUIRED_COPPER_FOR_FACTORY
 
@@ -45,7 +45,7 @@ def addFactoriesToQueue(game_object : g.GameData, number_of_factories : int, pro
     if not overMaxFactoryLimit(game_object, province_index, number_of_factories) and factoriesCanBeBought(game_object, number_of_factories):
         game_object.factories_being_constructed.append(f.Factory(time, province_index, number_of_factories))
         economy.subtractCostFromCurrency(game_object, cost)
-        raw_resource.subtractFromStoneQuantity(game_object, required_stone)
+        refined_resource.subtractFromCementQuantity(game_object, required_cement)
         raw_resource.subtractFromIronQuantity(game_object, required_iron)
         raw_resource.subtractFromCopperQuantity(game_object, required_copper)
 
