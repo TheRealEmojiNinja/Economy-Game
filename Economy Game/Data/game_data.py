@@ -7,7 +7,7 @@ Author: TheEmojiNinja
 
 # Required modules
 import Models.factory as factory, Models.mine as mine, Models.province as p, Models.infrastructure as infrastructure
-import Models.sawmill as sawmill, Models.refinery as refinery, Models.cement_plant as cement_plant
+import Models.sawmill as sawmill, Models.refinery as refinery, Models.cement_plant as cement_plant, Models.research as research
 import Data.data_loader as d
 from typing import List
 
@@ -31,6 +31,8 @@ class GameData:
 
         self.tax_level = 0
 
+        self.base_research_time = 45
+
         self.factories_being_constructed: List[factory.Factory] = []
         self.mines_being_constructed: List[mine.Mine] = []
         self.sawmills_being_constructed: List[sawmill.Sawmill] = []
@@ -38,6 +40,7 @@ class GameData:
         self.cement_plants_being_constructed : List[cement_plant.CementPlant] = []
         self.infrastructure_being_constructed: List[infrastructure.Infrastructure]= []
         
+        self.research_in_progress: List[research.Research] = []
 
         self.resource_deposits = []
 

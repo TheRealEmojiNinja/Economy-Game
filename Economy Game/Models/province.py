@@ -44,6 +44,7 @@ class Province:
         self.electrical_outage_status = False
         self.electrical_outage_time = -1
         self.maximum_production_status = False
+        self.construction_boost = 0
 
 
     # Helper methods that get different values for certain province components 
@@ -110,27 +111,27 @@ class Province:
         infrastructure_level = self.infrastructure_level
         match infrastructure_level:
             case 0:
-                return 30
+                return 30 - self.construction_boost
             case 1:
-                return 28
+                return 28 - self.construction_boost
             case 2:
-                return 25
+                return 25 - self.construction_boost
             case 3:
-                return 22
+                return 22 - self.construction_boost
             case 4:
-                return 19
+                return 19 - self.construction_boost
             case 5:
-                return 17
+                return 17 - self.construction_boost
             case 6:
-                return 15
+                return 15 - self.construction_boost
             case 7:
-                return 14
+                return 14 - self.construction_boost
             case 8:
-                return 13
+                return 13 - self.construction_boost
             case 9:
-                return 11
+                return 11 - self.construction_boost
             case 10:
-                return 10
+                return 10 - self.construction_boost
     
     def getOutageStatus(self) -> bool:
         return self.electrical_outage_status
@@ -171,6 +172,9 @@ class Province:
     
     def updateWoodProductionStatus(self, new_status : bool) -> None:
         self.wood_production = new_status
+
+    def updateConstructionBoost(self, new_construction_boost : int) -> None:
+        self.construction_boost = new_construction_boost
     
     def updateOutageStatus(self, status : bool) -> None:
         self.electrical_outage_status = status

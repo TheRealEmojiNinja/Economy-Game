@@ -28,7 +28,7 @@ Version 1.2.5 will implement new resources into the game: timber and copper. In 
 
 Version 1.2.6 will add Cement Plants to create cement using stone and a bit of iron. This building also uses fuel to create it. Cement will be used to construct new infrastructure and buildings in replacement of stone.
 
-
+Version 1.3.0 will implement a research system that allows the player to research different enhancements to make certain parts of the game easier, such as researching better tools and equipment to lower the construction times of buildings, obtaining more of a refined resource per raw resource requirements, etc.
 
 
 
