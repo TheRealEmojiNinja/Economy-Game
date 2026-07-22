@@ -23,9 +23,9 @@ def refineriesCanBeBought(game_object : g.GameData, number_of_refineries_to_be_b
 
     COST_OF_REFINERY, REQUIRED_IRON_FOR_REFINERY, REQUIRED_COPPER_FOR_REFINERY = economy.getRequirementsOfRefineryConstruction()
 
-    cost_requirements_met = number_of_refineries_to_be_bought*COST_OF_REFINERY < economy.getCurrencyAmount(game_object)
-    iron_requirements_met = number_of_refineries_to_be_bought*REQUIRED_IRON_FOR_REFINERY < raw_resource.getIronQuantity(game_object)
-    copper_requirements_met = number_of_refineries_to_be_bought*REQUIRED_COPPER_FOR_REFINERY < raw_resource.getCopperQuantity(game_object)
+    cost_requirements_met = number_of_refineries_to_be_bought*COST_OF_REFINERY <= economy.getCurrencyAmount(game_object)
+    iron_requirements_met = number_of_refineries_to_be_bought*REQUIRED_IRON_FOR_REFINERY <= raw_resource.getIronQuantity(game_object)
+    copper_requirements_met = number_of_refineries_to_be_bought*REQUIRED_COPPER_FOR_REFINERY <= raw_resource.getCopperQuantity(game_object)
 
     return cost_requirements_met and iron_requirements_met and copper_requirements_met
 

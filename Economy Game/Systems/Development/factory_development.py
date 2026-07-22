@@ -23,10 +23,10 @@ def factoriesCanBeBought(game_object : g.GameData, number_of_factories_to_be_bou
 
     COST_OF_FACTORY, REQUIRED_CEMENT_FOR_FACTORY, REQUIRED_IRON_FOR_FACTORY, REQUIRED_COPPER_FOR_FACTORY = economy.getRequirementsOfFactoryConstruction()
 
-    cost_requirements_met = number_of_factories_to_be_bought*COST_OF_FACTORY < economy.getCurrencyAmount(game_object)
-    cement_requirements_met = number_of_factories_to_be_bought*REQUIRED_CEMENT_FOR_FACTORY < refined_resource.getCementQuantity(game_object)
-    iron_requirements_met = number_of_factories_to_be_bought*REQUIRED_IRON_FOR_FACTORY < raw_resource.getIronQuantity(game_object)
-    copper_requirements_met = number_of_factories_to_be_bought*REQUIRED_COPPER_FOR_FACTORY < raw_resource.getCopperQuantity(game_object)
+    cost_requirements_met = number_of_factories_to_be_bought*COST_OF_FACTORY <= economy.getCurrencyAmount(game_object)
+    cement_requirements_met = number_of_factories_to_be_bought*REQUIRED_CEMENT_FOR_FACTORY <= refined_resource.getCementQuantity(game_object)
+    iron_requirements_met = number_of_factories_to_be_bought*REQUIRED_IRON_FOR_FACTORY <= raw_resource.getIronQuantity(game_object)
+    copper_requirements_met = number_of_factories_to_be_bought*REQUIRED_COPPER_FOR_FACTORY <= raw_resource.getCopperQuantity(game_object)
 
     return cost_requirements_met and cement_requirements_met and iron_requirements_met and copper_requirements_met
 

@@ -23,9 +23,9 @@ def sawmillsCanBeBought(game_object : g.GameData, number_of_sawmills_to_be_bough
 
     COST_OF_SAWMILL, REQUIRED_CEMENT_FOR_SAWMILL, REQUIRED_WOOD_FOR_SAWMILL = economy.getRequirementsOfSawmillConstruction()
 
-    cost_requirements_met = number_of_sawmills_to_be_bought*COST_OF_SAWMILL < economy.getCurrencyAmount(game_object)
-    cement_requirements_met = number_of_sawmills_to_be_bought*REQUIRED_CEMENT_FOR_SAWMILL < refined_resource.getCementQuantity(game_object)
-    wood_requirements_met = number_of_sawmills_to_be_bought*REQUIRED_WOOD_FOR_SAWMILL < refined_resource.getWoodQuantity(game_object)
+    cost_requirements_met = number_of_sawmills_to_be_bought*COST_OF_SAWMILL <= economy.getCurrencyAmount(game_object)
+    cement_requirements_met = number_of_sawmills_to_be_bought*REQUIRED_CEMENT_FOR_SAWMILL <= refined_resource.getCementQuantity(game_object)
+    wood_requirements_met = number_of_sawmills_to_be_bought*REQUIRED_WOOD_FOR_SAWMILL <= refined_resource.getWoodQuantity(game_object)
     terrain_type_valid = True if province.getTerrainType() in ['Mountainous', 'Forested'] else False
 
     return cost_requirements_met and cement_requirements_met and wood_requirements_met and terrain_type_valid

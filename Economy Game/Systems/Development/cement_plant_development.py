@@ -23,9 +23,9 @@ def cementPlantsCanBeBought(game_object : g.GameData, number_of_cement_plants_to
 
     COST_OF_CEMENT_PLANT, REQUIRED_CEMENT_FOR_CEMENT_PLANT, REQUIRED_WOOD_FOR_CEMENT_PLANT = economy.getRequirementsOfCementPlantConstruction()
 
-    cost_requirements_met = number_of_cement_plants_to_be_bought*COST_OF_CEMENT_PLANT < economy.getCurrencyAmount(game_object)
-    cement_requirements_met = number_of_cement_plants_to_be_bought*REQUIRED_CEMENT_FOR_CEMENT_PLANT < refined_resource.getCementQuantity(game_object)
-    wood_requirements_met = number_of_cement_plants_to_be_bought*REQUIRED_WOOD_FOR_CEMENT_PLANT < refined_resource.getWoodQuantity(game_object)
+    cost_requirements_met = number_of_cement_plants_to_be_bought*COST_OF_CEMENT_PLANT <= economy.getCurrencyAmount(game_object)
+    cement_requirements_met = number_of_cement_plants_to_be_bought*REQUIRED_CEMENT_FOR_CEMENT_PLANT <= refined_resource.getCementQuantity(game_object)
+    wood_requirements_met = number_of_cement_plants_to_be_bought*REQUIRED_WOOD_FOR_CEMENT_PLANT <= refined_resource.getWoodQuantity(game_object)
 
     return cost_requirements_met and cement_requirements_met and wood_requirements_met
 

@@ -23,8 +23,8 @@ def minesCanBeBought(game_object : g.GameData, number_of_mines_to_be_bought : in
 
     COST_OF_MINE, REQUIRED_WOOD_FOR_MINE = economy.getRequirementsOfMineConstruction()
 
-    cost_requirements_met = number_of_mines_to_be_bought*COST_OF_MINE < economy.getCurrencyAmount(game_object)
-    wood_requirements_met = number_of_mines_to_be_bought*REQUIRED_WOOD_FOR_MINE < refined_resource.getWoodQuantity(game_object)
+    cost_requirements_met = number_of_mines_to_be_bought*COST_OF_MINE <= economy.getCurrencyAmount(game_object)
+    wood_requirements_met = number_of_mines_to_be_bought*REQUIRED_WOOD_FOR_MINE <= refined_resource.getWoodQuantity(game_object)
 
     return cost_requirements_met and wood_requirements_met
 

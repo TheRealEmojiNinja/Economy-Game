@@ -23,9 +23,9 @@ def infrastructureCanBeBought(game_object : g.GameData, number_of_infrastructure
 
     COST_OF_INFRASTRUCTURE, REQUIRED_CEMENT_FOR_INFRASTRUCTURE, REQUIRED_WOOD_FOR_INFRASTRUCTURE = economy.getRequirementsOfInfrastructureConstruction()
 
-    cost_requirements_met = number_of_infrastructure_levels_to_be_bought*COST_OF_INFRASTRUCTURE < economy.getCurrencyAmount(game_object)
-    cement_requirements_met = number_of_infrastructure_levels_to_be_bought*REQUIRED_CEMENT_FOR_INFRASTRUCTURE < refined_resource.getCementQuantity(game_object)
-    wood_requirements_met = number_of_infrastructure_levels_to_be_bought*REQUIRED_WOOD_FOR_INFRASTRUCTURE < refined_resource.getWoodQuantity(game_object)
+    cost_requirements_met = number_of_infrastructure_levels_to_be_bought*COST_OF_INFRASTRUCTURE <= economy.getCurrencyAmount(game_object)
+    cement_requirements_met = number_of_infrastructure_levels_to_be_bought*REQUIRED_CEMENT_FOR_INFRASTRUCTURE <= refined_resource.getCementQuantity(game_object)
+    wood_requirements_met = number_of_infrastructure_levels_to_be_bought*REQUIRED_WOOD_FOR_INFRASTRUCTURE <= refined_resource.getWoodQuantity(game_object)
 
     return cost_requirements_met and cement_requirements_met and wood_requirements_met
 
