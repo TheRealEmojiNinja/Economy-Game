@@ -58,3 +58,9 @@ class GameData:
         self.provinces : List[p.Province] = []
 
         self.event_history = []
+
+        self.construction_time_boost = 0
+        self.ore_excavation_boost = 0
+        self.steel_production_boost = 0
+        self.fuel_production_boost = 0
+        self.wood_production_boost = 0
